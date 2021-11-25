@@ -49,7 +49,7 @@ public static class Prompt
         Persons.Add(new Person("Cody"));
     }
 
-    static void Quit()
+    public static void Quit()
     {
         Console.Clear();
         Console.WriteLine("Goodbye!");
@@ -77,5 +77,12 @@ public static class Prompt
                           "\n3 - Show list of People" +
                           "\n4 - Show list of Dogs" +
                           "\n\n(Press q to quit)");
+    }
+    
+    public static void ShowInvalidMessage()
+    {
+        Console.Clear();
+        Console.WriteLine("Invalided choice.");
+        Thread.Sleep(1000);
     }
 }

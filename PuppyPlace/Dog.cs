@@ -7,7 +7,6 @@ public class Dog
     public int Age { get; set; }
     public string Breed { get; set; }
     public Person? Owner { get; set; }
-
     public Dog(string name, int age, string breed)
     {
         Id = Guid.NewGuid();
@@ -15,41 +14,43 @@ public class Dog
         Age = age;
         Breed = breed;
     }
-        
-    public string Bark()
-    {
-        return "WOOF!!!";
-    }
-
     public void AddOwner(Person owner)
     {
         Owner = owner;
     }
-
     public static void ShowDogs()
     {
         Console.Clear();
         Console.WriteLine("These are the dogs we have:");
         
         var num = 1;
-        foreach (var dog in Prompt.Dogs)
+        if (Prompt.Dogs.Count == 0)
         {
-            Console.WriteLine($"{num} - {dog.Name}");
-            num++;
+            Console.WriteLine("We don't have any dogs at the moment!");
+        }
+        else
+        {
+            foreach (var dog in Prompt.Dogs)
+            {
+                Console.WriteLine($"{num} - {dog.Name}");
+                num++;
+            }
         }
 
-        Console.WriteLine("Enter name of dog for more information, or (b) to go back:");
-        var userInput = Console.ReadLine();
+        Console.WriteLine("(s)elect dog, (b)ack");
+        var userInput = Console.ReadKey();
 
-        switch (userInput)
+        switch (userInput.Key)
         {
-            case "b":
+            case ConsoleKey.B:
                 Prompt.ShowMainMenu();
                 break;
-            default:
+            case ConsoleKey.S:
+                Console.WriteLine("\nEnter name of dog for more information:");
+                var doggie = Console.ReadLine();
                 try
                 {
-                    ShowDog(userInput);
+                    ShowDog(doggie);
                 }
                 catch (NullReferenceException e)
                 {
@@ -58,9 +59,14 @@ public class Dog
                     ShowDogs();
                 }
                 break;
+            default:
+                Console.Clear();
+                Console.WriteLine("Invalid choice.");
+                Thread.Sleep(1500);
+                ShowDogs();
+                break;
         }
     }
-    
     static void ShowDog(string dogName)
     {
         var foundDog = Prompt.Dogs.Find(x => x.Name.ToLower() == dogName.ToLower());
@@ -81,22 +87,24 @@ public class Dog
 
         Console.WriteLine("======================");
 
-        Console.WriteLine("Enter (a) to add owner (b) to go back:");
-        var userChoice = Console.ReadLine();
-        switch (userChoice)
+        Console.WriteLine("Enter (a)dd owner, (u)pdate information, (d)elete, (b)ack:");
+        var userChoice = Console.ReadKey();
+        switch (userChoice.Key)
         {
-            case "a":
+            case ConsoleKey.A:
                 AddOwnerToDog(foundDog);
                 break;
-            case "b":
+            case ConsoleKey.B:
                 ShowDogs();
                 break;
-            case "u":
+            case ConsoleKey.U:
                 UpdateDog(foundDog);
                 break;
+            case ConsoleKey.D:
+                DeleteDog(foundDog);
+                break;
             default:
-                Console.WriteLine("Invalid choice.");
-                Thread.Sleep(1000);
+                Prompt.ShowInvalidMessage();
                 ShowDog(dogName);
                 break;
         }
@@ -116,6 +124,7 @@ public class Dog
         var userChoice = Console.ReadLine();
         var adoptingPerson = Prompt.Persons.Find(x => x.Name == userChoice);
         dog.AddOwner(adoptingPerson);
+        adoptingPerson.AddDog(dog);
         var newOwner = dog.Owner.Name;
         Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
         Thread.Sleep(1000);
@@ -124,8 +133,9 @@ public class Dog
 
     static void UpdateDog(Dog dog)
     {
-        Console.WriteLine("What would you like to update?");
-        Console.WriteLine("(N)ame, (A)ge, (B)reed");
+        Console.Clear();
+        Console.WriteLine($"What information would you like to update for {dog.Name}");
+        Console.WriteLine($"(n)ame, (a)ge, (b)reed");
         var userChoice = Console.ReadKey();
     
         switch (userChoice.Key)
@@ -140,7 +150,7 @@ public class Dog
                 UpdatePrompt("breed", dog);
                 break;
             default:
-                ShowInvalidMessage();
+                Prompt.ShowInvalidMessage();
                 UpdateDog(dog);
                 break;
         }
@@ -149,7 +159,7 @@ public class Dog
     static void UpdatePrompt(string field, Dog dog)
     {
         Console.Clear();
-        Console.WriteLine($"Enter updated {field}:\n");
+        Console.WriteLine($"Enter updated {field}:");
         var updatedField = Console.ReadLine();
         switch (field)
         {
@@ -164,7 +174,10 @@ public class Dog
                 dog.Breed = updatedField;
                 break;
         }
-        Prompt.ShowMainMenu();
+        Console.Clear();
+        Console.WriteLine($"Success! We've update {dog.Name}'s information");
+        Thread.Sleep(1500);
+        ShowDog(dog.Name);
     }
     
     public static void AddDog()
@@ -179,10 +192,10 @@ public class Dog
         var newDog = CreateDog();
         Prompt.Dogs.Add(newDog);
         Thread.Sleep(1500);
-        AddAnotherDog();
+        PromptToAddAnotherDog();
     }
 
-    private static void AddAnotherDog()
+    private static void PromptToAddAnotherDog()
     {
         Console.WriteLine("Add another dog? Choose: yes/no");
         var userChoice = Console.ReadLine();
@@ -195,8 +208,8 @@ public class Dog
                 Prompt.ShowMainMenu();
                 break;
             default:
-                Console.WriteLine("Invalid choice.");
-                AddAnotherDog();
+                Prompt.ShowInvalidMessage();
+                PromptToAddAnotherDog();
                 break;
         }
     } 
@@ -229,14 +242,35 @@ public class Dog
                           $"\nBreed: {newDogBreed}" +
                           $"\n========================================================="
         );
-
         return newDog;
     }
 
-    static void ShowInvalidMessage()
+    static void DeleteDog(Dog dog)
     {
         Console.Clear();
-        Console.WriteLine("Invalided choice.");
+        Console.WriteLine($"Are you sure you want to delete {dog.Name}" +
+                          $"\n(y)es/(n)o");
+        var userInput = Console.ReadKey();
+        switch (userInput.Key)
+        {
+            case ConsoleKey.Y:
+                Console.Clear();
+                Prompt.Dogs.Remove(dog);
+                var owner = dog.Owner;
+                try
+                {
+                    owner.Dogs.Remove(dog);
+                }
+                catch (NullReferenceException e)
+                {
+                    
+                }
+                Console.WriteLine($"Success! We have deleted {dog.Name} from our database.");
+                Thread.Sleep(1000);
+                break;
+        }
         Thread.Sleep(1000);
+        ShowDogs();
     }
+    
 }

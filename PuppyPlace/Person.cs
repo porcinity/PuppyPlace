@@ -96,17 +96,132 @@ public class Person
             num++;
         }
         
-        Console.WriteLine("Press (m) to return to main menu.");
-        var userPress = Console.ReadKey(true);
+        Console.WriteLine("(s)elect person, (b)ack");
+        var userInput = Console.ReadKey();
 
-        switch (userPress.Key)
+        switch (userInput.Key)
         {
-            case ConsoleKey.M:
+            case ConsoleKey.B:
                 Prompt.ShowMainMenu();
                 break;
+            case ConsoleKey.S:
+                Console.WriteLine("\nEnter the name of the person you want to select:");
+                var person = Console.ReadLine();
+                try
+                {
+                    ShowPerson(person);
+                }
+                catch (NullReferenceException e)
+                {
+                    Console.WriteLine("Person not found!");
+                    Thread.Sleep(1500);
+                    ShowPeople();
+                }
+                break;
             default:
+                Prompt.ShowInvalidMessage();
                 ShowPeople();
                 break;
         }
+    }
+
+    static void ShowPerson(string name)
+    {
+        var foundPerson = Prompt.Persons.Find(x => x.Name.ToLower() == name.ToLower());
+        Console.Clear();
+        Console.WriteLine("====================" +
+                          $"\nName: {foundPerson.Name}");
+        if (foundPerson.Dogs.Count == 0)
+        {
+            Console.WriteLine($"Dogs: Ain't got no mf dogs rn");
+        }
+        else
+        {
+            Console.WriteLine("Dogs:");
+            foreach (var dog in foundPerson.Dogs)
+            {
+                Console.WriteLine($" - {dog.Name}");
+            }
+        }
+        Console.WriteLine("===================");
+
+        Console.WriteLine("(a)dd dog, (u)pdate information, (b)ack, (m)ain menu, (q)uit");
+        var userInput = Console.ReadKey();
+        switch (userInput.Key)
+        {
+            case ConsoleKey.A:
+                //
+                break;
+            case ConsoleKey.D:
+                DeletePerson(foundPerson);
+                break;
+            case ConsoleKey.U:
+                UpdatePerson(foundPerson);
+                break;
+            case ConsoleKey.B:
+                ShowPeople();
+                break;
+            case ConsoleKey.Q:
+                Prompt.Quit();
+                break;
+            default:
+                Prompt.ShowInvalidMessage();
+                ShowPerson(name);
+                break;
+        }
+    }
+
+    static void UpdatePerson(Person person)
+    {
+        Console.Clear();
+        Console.WriteLine($"What information would you like to update for {person.Name}");
+        Console.WriteLine("(n)ame");
+        var userChoice = Console.ReadKey();
+
+        switch (userChoice.Key)
+        {
+            case ConsoleKey.N:
+                Console.Clear();
+                Console.WriteLine($"Enter the updated information for {person.Name}:");
+                var updatedField = Console.ReadLine();
+                person.Name = updatedField;
+                Console.WriteLine($"Success! We've updated {person.Name}'s information.");
+                break;
+            default:
+                Prompt.ShowInvalidMessage();
+                UpdatePerson(person);
+                break;
+        }
+        Thread.Sleep(1500);
+        Prompt.ShowMainMenu();
+    }
+    
+    static void DeletePerson(Person person)
+    {
+        Console.Clear();
+        Console.WriteLine($"Are you sure you want to delete {person.Name}?" +
+                          $"\n(y)es/(n)o");
+        var userInput = Console.ReadKey();
+        switch (userInput.Key)
+        {
+            case ConsoleKey.Y:
+                Console.Clear();
+                Prompt.Persons.Remove(person);
+                foreach (var dog in person.Dogs)
+                {
+                    dog.Owner = null;
+                }
+                Console.WriteLine($"Success! We have deleted {person.Name} from our database.");
+                break;
+            case ConsoleKey.N:
+                ShowPerson(person.Name);
+                break;
+            default:
+                Prompt.ShowInvalidMessage();
+                DeletePerson(person);
+                break;
+        }
+        Thread.Sleep(1500);
+        ShowPeople();
     }
 }
