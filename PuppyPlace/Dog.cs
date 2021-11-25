@@ -2,17 +2,18 @@ namespace PuppyPlace;
 
 public class Dog
 {
+    private Guid Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
     public string Breed { get; set; }
-    public List<Person> Owner { get; set; }
+    public Person? Owner { get; set; }
 
     public Dog(string name, int age, string breed)
     {
+        Id = Guid.NewGuid();
         Name = name;
         Age = age;
         Breed = breed;
-        Owner = new List<Person>();
     }
         
     public string Bark()
@@ -22,17 +23,17 @@ public class Dog
 
     public void AddOwner(Person owner)
     {
-        Owner.Add(owner);
+        Owner = owner;
     }
 
-    public void ShowOwners()
-    {
-        Console.WriteLine($"{Name} belongs to these people:");
-        foreach (var owner in Owner)
-        {
-            Console.WriteLine($"{owner.Name}");
-        }
-    }
+    // public void ShowOwners()
+    // {
+    //     Console.WriteLine($"{Name} belongs to these people:");
+    //     foreach (var owner in Owner)
+    //     {
+    //         Console.WriteLine($"{owner.Name}");
+    //     }
+    // }
 
     public static void AddDog()
     {
