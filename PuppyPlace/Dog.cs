@@ -44,7 +44,7 @@ public class Dog
         switch (userInput)
         {
             case "b":
-                Prompt.MainMenu();
+                Prompt.ShowMainMenu();
                 break;
             default:
                 try
@@ -119,7 +119,7 @@ public class Dog
         var newOwner = dog.Owner.Name;
         Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
         Thread.Sleep(1000);
-        Prompt.MainMenu();
+        Prompt.ShowMainMenu();
     }
 
     static void UpdateDog(Dog dog)
@@ -137,7 +137,7 @@ public class Dog
                 dog.Name = updatedName;
                 Console.WriteLine($"Success! Name has been update to: {dog.Name}");
                 Console.ReadLine();
-                Prompt.MainMenu();
+                Prompt.ShowMainMenu();
                 break;
             case ConsoleKey.A:
                 Console.Clear();
@@ -147,7 +147,7 @@ public class Dog
                 dog.Age = ageToInt;
                 Console.WriteLine($"Success! Name has been update to: {dog.Name}");
                 Console.ReadLine();
-                Prompt.MainMenu();
+                Prompt.ShowMainMenu();
                 break;
             default:
                 Console.WriteLine("Invalided choice.");
@@ -155,5 +155,71 @@ public class Dog
                 UpdateDog(dog);
                 break;
         }
+    }
+    
+    public static void AddDog()
+    {
+        Console.Clear();
+        Console.WriteLine("Great! Let's add a new dog!" +
+                          "\n=========================");
+        
+        Thread.Sleep(2000);
+        Console.Clear();
+        
+        var newDog = CreateDog();
+        Prompt.Dogs.Add(newDog);
+        Thread.Sleep(1500);
+        AddAnotherDog();
+    }
+
+    private static void AddAnotherDog()
+    {
+        Console.WriteLine("Add another dog? Choose: yes/no");
+        var userChoice = Console.ReadLine();
+        switch (userChoice)
+        {
+            case "yes":
+                AddDog();
+                break;
+            case "no":
+                Prompt.ShowMainMenu();
+                break;
+            default:
+                Console.WriteLine("Invalid choice.");
+                AddAnotherDog();
+                break;
+        }
+    } 
+    
+    private static Dog CreateDog()
+    {
+        Console.WriteLine("Please insert the dog's name:");
+        var newDogName = Console.ReadLine();
+        
+        Console.Clear();
+        
+        Console.WriteLine($"Please insert {newDogName}'s age:");
+        var newDogAge = Console.ReadLine();
+        var intAge = Int32.Parse(newDogAge);
+        
+        Console.Clear();
+        
+        Console.WriteLine($"Please insert {newDogName}'s breed:");
+        var newDogBreed = Console.ReadLine();
+
+        
+        Console.Clear();
+        
+        var newDog = new Dog(newDogName, intAge, newDogBreed);
+
+        Console.WriteLine("Success! We added the following information to the database:" +
+                          "\n==========================================================" +
+                          $"\nName: {newDog.Name}" +
+                          $"\nAge: {newDogAge}" +
+                          $"\nBreed: {newDogBreed}" +
+                          $"\n========================================================="
+        );
+
+        return newDog;
     }
 }

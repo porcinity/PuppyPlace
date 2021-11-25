@@ -8,7 +8,7 @@
             Prompt.SeedDogs();
             Prompt.SeedPersons();
             
-            Prompt.MainMenu();
+            Prompt.ShowMainMenu();
         }
     }
 }

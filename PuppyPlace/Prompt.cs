@@ -7,7 +7,7 @@ public static class Prompt
     public static List<Dog> Dogs = new List<Dog>();
     public static List<Person> Persons = new List<Person>();
 
-    public static void MainMenu()
+    public static void ShowMainMenu()
     {
         ShowMainMenuText();
         var userChoice = Console.ReadKey();
@@ -17,7 +17,7 @@ public static class Prompt
                 AddPerson();
                 break;
             case ConsoleKey.D2:
-                AddDog();
+                Dog.AddDog();
                 break;
             case ConsoleKey.D3:
                 ShowPeople();
@@ -61,79 +61,13 @@ public static class Prompt
                 AddPerson();
                 break;
             case "no":
-                MainMenu();
+                ShowMainMenu();
                 break;
             default:
                 Console.Clear();
                 AddAnotherPerson();
                 break;
         }
-    }
-
-    private static void AddDog()
-    {
-        Console.Clear();
-        Console.WriteLine("Great! Let's add a new dog!" +
-                          "\n=========================");
-        
-        Thread.Sleep(2000);
-        Console.Clear();
-        
-        var newDog = CreateDog();
-        Dogs.Add(newDog);
-        Thread.Sleep(1500);
-        AddAnotherDog();
-    }
-
-    private static void AddAnotherDog()
-    {
-        Console.WriteLine("Add another dog? Choose: yes/no");
-        var userChoice = Console.ReadLine();
-        switch (userChoice)
-        {
-            case "yes":
-                AddDog();
-                break;
-            case "no":
-                MainMenu();
-                break;
-            default:
-                Console.WriteLine("Invalid choice.");
-                AddAnotherDog();
-                break;
-        }
-    } 
-    
-    private static Dog CreateDog()
-    {
-        Console.WriteLine("Please insert the dog's name:");
-        var newDogName = Console.ReadLine();
-        
-        Console.Clear();
-        
-        Console.WriteLine($"Please insert {newDogName}'s age:");
-        var newDogAge = Console.ReadLine();
-        var intAge = Int32.Parse(newDogAge);
-        
-        Console.Clear();
-        
-        Console.WriteLine($"Please insert {newDogName}'s breed:");
-        var newDogBreed = Console.ReadLine();
-
-        
-        Console.Clear();
-        
-        var newDog = new Dog(newDogName, intAge, newDogBreed);
-
-        Console.WriteLine("Success! We added the following information to the database:" +
-                          "\n==========================================================" +
-                          $"\nName: {newDog.Name}" +
-                          $"\nAge: {newDogAge}" +
-                          $"\nBreed: {newDogBreed}" +
-                          $"\n========================================================="
-        );
-
-        return newDog;
     }
 
     private static Person CreatePerson()
@@ -171,7 +105,7 @@ public static class Prompt
         switch (userPress.Key)
         {
             case ConsoleKey.M:
-                MainMenu();
+                ShowMainMenu();
                 break;
             default:
                 ShowPeople();
@@ -208,7 +142,7 @@ public static class Prompt
         Console.WriteLine("Invalid choice.");
         Thread.Sleep(1000);
         Console.Clear();
-        MainMenu();
+        ShowMainMenu();
     }
 
     static void ShowMainMenuText()
