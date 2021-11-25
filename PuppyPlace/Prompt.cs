@@ -166,18 +166,16 @@ public static class Prompt
         }
 
         Console.WriteLine("Press (m) to return to main menu.");
-        var userPress = Console.ReadKey(true);
+        var userChoice = Console.ReadKey(true);
 
-        if (userPress.Key != ConsoleKey.M)
+        switch (userChoice.Key)
         {
-            Console.Clear();
-            ShowDogs();
-        }
-
-        if (userPress.Key == ConsoleKey.M)
-        {
-            Console.Clear();
-            MainMenu();
+            case ConsoleKey.M:
+                MainMenu();
+                break;
+            default:
+                ShowDogs();
+                break;
         }
     }
 
@@ -196,16 +194,14 @@ public static class Prompt
         Console.WriteLine("Press (m) to return to main menu.");
         var userPress = Console.ReadKey(true);
 
-        if (userPress.Key != ConsoleKey.M)
+        switch (userPress.Key)
         {
-            Console.Clear();
-            ShowPeople();
-        }
-
-        if (userPress.Key == ConsoleKey.M)
-        {
-            Console.Clear();
-            MainMenu();
+            case ConsoleKey.M:
+                MainMenu();
+                break;
+            default:
+                ShowPeople();
+                break;
         }
     }
 
