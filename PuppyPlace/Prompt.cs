@@ -176,7 +176,7 @@ public static class Prompt
             default:
                 try
                 {
-                    showDog(userInput);
+                    ShowDog(userInput);
                 }
                 catch (NullReferenceException e)
                 {
@@ -184,12 +184,11 @@ public static class Prompt
                     Thread.Sleep(1000);
                     ShowDogs();
                 }
-
                 break;
         }
     }
 
-    static void showDog(string dogName)
+    static void ShowDog(string dogName)
     {
         var foundDog = Dogs.Find(x => x.Name.ToLower() == dogName.ToLower());
         Console.Clear();
@@ -200,9 +199,9 @@ public static class Prompt
 
         try
         {
-            Console.WriteLine($"Owner: {foundDog.Owner.First().Name}");
+            Console.WriteLine($"Owner: {foundDog.Owner.Name}");
         }
-        catch (InvalidOperationException e)
+        catch (NullReferenceException e)
         {
             Console.WriteLine($"Owner: {foundDog.Name} does not have an owner yet!");
         }
@@ -219,10 +218,13 @@ public static class Prompt
             case "b":
                 ShowDogs();
                 break;
+            case "u":
+                UpdateDog(foundDog);
+                break;
             default:
                 Console.WriteLine("Invalid choice.");
                 Thread.Sleep(1000);
-                showDog(dogName);
+                ShowDog(dogName);
                 break;
         }
     }
@@ -267,10 +269,45 @@ public static class Prompt
         var userChoice = Console.ReadLine();
         var adoptingPerson = Persons.Find(x => x.Name == userChoice);
         dog.AddOwner(adoptingPerson);
-        var newOwner = dog.Owner.First().Name;
+        var newOwner = dog.Owner.Name;
         Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
         Thread.Sleep(1000);
         MainMenu();
+    }
+
+    static void UpdateDog(Dog dog)
+    {
+        Console.WriteLine("What would you like to update?");
+        Console.WriteLine("(N)ame, (A)ge, (B)reed");
+        var userChoice = Console.ReadKey();
+    
+        switch (userChoice.Key)
+        {
+            case ConsoleKey.N:
+                Console.Clear();
+                Console.WriteLine("Enter updated name:");
+                var updatedName = Console.ReadLine();
+                dog.Name = updatedName;
+                Console.WriteLine($"Success! Name has been update to: {dog.Name}");
+                Console.ReadLine();
+                MainMenu();
+                break;
+            case ConsoleKey.A:
+                Console.Clear();
+                Console.WriteLine("Enter updated age:");
+                var updatedAge = Console.ReadLine();
+                var ageToInt = Int32.Parse(updatedAge);
+                dog.Age = ageToInt;
+                Console.WriteLine($"Success! Name has been update to: {dog.Name}");
+                Console.ReadLine();
+                MainMenu();
+                break;
+            default:
+                Console.WriteLine("Invalided choice.");
+                Thread.Sleep(1000);
+                UpdateDog(dog);
+                break;
+        }
     }
 
     public static void SeedDogs()
