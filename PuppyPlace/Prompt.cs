@@ -9,19 +9,8 @@ public static class Prompt
 
     public static void MainMenu()
     {
-        Console.WriteLine(FiggleFonts.Doom.Render("Puppy  Place"));
-        Console.WriteLine("\nM  A  I  N      M  E  N  U" +
-                          "\n==========================" +
-                          "\n");
-        Console.WriteLine("What would you like to do?" +
-                          "\n1 - Add new Person" +
-                          "\n2 - Add new Dog" +
-                          "\n3 - Show list of People" +
-                          "\n4 - Show list of Dogs" +
-                          "\n\n(Press q to quit)");
-
+        ShowMainMenuText();
         var userChoice = Console.ReadKey();
-
         switch (userChoice.Key)
         {
             case ConsoleKey.D1:
@@ -255,5 +244,19 @@ public static class Prompt
         Thread.Sleep(1000);
         Console.Clear();
         MainMenu();
+    }
+
+    static void ShowMainMenuText()
+    {
+        Console.WriteLine(FiggleFonts.Doom.Render("Puppy  Place"));
+        Console.WriteLine("\nM  A  I  N      M  E  N  U" +
+                          "\n==========================" +
+                          "\n");
+        Console.WriteLine("What would you like to do?" +
+                          "\n1 - Add new Person" +
+                          "\n2 - Add new Dog" +
+                          "\n3 - Show list of People" +
+                          "\n4 - Show list of Dogs" +
+                          "\n\n(Press q to quit)");
     }
 }
