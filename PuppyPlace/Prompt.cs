@@ -22,46 +22,26 @@ public static class Prompt
 
         var userChoice = Console.ReadKey();
 
-        if (userChoice.Key != ConsoleKey.D1 
-            && userChoice.Key != ConsoleKey.D2 
-            && userChoice.Key != ConsoleKey.D3 
-            && userChoice.Key != ConsoleKey.D4
-            && userChoice.Key != ConsoleKey.Q)
+        switch (userChoice.Key)
         {
-            Console.Clear();
-            Console.WriteLine("Invalid choice.");
-            
-            Thread.Sleep(1000);
-            
-            Console.Clear();
-            MainMenu();
-        }
-
-        if (userChoice.Key == ConsoleKey.D1)
-        {
-            AddPerson();
-        }
-
-        if (userChoice.Key == ConsoleKey.D2)
-        {
-            AddDog();
-        }
-        
-        if (userChoice.Key == ConsoleKey.D3)
-        {
-            ShowPeople();
-        }
-        
-        if (userChoice.Key == ConsoleKey.D4)
-        {
-            ShowDogs();
-        }
-
-        if (userChoice.Key == ConsoleKey.Q)
-        {
-            Console.Clear();
-            Console.WriteLine("Goodbye!");
-            Environment.Exit(0);
+            case ConsoleKey.D1:
+                AddPerson();
+                break;
+            case ConsoleKey.D2:
+                AddDog();
+                break;
+            case ConsoleKey.D3:
+                ShowPeople();
+                break;
+            case ConsoleKey.D4:
+                ShowDogs();
+                break;
+            case ConsoleKey.Q:
+                Quit();
+                break;
+            default:
+                PromptAgain();
+                break;
         }
     }
 
@@ -259,5 +239,21 @@ public static class Prompt
         Persons.Add(new Person("Andrea"));
         Persons.Add(new Person("Aaron"));
         Persons.Add(new Person("Cody"));
+    }
+
+    static void Quit()
+    {
+        Console.Clear();
+        Console.WriteLine("Goodbye!");
+        Environment.Exit(0);
+    }
+    
+    static void PromptAgain()
+    {
+        Console.Clear();
+        Console.WriteLine("Invalid choice.");
+        Thread.Sleep(1000);
+        Console.Clear();
+        MainMenu();
     }
 }
