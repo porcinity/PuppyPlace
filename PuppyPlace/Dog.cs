@@ -131,30 +131,40 @@ public class Dog
         switch (userChoice.Key)
         {
             case ConsoleKey.N:
-                Console.Clear();
-                Console.WriteLine("Enter updated name:");
-                var updatedName = Console.ReadLine();
-                dog.Name = updatedName;
-                Console.WriteLine($"Success! Name has been update to: {dog.Name}");
-                Console.ReadLine();
-                Prompt.ShowMainMenu();
+                UpdatePrompt("name", dog);
                 break;
             case ConsoleKey.A:
-                Console.Clear();
-                Console.WriteLine("Enter updated age:");
-                var updatedAge = Console.ReadLine();
-                var ageToInt = Int32.Parse(updatedAge);
-                dog.Age = ageToInt;
-                Console.WriteLine($"Success! Name has been update to: {dog.Name}");
-                Console.ReadLine();
-                Prompt.ShowMainMenu();
+                UpdatePrompt("age", dog);
+                break;
+            case ConsoleKey.B:
+                UpdatePrompt("breed", dog);
                 break;
             default:
-                Console.WriteLine("Invalided choice.");
-                Thread.Sleep(1000);
+                ShowInvalidMessage();
                 UpdateDog(dog);
                 break;
         }
+    }
+
+    static void UpdatePrompt(string field, Dog dog)
+    {
+        Console.Clear();
+        Console.WriteLine($"Enter updated {field}:\n");
+        var updatedField = Console.ReadLine();
+        switch (field)
+        {
+            case "name":
+                dog.Name = updatedField;
+                break;
+            case "age":
+                var ageToInt = Int32.Parse(updatedField);
+                dog.Age = ageToInt;
+                break;
+            case "breed":
+                dog.Breed = updatedField;
+                break;
+        }
+        Prompt.ShowMainMenu();
     }
     
     public static void AddDog()
@@ -221,5 +231,12 @@ public class Dog
         );
 
         return newDog;
+    }
+
+    static void ShowInvalidMessage()
+    {
+        Console.Clear();
+        Console.WriteLine("Invalided choice.");
+        Thread.Sleep(1000);
     }
 }
