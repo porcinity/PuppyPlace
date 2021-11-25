@@ -89,23 +89,18 @@ public static class Prompt
     {
         Console.WriteLine("Add another dog? Choose: yes/no");
         var userChoice = Console.ReadLine();
-
-        if (userChoice != "yes" && userChoice != "no")
+        switch (userChoice)
         {
-            Console.WriteLine("Invalid choice.");
-            AddAnotherDog();
-        }
-
-        if (userChoice == "yes")
-        {
-            AddDog();
-            AddAnotherDog();
-        }
-
-        if (userChoice == "no")
-        {
-            Console.Clear();
-            MainMenu();
+            case "yes":
+                AddDog();
+                break;
+            case "no":
+                MainMenu();
+                break;
+            default:
+                Console.WriteLine("Invalid choice.");
+                AddAnotherDog();
+                break;
         }
     } 
     
