@@ -39,7 +39,7 @@ public static class Prompt
         Dogs.Add(new Dog("Kylie", 15, "Schnauzer"));
         Dogs.Add(new Dog("Remy", 8, "Schnauzer"));
         Dogs.Add(new Dog("Speckles", 12, "Red Heeler"));
-        Dogs.Add(new Dog("Bucky", 13, "Forgot"));
+        Dogs.Add(new Dog("Bucky", 15, "Fox Terrier"));
     }
 
     public static void SeedPersons()

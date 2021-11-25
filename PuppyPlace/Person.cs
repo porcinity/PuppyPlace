@@ -161,6 +161,9 @@ public class Person
             case ConsoleKey.B:
                 ShowPeople();
                 break;
+            case ConsoleKey.M:
+                Prompt.ShowMainMenu();
+                break;
             case ConsoleKey.Q:
                 Prompt.Quit();
                 break;
@@ -170,7 +173,6 @@ public class Person
                 break;
         }
     }
-
     static void UpdatePerson(Person person)
     {
         Console.Clear();

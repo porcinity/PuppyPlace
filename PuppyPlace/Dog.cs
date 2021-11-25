@@ -87,7 +87,7 @@ public class Dog
 
         Console.WriteLine("======================");
 
-        Console.WriteLine("Enter (a)dd owner, (u)pdate information, (d)elete, (b)ack:");
+        Console.WriteLine("(a)dd owner, (u)pdate information, (d)elete, (b)ack:");
         var userChoice = Console.ReadKey();
         switch (userChoice.Key)
         {
@@ -122,7 +122,7 @@ public class Dog
         }
         Console.WriteLine("Enter name of person:");
         var userChoice = Console.ReadLine();
-        var adoptingPerson = Prompt.Persons.Find(x => x.Name == userChoice);
+        var adoptingPerson = Prompt.Persons.Find(x => x.Name.ToLower() == userChoice.ToLower());
         dog.AddOwner(adoptingPerson);
         adoptingPerson.AddDog(dog);
         var newOwner = dog.Owner.Name;
@@ -167,8 +167,16 @@ public class Dog
                 dog.Name = updatedField;
                 break;
             case "age":
-                var ageToInt = Int32.Parse(updatedField);
-                dog.Age = ageToInt;
+                try
+                {
+                    var ageToInt = Int32.Parse(updatedField);
+                    dog.Age = ageToInt;
+                }
+                catch (Exception e)
+                {
+                    Prompt.ShowInvalidMessage();
+                    UpdatePrompt(field, dog);
+                } 
                 break;
             case "breed":
                 dog.Breed = updatedField;
