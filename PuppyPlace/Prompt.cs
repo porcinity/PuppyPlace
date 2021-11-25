@@ -165,16 +165,64 @@ public static class Prompt
             num++;
         }
 
-        Console.WriteLine("Press (m) to return to main menu.");
-        var userChoice = Console.ReadKey(true);
-
-        switch (userChoice.Key)
+        Console.WriteLine("Enter name of dog for more information:");
+        var userInput = Console.ReadLine();
+        
+        try
         {
-            case ConsoleKey.M:
-                MainMenu();
+            showDog(userInput);
+        }
+        catch (NullReferenceException e)
+        {
+            Console.WriteLine("Dog not found!");
+            Thread.Sleep(1000);
+            ShowDogs();
+        }
+
+        // Console.WriteLine("Press (m) to return to main menu.");
+        // var userChoice = Console.ReadKey(true);
+        //
+        // switch (userChoice.Key)
+        // {
+        //     case ConsoleKey.M:
+        //         MainMenu();
+        //         break;
+        //     case ConsoleKey.D1:
+        //         var id = (int) ConsoleKey.D1;
+        //         showDog(id);
+        //         break;
+        //     default:
+        //         ShowDogs();
+        //         break;
+        // }
+    }
+
+    static void showDog(string dogName)
+    {
+        var foundDog = Dogs.Find(x => x.Name.ToLower() == dogName.ToLower());
+        Console.Clear();
+        Console.WriteLine("======================\n" +
+                          $"Name: {foundDog.Name}\n" +
+                          $"Age: {foundDog.Age}\n" +
+                          $"Breed: {foundDog.Breed}");
+        if (!foundDog.Owner.Any())
+        {
+            Console.WriteLine($"Owner: {foundDog.Name} does not have an owner yet!");
+        }
+
+        Console.WriteLine("======================");
+
+        Console.WriteLine("Enter (b) to go back:");
+        var userChoice = Console.ReadLine();
+        switch (userChoice)
+        {
+            case "b":
+                ShowDogs();
                 break;
             default:
-                ShowDogs();
+                Console.WriteLine("Invalid choice.");
+                Thread.Sleep(1000);
+                showDog(dogName);
                 break;
         }
     }
