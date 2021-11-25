@@ -2,7 +2,7 @@ using Figgle;
 
 namespace PuppyPlace;
 
-public class Prompt
+public static class Prompt
 {
     public static List<Dog> Dogs = new List<Dog>();
     public static List<Person> Persons = new List<Person>();
@@ -85,23 +85,19 @@ public class Prompt
     {
         Console.WriteLine("Add another person? Choose: yes/no");
         var userChoice = Console.ReadLine();
-        
-        if (userChoice != "yes" && userChoice != "no")
-        {
-            Console.WriteLine("Invalid choice.");
-            AddAnotherPerson();
-        }
 
-        if (userChoice == "yes")
+        switch (userChoice)
         {
-            AddPerson();
-            AddAnotherPerson();
-        }
-
-        if (userChoice == "no")
-        {
-            Console.Clear();
-            MainMenu();
+            case "yes":
+                AddPerson();
+                break;
+            case "no":
+                MainMenu();
+                break;
+            default:
+                Console.Clear();
+                AddAnotherPerson();
+                break;
         }
     }
 
