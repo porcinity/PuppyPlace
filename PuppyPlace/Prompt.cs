@@ -165,36 +165,28 @@ public static class Prompt
             num++;
         }
 
-        Console.WriteLine("Enter name of dog for more information:");
+        Console.WriteLine("Enter name of dog for more information, or (b) to go back:");
         var userInput = Console.ReadLine();
-        
-        try
-        {
-            showDog(userInput);
-        }
-        catch (NullReferenceException e)
-        {
-            Console.WriteLine("Dog not found!");
-            Thread.Sleep(1000);
-            ShowDogs();
-        }
 
-        // Console.WriteLine("Press (m) to return to main menu.");
-        // var userChoice = Console.ReadKey(true);
-        //
-        // switch (userChoice.Key)
-        // {
-        //     case ConsoleKey.M:
-        //         MainMenu();
-        //         break;
-        //     case ConsoleKey.D1:
-        //         var id = (int) ConsoleKey.D1;
-        //         showDog(id);
-        //         break;
-        //     default:
-        //         ShowDogs();
-        //         break;
-        // }
+        switch (userInput)
+        {
+            case "b":
+                MainMenu();
+                break;
+            default:
+                try
+                {
+                    showDog(userInput);
+                }
+                catch (NullReferenceException e)
+                {
+                    Console.WriteLine("Dog not found!");
+                    Thread.Sleep(1000);
+                    ShowDogs();
+                }
+
+                break;
+        }
     }
 
     static void showDog(string dogName)
@@ -205,17 +197,25 @@ public static class Prompt
                           $"Name: {foundDog.Name}\n" +
                           $"Age: {foundDog.Age}\n" +
                           $"Breed: {foundDog.Breed}");
-        if (!foundDog.Owner.Any())
+
+        try
+        {
+            Console.WriteLine($"Owner: {foundDog.Owner.First().Name}");
+        }
+        catch (InvalidOperationException e)
         {
             Console.WriteLine($"Owner: {foundDog.Name} does not have an owner yet!");
         }
 
         Console.WriteLine("======================");
 
-        Console.WriteLine("Enter (b) to go back:");
+        Console.WriteLine("Enter (a) to add owner (b) to go back:");
         var userChoice = Console.ReadLine();
         switch (userChoice)
         {
+            case "a":
+                AddOwnerToDog(foundDog);
+                break;
             case "b":
                 ShowDogs();
                 break;
@@ -251,6 +251,26 @@ public static class Prompt
                 ShowPeople();
                 break;
         }
+    }
+
+    static void AddOwnerToDog(Dog dog)
+    {
+        Console.Clear();
+        Console.WriteLine($"Great! Who is adopting {dog.Name}?");
+        var num = 1;
+        foreach (var person in Persons)
+        {
+            Console.WriteLine($"{num} - {person.Name}");
+            num++;
+        }
+        Console.WriteLine("Enter name of person:");
+        var userChoice = Console.ReadLine();
+        var adoptingPerson = Persons.Find(x => x.Name == userChoice);
+        dog.AddOwner(adoptingPerson);
+        var newOwner = dog.Owner.First().Name;
+        Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
+        Thread.Sleep(1000);
+        MainMenu();
     }
 
     public static void SeedDogs()
