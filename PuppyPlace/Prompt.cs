@@ -14,13 +14,13 @@ public static class Prompt
         switch (userChoice.Key)
         {
             case ConsoleKey.D1:
-                AddPerson();
+                Person.AddPerson();
                 break;
             case ConsoleKey.D2:
                 Dog.AddDog();
                 break;
             case ConsoleKey.D3:
-                ShowPeople();
+                Person.ShowPeople();
                 break;
             case ConsoleKey.D4:
                 Dog.ShowDogs();
@@ -33,86 +33,6 @@ public static class Prompt
                 break;
         }
     }
-
-    private static void AddPerson()
-    {
-        Console.Clear();
-        Console.WriteLine("Great! Let's add a new person!" +
-                          "\n==============================");
-        Thread.Sleep(2000);
-        Console.Clear();
-
-        var newPerson = CreatePerson();
-        
-        Persons.Add(newPerson);
-        Thread.Sleep(1500);
-        
-        AddAnotherPerson();
-    }
-
-    private static void AddAnotherPerson()
-    {
-        Console.WriteLine("Add another person? Choose: yes/no");
-        var userChoice = Console.ReadLine();
-
-        switch (userChoice)
-        {
-            case "yes":
-                AddPerson();
-                break;
-            case "no":
-                ShowMainMenu();
-                break;
-            default:
-                Console.Clear();
-                AddAnotherPerson();
-                break;
-        }
-    }
-
-    private static Person CreatePerson()
-    {
-        Console.WriteLine("Please insert the person's name:");
-        var newPersonName = Console.ReadLine();
-        
-        Console.Clear();
-
-        var newPerson = new Person(newPersonName);
-
-        Console.WriteLine("Success! We add the following information to the database:" +
-                          "\n========================================================" +
-                          $"\nName: {newPerson.Name}" +
-                          $"\n=======================================================");
-
-        return newPerson;
-    }
-
-    private static void ShowPeople()
-    {
-        Console.Clear();
-        Console.WriteLine("These are the people in our database:");
-
-        var num = 1;
-        foreach (var person in Persons)
-        {
-            Console.WriteLine($"{num} - {person.Name}");
-            num++;
-        }
-        
-        Console.WriteLine("Press (m) to return to main menu.");
-        var userPress = Console.ReadKey(true);
-
-        switch (userPress.Key)
-        {
-            case ConsoleKey.M:
-                ShowMainMenu();
-                break;
-            default:
-                ShowPeople();
-                break;
-        }
-    }
-
     public static void SeedDogs()
     {
         Dogs.Add(new Dog("Apollo", 12, "Dachshund"));
