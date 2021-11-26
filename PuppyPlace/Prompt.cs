@@ -14,13 +14,13 @@ public static class Prompt
         switch (userChoice.Key)
         {
             case ConsoleKey.D1:
-                Person.AddPerson();
+                PersonTools.AddPerson();
                 break;
             case ConsoleKey.D2:
                 Dog.AddDog();
                 break;
             case ConsoleKey.D3:
-                Person.ShowPeople();
+                PersonTools.ShowPeople();
                 break;
             case ConsoleKey.D4:
                 Dog.ShowDogs();

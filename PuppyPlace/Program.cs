@@ -7,7 +7,6 @@
             Console.Clear();
             Prompt.SeedDogs();
             Prompt.SeedPersons();
-            
             Prompt.ShowMainMenu();
         }
     }
