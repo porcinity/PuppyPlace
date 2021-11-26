@@ -178,12 +178,8 @@ public static class DogTools
         Console.WriteLine("Great! Let's add a new dog!" +
                           "\n=========================");
         
-        Thread.Sleep(2000);
-        Console.Clear();
-        
-        var newDog = CreateDog();
-        Prompt.Dogs.Add(newDog);
-        Thread.Sleep(1500);
+        Thread.Sleep(1000);
+        CreateDog();
         ShowPromptToAddAnotherDog();
     }
 
@@ -206,8 +202,9 @@ public static class DogTools
         }
     } 
     
-    private static Dog CreateDog()
+    private static void CreateDog()
     {
+        Console.Clear();
         Console.WriteLine("Please insert the dog's name:");
         var newDogName = Console.ReadLine();
         
@@ -226,6 +223,7 @@ public static class DogTools
         Console.Clear();
         
         var newDog = new Dog(newDogName, intAge, newDogBreed);
+        Prompt.Dogs.Add(newDog);
 
         Console.WriteLine("Success! We added the following information to the database:" +
                           "\n==========================================================" +
@@ -234,7 +232,7 @@ public static class DogTools
                           $"\nBreed: {newDogBreed}" +
                           $"\n========================================================="
         );
-        return newDog;
+        Thread.Sleep(1500);
     }
 
     static void DeleteDog(Dog dog)
