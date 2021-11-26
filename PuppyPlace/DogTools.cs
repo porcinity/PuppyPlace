@@ -12,6 +12,7 @@ public static class DogTools
     };
     public static void ShowDogs()
     {
+        Prompt.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("These are the dogs we have:");
         
@@ -182,6 +183,7 @@ public static class DogTools
     
     public static void AddDog()
     {
+        Prompt.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("Great! Let's add a new dog!" +
                           "\n=========================");

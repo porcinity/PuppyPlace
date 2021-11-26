@@ -6,32 +6,37 @@ public static class Prompt
 {
     public static void ShowMainMenu()
     {
-        Console.Clear();
-        ShowMainMenuText();
-        var userChoice = Console.ReadKey();
-        switch (userChoice.Key)
+        while (true)
         {
-            case ConsoleKey.D1:
-                PersonTools.AddPerson();
-                break;
-            case ConsoleKey.D2:
-                DogTools.AddDog();
-                break;
-            case ConsoleKey.D3:
-                PersonTools.ShowPeople();
-                break;
-            case ConsoleKey.D4:
-                DogTools.ShowDogs();
-                break;
-            case ConsoleKey.Q:
-                Quit();
-                break;
-            default:
-                ShowInvalidMessage();
-                ShowMainMenu();
-                break;
+            Console.Clear();
+            ShowMainMenuText();
+            var userChoice = Console.ReadKey();
+            switch (userChoice.Key)
+            {
+                case ConsoleKey.D1:
+                    PersonTools.AddPerson();
+                    break;
+                case ConsoleKey.D2:
+                    DogTools.AddDog();
+                    break;
+                case ConsoleKey.D3:
+                    PersonTools.ShowPeople();
+                    break;
+                case ConsoleKey.D4:
+                    DogTools.ShowDogs();
+                    break;
+                case ConsoleKey.Q:
+                    Quit();
+                    break;
+                default:
+                    ShowInvalidMessage();
+                    continue;
+            }
+
+            break;
         }
     }
+
     public static void Quit()
     {
         Console.Clear();
@@ -57,5 +62,18 @@ public static class Prompt
         Console.Clear();
         Console.WriteLine("Invalided choice.");
         Thread.Sleep(1000);
+    }
+
+    public static void ShowLoadingAnimation()
+    {
+        var dots = "";
+        
+        for (int i = 0; i < 4; i++)
+        {
+            Console.Clear();
+            dots = dots + ".";
+            Console.WriteLine("Loading" + dots);
+            Thread.Sleep(250);
+        }
     }
 }

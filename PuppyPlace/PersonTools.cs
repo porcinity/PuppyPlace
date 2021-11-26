@@ -10,6 +10,7 @@ public static class PersonTools
     };
     public static void AddPerson()
     {
+        Prompt.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("Great! Let's add a new person!" +
                           "\n==============================");
@@ -56,6 +57,7 @@ public static class PersonTools
     }
     public static void ShowPeople()
     {
+        Prompt.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("These are the people in our database:");
 
