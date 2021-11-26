@@ -4,11 +4,11 @@ public static class DogTools
 {
     public static List<Dog> Dogs = new List<Dog>()
     {
-        new Dog("Apollo", 12, "Dachshund"),
-        new Dog("Kylie", 15, "Schnauzer"),
-        new Dog("Remy", 8, "Schnauzer"),
-        new Dog("Speckles", 12, "Red Heeler"),
-        new Dog("Bucky", 15, "Fox Terrier")
+        new ("Apollo", 12, "Dachshund"),
+        new ("Kylie", 15, "Schnauzer"),
+        new ("Remy", 8, "Schnauzer"),
+        new ("Speckles", 12, "Red Heeler"),
+        new ("Bucky", 15, "Fox Terrier")
     };
     public static void ShowDogs()
     {
