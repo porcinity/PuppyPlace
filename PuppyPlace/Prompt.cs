@@ -4,11 +4,9 @@ namespace PuppyPlace;
 
 public static class Prompt
 {
-    public static List<Dog> Dogs = new List<Dog>();
-    public static List<Person> Persons = new List<Person>();
-
     public static void ShowMainMenu()
     {
+        Console.Clear();
         ShowMainMenuText();
         var userChoice = Console.ReadKey();
         switch (userChoice.Key)
@@ -29,42 +27,31 @@ public static class Prompt
                 Quit();
                 break;
             default:
-                PromptAgain();
+                ShowInvalidMessage();
+                ShowMainMenu();
                 break;
         }
     }
-    public static void SeedDogs()
+    public static List<Dog> Dogs = new List<Dog>()
     {
-        Dogs.Add(new Dog("Apollo", 12, "Dachshund"));
-        Dogs.Add(new Dog("Kylie", 15, "Schnauzer"));
-        Dogs.Add(new Dog("Remy", 8, "Schnauzer"));
-        Dogs.Add(new Dog("Speckles", 12, "Red Heeler"));
-        Dogs.Add(new Dog("Bucky", 15, "Fox Terrier"));
-    }
-
-    public static void SeedPersons()
+        new Dog("Apollo", 12, "Dachshund"),
+        new Dog("Kylie", 15, "Schnauzer"),
+        new Dog("Remy", 8, "Schnauzer"),
+        new Dog("Speckles", 12, "Red Heeler"),
+        new Dog("Bucky", 15, "Fox Terrier")
+    };
+    public static List<Person> Persons = new List<Person>
     {
-        Persons.Add(new Person("Andrea"));
-        Persons.Add(new Person("Aaron"));
-        Persons.Add(new Person("Cody"));
-    }
-
+        new Person("Andrea"),
+        new Person("Aaron"),
+        new Person("Cody")
+    };
     public static void Quit()
     {
         Console.Clear();
         Console.WriteLine("Goodbye!");
         Environment.Exit(0);
     }
-    
-    static void PromptAgain()
-    {
-        Console.Clear();
-        Console.WriteLine("Invalid choice.");
-        Thread.Sleep(1000);
-        Console.Clear();
-        ShowMainMenu();
-    }
-
     static void ShowMainMenuText()
     {
         Console.WriteLine(FiggleFonts.Doom.Render("Puppy  Place"));
