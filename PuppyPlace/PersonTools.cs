@@ -7,14 +7,8 @@ public static class PersonTools
         Console.Clear();
         Console.WriteLine("Great! Let's add a new person!" +
                           "\n==============================");
-        Thread.Sleep(2000);
-        Console.Clear();
-
-        var newPerson = CreatePerson();
-        
-        Prompt.Persons.Add(newPerson);
-        Thread.Sleep(1500);
-        
+        Thread.Sleep(1000);
+        CreatePerson();
         ShowPromptToAddAnotherPerson();
     }
 
@@ -37,24 +31,23 @@ public static class PersonTools
                 break;
         }
     }
-
-    private static Person CreatePerson()
+    private static void CreatePerson()
     {
+        Console.Clear();
         Console.WriteLine("Please insert the person's name:");
         var newPersonName = Console.ReadLine();
         
         Console.Clear();
 
         var newPerson = new Person(newPersonName);
+        Prompt.Persons.Add(newPerson);
 
         Console.WriteLine("Success! We add the following information to the database:" +
                           "\n========================================================" +
                           $"\nName: {newPerson.Name}" +
                           $"\n=======================================================");
-
-        return newPerson;
+        Thread.Sleep(1500);
     }
-
     public static void ShowPeople()
     {
         Console.Clear();
