@@ -7,8 +7,6 @@ public class Person
     public List<Dog> Dogs { get; set; }
     public Person(string name)
     {
-        var rnd = new Random();
-            
         Name = name;
         Id = Guid.NewGuid();
         Dogs = new List<Dog>();
@@ -18,17 +16,4 @@ public class Person
     {
         Dogs.Add(dog);
     }
-    
-    // public void ShowDogs()
-    // { 
-    //     Console.WriteLine($"{Name} has the following dogs:");
-    //         
-    //     foreach (var dog in Dogs)
-    //     {
-    //         Console.WriteLine($"{dog.Name}");
-    //     }
-    // }
-    
-    //
-    
 }
