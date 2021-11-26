@@ -115,13 +115,10 @@ public static class PersonTools
         }
         Console.WriteLine("===================");
 
-        Console.WriteLine("(a)dd dog, (u)pdate information, (b)ack, (m)ain menu, (q)uit");
+        Console.WriteLine("(u)pdate information, (b)ack, (m)ain menu, (q)uit");
         var userInput = Console.ReadKey();
         switch (userInput.Key)
         {
-            case ConsoleKey.A:
-                //
-                break;
             case ConsoleKey.D:
                 DeletePerson(foundPerson);
                 break;
