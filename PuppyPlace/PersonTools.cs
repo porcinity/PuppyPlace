@@ -4,9 +4,9 @@ public static class PersonTools
 {
     public static List<Person> Persons = new List<Person>
     {
-        new Person("Andrea"),
-        new Person("Aaron"),
-        new Person("Cody")
+        new ("Andrea"),
+        new ("Aaron"),
+        new ("Cody")
     };
     public static void AddPerson()
     {
