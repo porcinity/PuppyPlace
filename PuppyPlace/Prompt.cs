@@ -17,13 +17,13 @@ public static class Prompt
                 PersonTools.AddPerson();
                 break;
             case ConsoleKey.D2:
-                Dog.AddDog();
+                DogTools.AddDog();
                 break;
             case ConsoleKey.D3:
                 PersonTools.ShowPeople();
                 break;
             case ConsoleKey.D4:
-                Dog.ShowDogs();
+                DogTools.ShowDogs();
                 break;
             case ConsoleKey.Q:
                 Quit();
