@@ -15,10 +15,10 @@ public static class PersonTools
         Prompt.Persons.Add(newPerson);
         Thread.Sleep(1500);
         
-        AddAnotherPerson();
+        ShowPromptToAddAnotherPerson();
     }
 
-    private static void AddAnotherPerson()
+    private static void ShowPromptToAddAnotherPerson()
     {
         Console.WriteLine("Add another person? Choose: yes/no");
         var userChoice = Console.ReadLine();
@@ -33,7 +33,7 @@ public static class PersonTools
                 break;
             default:
                 Console.Clear();
-                AddAnotherPerson();
+                ShowPromptToAddAnotherPerson();
                 break;
         }
     }

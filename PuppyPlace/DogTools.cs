@@ -184,10 +184,10 @@ public static class DogTools
         var newDog = CreateDog();
         Prompt.Dogs.Add(newDog);
         Thread.Sleep(1500);
-        PromptToAddAnotherDog();
+        ShowPromptToAddAnotherDog();
     }
 
-    private static void PromptToAddAnotherDog()
+    private static void ShowPromptToAddAnotherDog()
     {
         Console.WriteLine("Add another dog? Choose: yes/no");
         var userChoice = Console.ReadLine();
@@ -201,7 +201,7 @@ public static class DogTools
                 break;
             default:
                 Prompt.ShowInvalidMessage();
-                PromptToAddAnotherDog();
+                ShowPromptToAddAnotherDog();
                 break;
         }
     } 
