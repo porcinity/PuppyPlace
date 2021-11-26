@@ -53,9 +53,7 @@ public static class DogTools
                 }
                 break;
             default:
-                Console.Clear();
-                Console.WriteLine("Invalid choice.");
-                Thread.Sleep(1500);
+                Prompt.ShowInvalidMessage();
                 ShowDogs();
                 break;
         }
