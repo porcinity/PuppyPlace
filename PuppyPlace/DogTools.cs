@@ -2,19 +2,27 @@ namespace PuppyPlace;
 
 public static class DogTools
 {
+    public static List<Dog> Dogs = new List<Dog>()
+    {
+        new Dog("Apollo", 12, "Dachshund"),
+        new Dog("Kylie", 15, "Schnauzer"),
+        new Dog("Remy", 8, "Schnauzer"),
+        new Dog("Speckles", 12, "Red Heeler"),
+        new Dog("Bucky", 15, "Fox Terrier")
+    };
     public static void ShowDogs()
     {
         Console.Clear();
         Console.WriteLine("These are the dogs we have:");
         
         var num = 1;
-        if (Prompt.Dogs.Count == 0)
+        if (Dogs.Count == 0)
         {
             Console.WriteLine("We don't have any dogs at the moment!");
         }
         else
         {
-            foreach (var dog in Prompt.Dogs)
+            foreach (var dog in Dogs)
             {
                 Console.WriteLine($"{num} - {dog.Name}");
                 num++;
@@ -53,7 +61,7 @@ public static class DogTools
     }
     static void ShowDog(string dogName)
     {
-        var foundDog = Prompt.Dogs.Find(x => x.Name.ToLower() == dogName.ToLower());
+        var foundDog = Dogs.Find(x => x.Name.ToLower() == dogName.ToLower());
         Console.Clear();
         Console.WriteLine("======================\n" +
                           $"Name: {foundDog.Name}\n" +
@@ -99,14 +107,14 @@ public static class DogTools
         Console.Clear();
         Console.WriteLine($"Great! Who is adopting {dog.Name}?");
         var num = 1;
-        foreach (var person in Prompt.Persons)
+        foreach (var person in PersonTools.Persons)
         {
             Console.WriteLine($"{num} - {person.Name}");
             num++;
         }
         Console.WriteLine("Enter name of person:");
         var userChoice = Console.ReadLine();
-        var adoptingPerson = Prompt.Persons.Find(x => x.Name.ToLower() == userChoice.ToLower());
+        var adoptingPerson = PersonTools.Persons.Find(x => x.Name.ToLower() == userChoice.ToLower());
         dog.AddOwner(adoptingPerson);
         adoptingPerson.AddDog(dog);
         var newOwner = dog.Owner.Name;
@@ -223,7 +231,7 @@ public static class DogTools
         Console.Clear();
         
         var newDog = new Dog(newDogName, intAge, newDogBreed);
-        Prompt.Dogs.Add(newDog);
+        Dogs.Add(newDog);
 
         Console.WriteLine("Success! We added the following information to the database:" +
                           "\n==========================================================" +
@@ -245,7 +253,7 @@ public static class DogTools
         {
             case ConsoleKey.Y:
                 Console.Clear();
-                Prompt.Dogs.Remove(dog);
+                Dogs.Remove(dog);
                 var owner = dog.Owner;
                 try
                 {

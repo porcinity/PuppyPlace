@@ -2,6 +2,12 @@ namespace PuppyPlace;
 
 public static class PersonTools
 {
+    public static List<Person> Persons = new List<Person>
+    {
+        new Person("Andrea"),
+        new Person("Aaron"),
+        new Person("Cody")
+    };
     public static void AddPerson()
     {
         Console.Clear();
@@ -40,7 +46,7 @@ public static class PersonTools
         Console.Clear();
 
         var newPerson = new Person(newPersonName);
-        Prompt.Persons.Add(newPerson);
+        Persons.Add(newPerson);
 
         Console.WriteLine("Success! We add the following information to the database:" +
                           "\n========================================================" +
@@ -54,7 +60,7 @@ public static class PersonTools
         Console.WriteLine("These are the people in our database:");
 
         var num = 1;
-        foreach (var person in Prompt.Persons)
+        foreach (var person in Persons)
         {
             Console.WriteLine($"{num} - {person.Name}");
             num++;
@@ -91,7 +97,7 @@ public static class PersonTools
 
     static void ShowPerson(string name)
     {
-        var foundPerson = Prompt.Persons.Find(x => x.Name.ToLower() == name.ToLower());
+        var foundPerson = Persons.Find(x => x.Name.ToLower() == name.ToLower());
         Console.Clear();
         Console.WriteLine("====================" +
                           $"\nName: {foundPerson.Name}");
@@ -172,7 +178,7 @@ public static class PersonTools
         {
             case ConsoleKey.Y:
                 Console.Clear();
-                Prompt.Persons.Remove(person);
+                Persons.Remove(person);
                 foreach (var dog in person.Dogs)
                 {
                     dog.Owner = null;

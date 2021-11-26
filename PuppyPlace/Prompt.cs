@@ -32,20 +32,6 @@ public static class Prompt
                 break;
         }
     }
-    public static List<Dog> Dogs = new List<Dog>()
-    {
-        new Dog("Apollo", 12, "Dachshund"),
-        new Dog("Kylie", 15, "Schnauzer"),
-        new Dog("Remy", 8, "Schnauzer"),
-        new Dog("Speckles", 12, "Red Heeler"),
-        new Dog("Bucky", 15, "Fox Terrier")
-    };
-    public static List<Person> Persons = new List<Person>
-    {
-        new Person("Andrea"),
-        new Person("Aaron"),
-        new Person("Cody")
-    };
     public static void Quit()
     {
         Console.Clear();
