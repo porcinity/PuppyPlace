@@ -1,6 +1,6 @@
 namespace PuppyPlace;
 
-public class PersonTools
+public static class PersonTools
 {
     public static void AddPerson()
     {

@@ -264,5 +264,4 @@ public static class DogTools
         Thread.Sleep(1000);
         ShowDogs();
     }
-    
 }
