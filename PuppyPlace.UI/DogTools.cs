@@ -1,4 +1,6 @@
-namespace PuppyPlace;
+using PuppyPlace.Domain;
+
+namespace PuppyPlace.UI;
 
 public static class DogTools
 {

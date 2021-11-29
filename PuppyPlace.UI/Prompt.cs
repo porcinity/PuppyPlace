@@ -1,6 +1,6 @@
 using Figgle;
 
-namespace PuppyPlace;
+namespace PuppyPlace.UI;
 
 public static class Prompt
 {

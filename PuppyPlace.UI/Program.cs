@@ -1,4 +1,4 @@
-﻿namespace PuppyPlace
+﻿namespace PuppyPlace.UI
 {
     class Program
     {
