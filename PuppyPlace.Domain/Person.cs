@@ -1,9 +1,15 @@
-namespace PuppyPlace;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PuppyPlace.Domain;
 
 public class Person
 {
-    public string Name { get; set; }
+    [Key]
     public Guid Id { get; set; }
+    [Required]
+    public string Name { get; set; }
+    [Column]
     public List<Dog> Dogs { get; set; }
     public Person(string name)
     {

@@ -1,4 +1,4 @@
-namespace PuppyPlace;
+namespace PuppyPlace.Domain;
 
 public class Dog
 {
