@@ -10,7 +10,6 @@ public class PuppyPlaceContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-            "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=PuppyPlaceData");
+        optionsBuilder.UseSqlite("Filename=./datuh.sqlite");
     }
 }
