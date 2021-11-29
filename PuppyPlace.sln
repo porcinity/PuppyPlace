@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace", "PuppyPlace\PuppyPlace.csproj", "{A8122357-DB1A-420A-8C36-BBC3D6125DA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.UI", "PuppyPlace.UI\PuppyPlace.UI.csproj", "{A8122357-DB1A-420A-8C36-BBC3D6125DA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Data", "PuppyPlace.Data\PuppyPlace.Data.csproj", "{E01084C5-289F-4C6F-B9B0-F49DAF806EFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Domain", "PuppyPlace.Domain\PuppyPlace.Domain.csproj", "{2D367341-9DFE-46E4-8B6A-2D1F55258A42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{A8122357-DB1A-420A-8C36-BBC3D6125DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8122357-DB1A-420A-8C36-BBC3D6125DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8122357-DB1A-420A-8C36-BBC3D6125DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E01084C5-289F-4C6F-B9B0-F49DAF806EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E01084C5-289F-4C6F-B9B0-F49DAF806EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E01084C5-289F-4C6F-B9B0-F49DAF806EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E01084C5-289F-4C6F-B9B0-F49DAF806EFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D367341-9DFE-46E4-8B6A-2D1F55258A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D367341-9DFE-46E4-8B6A-2D1F55258A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D367341-9DFE-46E4-8B6A-2D1F55258A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D367341-9DFE-46E4-8B6A-2D1F55258A42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
