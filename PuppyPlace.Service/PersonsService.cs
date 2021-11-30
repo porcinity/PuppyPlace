@@ -8,38 +8,30 @@ namespace PuppyPlace.Service;
 public class PersonsService
 {
     private readonly PuppyPlaceContext _context = new PuppyPlaceContext();
-    
-    public void AddPersonDb(Person person)
+
+    public async void AddPersonDb(Person person)
     {
-        _context.Persons.Add(person);
-        _context.SaveChanges();
+       await _context.Persons.AddAsync(person);
+       await _context.SaveChangesAsync();
     }
-    
-    public void AdoptDog(Person person, Dog dog)
+
+    public async void AdoptDog(Person person, Dog dog)
     {
         person.AddDog(dog);
         _context.Update(person);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
-    public void ShowPersons()
+
+    public async Task<List<Person>> FindPersons()
     {
-        var persons = _context.Persons.ToList();
-        Console.WriteLine($"Person count is {persons.Count}");
-        Console.WriteLine("We have the following people in our database");
-        foreach (var person in persons)
-        {
-            Console.WriteLine(person.Name);
-            foreach (var dog in person.Dogs)
-            {
-                Console.WriteLine($"- {dog.Name}");
-            }
-        }
+        return await _context.Persons.ToListAsync();
     }
-    public Person FindPerson(Guid id)
+
+    public async Task<Person> FindPerson(Guid id)
     {
         try
         {
-            return _context.Persons.Find(id);
+            return await _context.Persons.FindAsync(id);
         }
         catch (NullReferenceException e)
         {
