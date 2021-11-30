@@ -7,6 +7,7 @@ namespace PuppyPlace.Service;
 public class DogsService
 {
     private readonly PuppyPlaceContext _context = new PuppyPlaceContext();
+    private readonly PersonsService _personsService = new PersonsService();
 
     public async void AddDogDb(Dog dog)
     {
@@ -44,6 +45,13 @@ public class DogsService
     public async void DeleteDogDb(Dog dog)
     {
         _context.Dogs.Remove(dog);
+        await _context.SaveChangesAsync();
+    }
+
+    public async void AddOwnerDb(Dog dog, Person person)
+    {
+        dog.Owner = person;
+        _personsService.AdoptDog(person, dog);
         await _context.SaveChangesAsync();
     }
 }
