@@ -9,7 +9,7 @@ public class DogsUI
     private readonly PersonsService _personsService = new PersonsService();
     public void AddDog()
     {
-        Prompt.ShowLoadingAnimation();
+        ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("Great! Let's add a new dog!" +
                           "\n=========================");
@@ -135,7 +135,7 @@ public class DogsUI
                 DeleteDog(dog);
                 break;
             default:
-                Prompt.ShowInvalidMessage();
+                ConsoleMainMenu.ShowInvalidMessage();
                 ShowDog(dog);
                 break;
         }

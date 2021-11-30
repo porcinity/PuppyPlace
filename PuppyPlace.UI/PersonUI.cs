@@ -8,7 +8,7 @@ public class PersonUI
     private readonly PersonsService _personsService = new PersonsService();
     public void AddPersonPrompt()
     {
-        Prompt.ShowLoadingAnimation();
+        ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("Great! Let's add a new person!" +
                           "\n==============================");
@@ -113,13 +113,13 @@ public class PersonUI
                 ShowPersons();
                 break;
             case ConsoleKey.M:
-                Prompt.ShowMainMenu();
+                ConsoleMainMenu.Show();
                 break;
             case ConsoleKey.Q:
-                Prompt.Quit();
+                ConsoleMainMenu.Quit();
                 break;
             default:
-                Prompt.ShowInvalidMessage();
+                ConsoleMainMenu.ShowInvalidMessage();
                 ShowPerson(id);
                 break;
         }
@@ -142,7 +142,7 @@ public class PersonUI
                 Console.WriteLine($"Success! We've updated {person.Name}'s information.");
                 break;
             default:
-                Prompt.ShowInvalidMessage();
+                ConsoleMainMenu.ShowInvalidMessage();
                 UpdatePerson(person);
                 break;
         }

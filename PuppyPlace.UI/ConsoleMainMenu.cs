@@ -69,7 +69,7 @@ public class ConsoleMainMenu
         }
     }
     
-    private static void Quit()
+    public static void Quit()
     {
         Console.Clear();
         Console.WriteLine("Goodbye!");
