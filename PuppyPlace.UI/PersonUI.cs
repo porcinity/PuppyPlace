@@ -14,6 +14,7 @@ public class PersonUI
                           "\n==============================");
         Thread.Sleep(1000);
         CreatePerson();
+        ConsoleMainMenu.Show();
     }
     
     private async void CreatePerson()
@@ -39,7 +40,8 @@ public class PersonUI
     
     public async void ShowPersons()
     {
-        Prompt.ShowLoadingAnimation();
+        ConsoleMainMenu.ShowLoadingAnimation();
+        Console.Clear();
         var persons = await _personsService.FindPersons();
         var personNum = 1;
         foreach (var person in persons)
@@ -47,13 +49,15 @@ public class PersonUI
             Console.WriteLine($"{personNum} - {person.Name}");
             personNum++;
         }
+
+        Console.WriteLine("Press number or (b)ack");
     
        var userInput = Console.ReadKey();
        
        switch (userInput.Key)
        {
            case ConsoleKey.B:
-               Prompt.ShowMainMenu();
+               ConsoleMainMenu.Show();
                break;
            default:
                if (int.TryParse(userInput.KeyChar.ToString(), out var charIntEntered))
@@ -95,16 +99,16 @@ public class PersonUI
         }
         Console.WriteLine("===================");
 
-        Console.WriteLine("(u)pdate information, (b)ack, (m)ain menu, (q)uit");
+        Console.WriteLine("(u)pdate information, (d)elete person, (b)ack, (m)ain menu, (q)uit");
         var userInput = Console.ReadKey();
         switch (userInput.Key)
         {
-            // case ConsoleKey.D:
-            //     DeletePerson(foundPerson);
-            //     break;
-            // case ConsoleKey.U:
-            //     UpdatePerson(foundPerson);
-            //     break;
+            case ConsoleKey.D:
+                DeletePerson(foundPerson);
+                break;
+            case ConsoleKey.U:
+                UpdatePerson(foundPerson);
+                break;
             case ConsoleKey.B:
                 ShowPersons();
                 break;
@@ -121,7 +125,7 @@ public class PersonUI
         }
     }
     
-    static void UpdatePerson(Person person)
+    public void UpdatePerson(Person person)
     {
         Console.Clear();
         Console.WriteLine($"What information would you like to update for {person.Name}");
@@ -134,7 +138,7 @@ public class PersonUI
                 Console.Clear();
                 Console.WriteLine($"Enter the updated information for {person.Name}:");
                 var updatedField = Console.ReadLine();
-                person.Name = updatedField;
+                _personsService.UpdatePerson(person.Id, updatedField);
                 Console.WriteLine($"Success! We've updated {person.Name}'s information.");
                 break;
             default:
@@ -142,7 +146,13 @@ public class PersonUI
                 UpdatePerson(person);
                 break;
         }
-        Thread.Sleep(1500);
-        Prompt.ShowMainMenu();
+        Thread.Sleep(500);
+        ConsoleMainMenu.Show();
+    }
+    
+    public async void DeletePerson(Person person)
+    {
+       _personsService.DeletePersonDb(person);
+       ConsoleMainMenu.Show();
     }
 }
