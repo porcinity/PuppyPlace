@@ -39,4 +39,11 @@ public class PersonsService
             throw;
         }
     }
+    
+    public async void UpdatePerson(Guid id, string name)
+    {
+        var person = await FindPerson(id);
+        person.Name = name;
+        await _context.SaveChangesAsync();
+    }
 }
