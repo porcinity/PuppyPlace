@@ -35,4 +35,16 @@ public class PersonsService
             }
         }
     }
+    public Person FindPerson(Guid id)
+    {
+        try
+        {
+            return _context.Persons.Find(id);
+        }
+        catch (NullReferenceException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }
