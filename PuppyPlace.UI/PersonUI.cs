@@ -85,17 +85,17 @@ public class PersonUI
         Console.Clear();
         Console.WriteLine("====================" +
                           $"\nName: {foundPerson.Name}");
-        if (foundPerson.Dogs.Count == 0)
-        {
-            Console.WriteLine($"Dogs: Ain't got no mf dogs rn");
-        }
-        else
+        if (foundPerson.Dogs.Count != 0)
         {
             Console.WriteLine("Dogs:");
             foreach (var dog in foundPerson.Dogs)
             {
                 Console.WriteLine($" - {dog.Name}");
             }
+        }
+        else
+        {
+            Console.WriteLine("Dogs: none right now");
         }
         Console.WriteLine("===================");
 
