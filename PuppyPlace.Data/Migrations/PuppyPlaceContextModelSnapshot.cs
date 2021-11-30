@@ -62,15 +62,10 @@ namespace PuppyPlace.Data.Migrations
             modelBuilder.Entity("PuppyPlace.Domain.Dog", b =>
                 {
                     b.HasOne("PuppyPlace.Domain.Person", "Owner")
-                        .WithMany("Dogs")
+                        .WithMany()
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
-                {
-                    b.Navigation("Dogs");
                 });
 #pragma warning restore 612, 618
         }
