@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using PuppyPlace.Data;
@@ -18,7 +19,6 @@ public class PersonsService
     public async void AdoptDog(Person person, Dog dog)
     {
         person.AddDog(dog);
-        _context.Update(person);
         await _context.SaveChangesAsync();
     }
 
@@ -44,6 +44,13 @@ public class PersonsService
     {
         var person = await FindPerson(id);
         person.Name = name;
+        await _context.SaveChangesAsync();
+    }
+
+    public async void DeletePersonDb(Person person)
+    {
+        // var person = await FindPerson(id);
+        _context.Persons.Remove(person);
         await _context.SaveChangesAsync();
     }
 }
