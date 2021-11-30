@@ -3,6 +3,7 @@ namespace PuppyPlace.UI;
 public class ConsoleMainMenu
 {
     private static readonly PersonUI _personUi = new PersonUI();
+    private static readonly DogsUI _dogsUi = new DogsUI();
     public static void Show()
     {
         while (true)
@@ -15,18 +16,18 @@ public class ConsoleMainMenu
                 case ConsoleKey.D1:
                     _personUi.AddPersonPrompt();
                     break;
-                // case ConsoleKey.D2:
-                //     DogTools.AddDog();
-                //     break;
+                case ConsoleKey.D2:
+                    _dogsUi.AddDog();
+                    break;
                 case ConsoleKey.D3:
                     _personUi.ShowPersons();
                     break;
-                // case ConsoleKey.D4:
-                //     DogTools.ShowDogs();
-                //     break;
-                // case ConsoleKey.Q:
-                //     Quit();
-                //     break;
+                case ConsoleKey.D4:
+                    _dogsUi.ShowDogs();
+                    break;
+                case ConsoleKey.Q:
+                    Quit();
+                    break;
                 default:
                     ShowInvalidMessage();
                     continue;
@@ -66,5 +67,12 @@ public class ConsoleMainMenu
             Console.WriteLine("Loading" + dots);
             Thread.Sleep(50);
         }
+    }
+    
+    private static void Quit()
+    {
+        Console.Clear();
+        Console.WriteLine("Goodbye!");
+        Environment.Exit(0);
     }
 }
