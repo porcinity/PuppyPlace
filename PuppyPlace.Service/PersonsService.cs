@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using PuppyPlace.Data;
 using PuppyPlace.Domain;
@@ -19,5 +20,19 @@ public class PersonsService
         person.AddDog(dog);
         _context.Update(person);
         _context.SaveChanges();
+    }
+    public void ShowPersons()
+    {
+        var persons = _context.Persons.ToList();
+        Console.WriteLine($"Person count is {persons.Count}");
+        Console.WriteLine("We have the following people in our database");
+        foreach (var person in persons)
+        {
+            Console.WriteLine(person.Name);
+            foreach (var dog in person.Dogs)
+            {
+                Console.WriteLine($"- {dog.Name}");
+            }
+        }
     }
 }
