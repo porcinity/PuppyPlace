@@ -5,7 +5,12 @@ namespace PuppyPlace.UI;
 
 public class PersonUI
 {
-    private readonly PersonsService _personsService = new ();
+    private readonly PersonsService _personsService;
+    
+    public PersonUI(PersonsService personsService)
+    {
+        _personsService = personsService;
+    }
     public void AddPersonPrompt()
     {
         ConsoleMainMenu.ShowLoadingAnimation();
