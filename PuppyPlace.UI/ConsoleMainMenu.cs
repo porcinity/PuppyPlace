@@ -1,9 +1,9 @@
 namespace PuppyPlace.UI;
 
-public class ConsoleMainMenu
+public static class ConsoleMainMenu
 {
-    private static readonly PersonUI _personUi = new PersonUI();
-    private static readonly DogsUI _dogsUi = new DogsUI();
+    private static readonly PersonUI _personUi = DI.PersonUi;
+    private static readonly DogsUI _dogsUi = DI.DogsUi;
     public static void Show()
     {
         while (true)
