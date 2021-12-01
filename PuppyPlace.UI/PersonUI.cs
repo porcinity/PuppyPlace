@@ -5,7 +5,7 @@ namespace PuppyPlace.UI;
 
 public class PersonUI
 {
-    private readonly PersonsService _personsService = new PersonsService();
+    private readonly PersonsService _personsService = new ();
     public void AddPersonPrompt()
     {
         ConsoleMainMenu.ShowLoadingAnimation();
@@ -138,7 +138,8 @@ public class PersonUI
                 Console.Clear();
                 Console.WriteLine($"Enter the updated information for {person.Name}:");
                 var updatedField = Console.ReadLine();
-                _personsService.UpdatePerson(person.Id, updatedField);
+                person.Name = updatedField;
+                _personsService.UpdatePerson(person);
                 Console.WriteLine($"Success! We've updated {person.Name}'s information.");
                 break;
             default:
