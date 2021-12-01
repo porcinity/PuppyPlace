@@ -10,6 +10,6 @@ public class PuppyPlaceContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Filename=./datuh.sqlite");
+        optionsBuilder.UseSqlite("Filename=/Users/aaroncadrian/Repos/PuppyPlace/PuppyPlace.Data/datuh.sqlite");
     }
 }
