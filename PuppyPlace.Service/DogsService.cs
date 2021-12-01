@@ -54,7 +54,7 @@ public class DogsService
         await _context.SaveChangesAsync();
     }
 
-    public async void AddOwnerDb(Dog dog, Person person)
+    public async Task AddOwnerDb(Dog dog, Person person)
     {
         dog.Owner = person;
         // _personsService.AdoptDog(person, dog);
