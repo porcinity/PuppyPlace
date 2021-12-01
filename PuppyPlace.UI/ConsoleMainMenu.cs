@@ -38,6 +38,7 @@ public class ConsoleMainMenu
     
     static void ShowMainMenuText()
     {
+        Console.WriteLine(Figgle.FiggleFonts.Doom.Render("Puppy Place"));
         Console.WriteLine("\nM  A  I  N      M  E  N  U" +
                           "\n==========================" +
                           "\n");
