@@ -31,7 +31,10 @@ public class PersonsService
     {
         try
         {
-            return await _context.Persons.FindAsync(id);
+            return await _context
+                .Persons
+                .Include(m => m.Dogs)
+                .FirstAsync(m => m.Id == id);
         }
         catch (NullReferenceException e)
         {
