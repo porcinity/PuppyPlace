@@ -16,8 +16,8 @@ public class PersonsService
     }
     public async void AddPersonDb(Person person)
     {
-       await _context.Persons.AddAsync(person);
-       await _context.SaveChangesAsync();
+        await _context.Persons.AddAsync(person);
+        await _context.SaveChangesAsync();
     }
 
     public async void AdoptDog(Person person, Dog dog)
@@ -35,7 +35,10 @@ public class PersonsService
     {
         try
         {
-            return await _context.Persons.FindAsync(id);
+            return await _context
+                .Persons
+                .Include(person => person.Dogs)
+                .FirstAsync(person => person.Id == id);
         }
         catch (NullReferenceException e)
         {
@@ -43,7 +46,7 @@ public class PersonsService
             throw;
         }
     }
-    
+
     public async void UpdatePerson(Guid id, string name)
     {
         var person = await FindPerson(id);
