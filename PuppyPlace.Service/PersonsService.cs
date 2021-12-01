@@ -8,8 +8,12 @@ namespace PuppyPlace.Service;
 
 public class PersonsService
 {
-    private readonly PuppyPlaceContext _context = new PuppyPlaceContext();
+    private readonly PuppyPlaceContext _context;
 
+    public PersonsService(PuppyPlaceContext context)
+    {
+        _context = context;
+    }
     public async void AddPersonDb(Person person)
     {
        await _context.Persons.AddAsync(person);

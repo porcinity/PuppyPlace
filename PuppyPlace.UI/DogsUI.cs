@@ -5,8 +5,10 @@ namespace PuppyPlace.UI;
 
 public class DogsUI
 {
-    private readonly DogsService _dogsService = new DogsService(DI.PuppyPlaceContext, new PersonsService());
-    private readonly PersonsService _personsService = new PersonsService();
+    private readonly DogsService _dogsService =
+        new DogsService(DI.PuppyPlaceContext, new PersonsService(DI.PuppyPlaceContext));
+    
+    private readonly PersonsService _personsService = new PersonsService(DI.PuppyPlaceContext);
     public void AddDog()
     {
         ConsoleMainMenu.ShowLoadingAnimation();
