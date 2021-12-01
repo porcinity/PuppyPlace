@@ -45,9 +45,7 @@ public class PersonsService
     
     public async Task UpdatePerson(Person person)
     {
-        // var person = await FindPerson(id);
-        // person.Name = name;
-        _context.Update(person);
+        _context.Persons.Update(person);
         await _context.SaveChangesAsync();
     }
 
