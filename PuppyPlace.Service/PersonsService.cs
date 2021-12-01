@@ -16,7 +16,7 @@ public class PersonsService
        await _context.SaveChangesAsync();
     }
 
-    public async void AdoptDog(Person person, Dog dog)
+    public async Task AdoptDog(Person person, Dog dog)
     {
         person.AddDog(dog);
         await _context.SaveChangesAsync();
@@ -43,16 +43,16 @@ public class PersonsService
         }
     }
     
-    public async void UpdatePerson(Guid id, string name)
+    public async Task UpdatePerson(Person person)
     {
-        var person = await FindPerson(id);
-        person.Name = name;
+        // var person = await FindPerson(id);
+        // person.Name = name;
+        _context.Update(person);
         await _context.SaveChangesAsync();
     }
 
-    public async void DeletePersonDb(Person person)
+    public async Task DeletePersonDb(Person person)
     {
-        // var person = await FindPerson(id);
         _context.Persons.Remove(person);
         await _context.SaveChangesAsync();
     }
