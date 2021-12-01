@@ -5,8 +5,15 @@ namespace PuppyPlace.UI;
 
 public class DogsUI
 {
-    private readonly DogsService _dogsService = new DogsService();
-    private readonly PersonsService _personsService = new PersonsService();
+    private readonly DogsService _dogsService;
+
+    private readonly PersonsService _personsService;
+
+    public DogsUI(DogsService dogsService, PersonsService personsService)
+    {
+        _dogsService = dogsService;
+        _personsService = personsService;
+    }
     public void AddDog()
     {
         ConsoleMainMenu.ShowLoadingAnimation();
@@ -160,7 +167,8 @@ public class DogsUI
             try
             {
                 var adoptingPerson = persons[choice - 1];
-                _dogsService.AddOwnerDb(dog, adoptingPerson);
+                // dog.Owner = adoptingPerson;
+                await _dogsService.AddOwnerDb(dog, adoptingPerson);
                 var newOwner = dog.Owner.Name;
                 Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
             }
