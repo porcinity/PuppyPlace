@@ -6,8 +6,14 @@ namespace PuppyPlace.Service;
 
 public class DogsService
 {
-    private readonly PuppyPlaceContext _context = new PuppyPlaceContext();
-    private readonly PersonsService _personsService = new PersonsService();
+    private readonly PuppyPlaceContext _context;
+    private readonly PersonsService _personsService;
+
+    public DogsService(PuppyPlaceContext context, PersonsService personsService)
+    {
+        _context = context;
+        _personsService = personsService;
+    }
 
     public async void AddDogDb(Dog dog)
     {

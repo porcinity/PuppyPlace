@@ -5,7 +5,7 @@ namespace PuppyPlace.UI;
 
 public class DogsUI
 {
-    private readonly DogsService _dogsService = new DogsService();
+    private readonly DogsService _dogsService = new DogsService(DI.PuppyPlaceContext, new PersonsService());
     private readonly PersonsService _personsService = new PersonsService();
     public void AddDog()
     {
@@ -13,32 +13,32 @@ public class DogsUI
         Console.Clear();
         Console.WriteLine("Great! Let's add a new dog!" +
                           "\n=========================");
-        
+
         Thread.Sleep(1000);
         CreateDog();
         ConsoleMainMenu.Show();
     }
-    
+
     private void CreateDog()
     {
         Console.Clear();
         Console.WriteLine("Please insert the dog's name:");
         var newDogName = Console.ReadLine();
-        
+
         Console.Clear();
-        
+
         Console.WriteLine($"Please insert {newDogName}'s age:");
         var newDogAge = Console.ReadLine();
         var intAge = Int32.Parse(newDogAge);
-        
+
         Console.Clear();
-        
+
         Console.WriteLine($"Please insert {newDogName}'s breed:");
         var newDogBreed = Console.ReadLine();
 
-        
+
         Console.Clear();
-        
+
         var newDog = new Dog(newDogName, intAge, newDogBreed);
         _dogsService.AddDogDb(newDog);
 
@@ -98,7 +98,7 @@ public class DogsUI
             ShowDog(dog);
         }
     }
-    
+
     public void ShowDog(Dog dog)
     {
         Console.Clear();
@@ -140,7 +140,7 @@ public class DogsUI
                 break;
         }
     }
-    
+
     public async void AddOwnerToDog(Dog dog)
     {
         Console.Clear();
@@ -170,7 +170,7 @@ public class DogsUI
                 AddOwnerToDog(dog);
             }
         }
-        
+
         Thread.Sleep(1000);
         ConsoleMainMenu.Show();
     }
