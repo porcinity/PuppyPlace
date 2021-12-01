@@ -160,7 +160,7 @@ public class DogsUI
             try
             {
                 var adoptingPerson = persons[choice - 1];
-                _dogsService.AddOwnerDb(dog, adoptingPerson);
+                await _dogsService.AddOwnerDb(dog, adoptingPerson);
                 var newOwner = dog.Owner.Name;
                 Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
             }
