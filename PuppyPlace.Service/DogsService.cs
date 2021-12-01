@@ -6,9 +6,13 @@ namespace PuppyPlace.Service;
 
 public class DogsService
 {
-    private readonly PuppyPlaceContext _context = new PuppyPlaceContext();
-    private readonly PersonsService _personsService = new PersonsService();
-
+    private readonly PuppyPlaceContext _context;
+    private readonly PersonsService _personsService;
+    public DogsService(PuppyPlaceContext context, PersonsService personsService)
+    {
+        _context = context;
+        _personsService = personsService;
+    }
     public async void AddDogDb(Dog dog)
     {
         await _context.Dogs.AddAsync(dog);
@@ -24,7 +28,9 @@ public class DogsService
     {
         try
         {
-            return await _context.Dogs.FindAsync(id);
+            return await _context.Dogs
+                .Include(m => m.Owner)
+                .FirstOrDefaultAsync(m => m.Id == id);
         }
         catch (NullReferenceException e)
         {
@@ -48,10 +54,11 @@ public class DogsService
         await _context.SaveChangesAsync();
     }
 
-    public async void AddOwnerDb(Dog dog, Person person)
+    public async Task AddOwnerDb(Dog dog, Person person)
     {
-        dog.Owner = person;
-        // _personsService.AdoptDog(person, dog);
+        // dog.Owner = person;
+        // _context.Dogs.Update(dog);
+        dog.AddOwner(person);
         await _context.SaveChangesAsync();
     }
 }
