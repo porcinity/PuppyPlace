@@ -42,6 +42,12 @@ public class DogsService
         await _context.SaveChangesAsync();
     }
 
+    public async void UpdateDog(Dog dog)
+    {
+        _context.Entry(dog).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+    }
+
     public async void DeleteDogDb(Dog dog)
     {
         _context.Dogs.Remove(dog);
@@ -51,7 +57,7 @@ public class DogsService
     public async void AddOwnerDb(Dog dog, Person person)
     {
         dog.Owner = person;
-        _personsService.AdoptDog(person, dog);
+        // _personsService.AdoptDog(person, dog);
         await _context.SaveChangesAsync();
     }
 }
