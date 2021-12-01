@@ -1,6 +1,6 @@
 namespace PuppyPlace.UI;
 
-public class ConsoleMainMenu
+public static class ConsoleMainMenu
 {
     private static readonly PersonUI _personUi = new PersonUI();
     private static readonly DogsUI _dogsUi = new DogsUI();
