@@ -2,8 +2,8 @@ namespace PuppyPlace.UI;
 
 public static class ConsoleMainMenu
 {
-    private static readonly PersonUI _personUi = new PersonUI();
-    private static readonly DogsUI _dogsUi = new DogsUI();
+    private static readonly PersonUI _personUi = DI.PersonUi;
+    private static readonly DogsUI _dogsUi = DI.DogsUi;
     public static void Show()
     {
         while (true)
@@ -35,7 +35,7 @@ public static class ConsoleMainMenu
             break;
         }
     }
-    
+
     static void ShowMainMenuText()
     {
         Console.WriteLine("\nM  A  I  N      M  E  N  U" +
@@ -48,18 +48,18 @@ public static class ConsoleMainMenu
                           "\n4 - Show list of Dogs" +
                           "\n\n(Press q to quit)");
     }
-    
+
     public static void ShowInvalidMessage()
     {
         Console.Clear();
         Console.WriteLine("Invalided choice.");
         Thread.Sleep(1000);
     }
-    
+
     public static void ShowLoadingAnimation()
     {
         var dots = "";
-        
+
         for (int i = 0; i < 5; i++)
         {
             Console.Clear();
@@ -68,7 +68,7 @@ public static class ConsoleMainMenu
             Thread.Sleep(50);
         }
     }
-    
+
     public static void Quit()
     {
         Console.Clear();
