@@ -11,18 +11,18 @@ public class PersonUI
     {
         _personsService = personsService;
     }
-    public void AddPersonPrompt()
+    public async Task AddPersonPrompt()
     {
         ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("Great! Let's add a new person!" +
                           "\n==============================");
         Thread.Sleep(1000);
-        CreatePerson();
-        ConsoleMainMenu.Show();
+        await CreatePerson();
+        
     }
     
-    private async void CreatePerson()
+    private async Task CreatePerson()
     {
         Console.Clear();
         Console.WriteLine("Please insert the person's name:");
@@ -32,20 +32,29 @@ public class PersonUI
 
         var newPerson = new Person(newPersonName);
         var personId = newPerson.Id;
-        _personsService.AddPersonDb(newPerson);
+        try
+        {
+            await _personsService.AddPersonDb(newPerson);
+            var addedPerson = await _personsService.FindPerson(personId);
+            Console.WriteLine("Success! We add the following information to the database:" +
+                              "\n========================================================" +
+                              $"\nName: {addedPerson.Name}" +
+                              $"\n=======================================================");
+            Thread.Sleep(1500);
+            ConsoleMainMenu.Show();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
 
-        var addedPerson = await _personsService.FindPerson(personId);
-        Console.WriteLine("Success! We add the following information to the database:" +
-                          "\n========================================================" +
-                          $"\nName: {addedPerson.Name}" +
-                          $"\n=======================================================");
-        Thread.Sleep(1500);
-        
+       
     }
     
-    public async void ShowPersons()
+    public async Task ShowPersons()
     {
-        ConsoleMainMenu.ShowLoadingAnimation();
+        // ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
         var persons = await _personsService.FindPersons();
         var personNum = 1;
@@ -84,7 +93,7 @@ public class PersonUI
        }
     }
 
-    public async void ShowPerson(Guid id)
+    public async Task ShowPerson(Guid id)
     {
         var foundPerson = await _personsService.FindPerson(id);
         Console.Clear();
@@ -156,9 +165,9 @@ public class PersonUI
         ConsoleMainMenu.Show();
     }
     
-    public async void DeletePerson(Person person)
+    public async Task DeletePerson(Person person)
     {
-       _personsService.DeletePersonDb(person);
+       await _personsService.DeletePersonDb(person);
        ConsoleMainMenu.Show();
     }
 }
