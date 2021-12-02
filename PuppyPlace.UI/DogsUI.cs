@@ -94,13 +94,15 @@ public class DogsUI
         {
             var dogIndex = charIntEntered - 1;
             var dog = dogs.ElementAtOrDefault(dogIndex);
-
-            if (dog == null)
+            try
+            {
+                await ShowDog(await _dogsService.FindDog(dog.Id));
+            }
+            catch (Exception e)
             {
                 ConsoleMainMenu.ShowInvalidMessage();
-                ConsoleMainMenu.Show();
+                await ConsoleMainMenu.Show();
             }
-            await ShowDog(dog);
         }
     }
 
