@@ -6,10 +6,12 @@ namespace PuppyPlace.UI;
 public class PersonUI
 {
     private readonly PersonsService _personsService;
+    private readonly DogsService _dogsService;
     
-    public PersonUI(PersonsService personsService)
+    public PersonUI(PersonsService personsService, DogsService dogsService)
     {
         _personsService = personsService;
+        _dogsService = dogsService;
     }
     public async Task AddPersonPrompt()
     {
