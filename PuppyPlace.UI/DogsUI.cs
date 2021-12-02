@@ -178,14 +178,12 @@ public class DogsUI
                 await AddOwnerToDog(dog);
             }
         }
-        
-        Thread.Sleep(1000);
         await ConsoleMainMenu.Show();
     }
 
-    public async void DeleteDog(Dog dog)
+    public async Task DeleteDog(Dog dog)
     {
-        _dogsService.DeleteDogDb(dog);
-        ShowDogs();
+        await _dogsService.DeleteDogDb(dog);
+        await ShowDogs();
     }
 }
