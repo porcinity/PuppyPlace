@@ -2,9 +2,9 @@
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            ConsoleMainMenu.Show();
+            await ConsoleMainMenu.Show();
         }
     }
 }
