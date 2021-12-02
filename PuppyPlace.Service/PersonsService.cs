@@ -14,7 +14,7 @@ public class PersonsService
     {
         _context = context;
     }
-    public async void AddPersonDb(Person person)
+    public async Task AddPersonDb(Person person)
     {
        await _context.Persons.AddAsync(person);
        await _context.SaveChangesAsync();
