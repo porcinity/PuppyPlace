@@ -213,31 +213,37 @@ public class DogsUI
     private async Task UpdateName(Dog dog)
     {
         Console.Clear();
-        Console.WriteLine("Enter new name:");
+        Console.WriteLine($"Previous: {dog.Name}");
+        Console.WriteLine("Enter updated name:");
         var userInput = Console.ReadLine();
         dog.Name = userInput;
         await _dogsService.UpdateDog(dog);
+        Console.WriteLine("Success!");
         await ConsoleMainMenu.Show();
     }
 
     private async Task UpdateAge(Dog dog)
     {
         Console.Clear();
-        Console.WriteLine("Enter new age:");
+        Console.WriteLine($"Previous: {dog.Age}");
+        Console.WriteLine("Enter updated age:");
         var userInput = Console.ReadLine();
         var intAge = int.Parse(userInput);
         dog.Age = intAge;
         await _dogsService.UpdateDog(dog);
+        Console.WriteLine("Success!");
         await ConsoleMainMenu.Show();
     }
     
     private async Task UpdateBreed(Dog dog)
     {
         Console.Clear();
-        Console.WriteLine("Enter new name:");
+        Console.WriteLine($"Previous: {dog.Breed}");
+        Console.WriteLine("Enter updated breed:");
         var userInput = Console.ReadLine();
         dog.Breed = userInput;
         await _dogsService.UpdateDog(dog);
+        Console.WriteLine("Success!");
         await ConsoleMainMenu.Show();
     }
 
