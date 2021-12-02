@@ -71,7 +71,7 @@ public class PersonUI
        switch (userInput.Key)
        {
            case ConsoleKey.B:
-               ConsoleMainMenu.Show();
+               await ConsoleMainMenu.Show();
                break;
            default:
                if (int.TryParse(userInput.KeyChar.ToString(), out var charIntEntered))
@@ -86,7 +86,7 @@ public class PersonUI
                    }
 
                    var personId = person.Id;
-                   ShowPerson(personId);
+                   await ShowPerson(personId);
                }
 
                break;
@@ -95,50 +95,54 @@ public class PersonUI
 
     public async Task ShowPerson(Guid id)
     {
-        var foundPerson = await _personsService.FindPerson(id);
-        Console.Clear();
-        Console.WriteLine("====================" +
-                          $"\nName: {foundPerson.Name}");
-        if (foundPerson.Dogs.Count != 0)
+        while (true)
         {
-            Console.WriteLine("Dogs:");
-            foreach (var dog in foundPerson.Dogs)
+            var foundPerson = await _personsService.FindPerson(id);
+            Console.Clear();
+            Console.WriteLine("====================" + $"\nName: {foundPerson.Name}");
+            if (foundPerson.Dogs.Count != 0)
             {
-                Console.WriteLine($" - {dog.Name}");
+                Console.WriteLine("Dogs:");
+                foreach (var dog in foundPerson.Dogs)
+                {
+                    Console.WriteLine($" - {dog.Name}");
+                }
             }
-        }
-        else
-        {
-            Console.WriteLine("Dogs: none right now");
-        }
-        Console.WriteLine("===================");
+            else
+            {
+                Console.WriteLine("Dogs: none right now");
+            }
 
-        Console.WriteLine("(u)pdate information, (d)elete person, (b)ack, (m)ain menu, (q)uit");
-        var userInput = Console.ReadKey();
-        switch (userInput.Key)
-        {
-            case ConsoleKey.D:
-                DeletePerson(foundPerson);
-                break;
-            case ConsoleKey.U:
-                UpdatePerson(foundPerson);
-                break;
-            case ConsoleKey.B:
-                ShowPersons();
-                break;
-            case ConsoleKey.M:
-                ConsoleMainMenu.Show();
-                break;
-            case ConsoleKey.Q:
-                ConsoleMainMenu.Quit();
-                break;
-            default:
-                ConsoleMainMenu.ShowInvalidMessage();
-                ShowPerson(id);
-                break;
+            Console.WriteLine("===================");
+
+            Console.WriteLine("(u)pdate information, (d)elete person, (b)ack, (m)ain menu, (q)uit");
+            var userInput = Console.ReadKey();
+            switch (userInput.Key)
+            {
+                case ConsoleKey.D:
+                    DeletePerson(foundPerson);
+                    break;
+                case ConsoleKey.U:
+                    UpdatePerson(foundPerson);
+                    break;
+                case ConsoleKey.B:
+                    await ShowPersons();
+                    break;
+                case ConsoleKey.M:
+                    await ConsoleMainMenu.Show();
+                    break;
+                case ConsoleKey.Q:
+                    ConsoleMainMenu.Quit();
+                    break;
+                default:
+                    ConsoleMainMenu.ShowInvalidMessage();
+                    continue;
+            }
+
+            break;
         }
     }
-    
+
     public void UpdatePerson(Person person)
     {
         Console.Clear();
