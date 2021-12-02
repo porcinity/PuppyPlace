@@ -45,8 +45,6 @@ public class DogsService
 
     public async Task AddOwnerDb(Dog dog, Person person)
     {
-        // dog.Owner = person;
-        // _context.Dogs.Update(dog);
         dog.AddOwner(person);
         await _context.SaveChangesAsync();
     }
