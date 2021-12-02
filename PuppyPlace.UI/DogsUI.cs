@@ -193,6 +193,15 @@ public class DogsUI
                 case ConsoleKey.N:
                     await UpdateName(dog);
                     break;
+                case ConsoleKey.A:
+                    await UpdateAge(dog);
+                    break;
+                case ConsoleKey.B:
+                    await UpdateBreed(dog);
+                    break;
+                case ConsoleKey.C:
+                    await ConsoleMainMenu.Show();
+                    break;
                 default:
                     ConsoleMainMenu.ShowInvalidMessage();
                     continue;
