@@ -106,7 +106,7 @@ public class DogsUI
         }
     }
     
-    public void ShowDog(Dog dog)
+    public async Task ShowDog(Dog dog)
     {
         Console.Clear();
         Console.WriteLine("======================\n" +
@@ -133,7 +133,7 @@ public class DogsUI
                 AddOwnerToDog(dog);
                 break;
             case ConsoleKey.B:
-                ShowDogs();
+                await ShowDogs();
                 break;
             // case ConsoleKey.U:
             //     UpdateDog(foundDog);
@@ -143,7 +143,7 @@ public class DogsUI
                 break;
             default:
                 ConsoleMainMenu.ShowInvalidMessage();
-                ShowDog(dog);
+                await ShowDog(dog);
                 break;
         }
     }
