@@ -39,12 +39,9 @@ public class DogsService
         }
     }
 
-    public async Task UpdateDog(Guid id, string name, int age, string breed)
+    public async Task UpdateDog(Dog dog)
     {
-        var dog = await FindDog(id);
-        dog.Name = name;
-        dog.Age = age;
-        dog.Breed = breed;
+        _context.Dogs.Update(dog);
         await _context.SaveChangesAsync();
     }
 
