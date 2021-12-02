@@ -23,7 +23,6 @@ public class DogsUI
         
         Thread.Sleep(1000);
         await CreateDog();
-        ConsoleMainMenu.Show();
     }
     
     private async Task CreateDog()
@@ -56,7 +55,7 @@ public class DogsUI
                           $"\nBreed: {newDogBreed}" +
                           $"\n========================================================="
         );
-        Thread.Sleep(1500);
+        await ConsoleMainMenu.Show();
     }
 
     public async Task ShowDogs()
@@ -82,15 +81,15 @@ public class DogsUI
         switch (userInput.Key)
         {
             case ConsoleKey.B:
-                ConsoleMainMenu.Show();
+                await ConsoleMainMenu.Show();
                 break;
             default:
-                SelectDog(dogs, userInput.KeyChar);
+                await SelectDog(dogs, userInput.KeyChar);
                 break;
         }
     }
 
-    public void SelectDog(List<Dog> dogs, char choice)
+    public async Task SelectDog(List<Dog> dogs, char choice)
     {
         if (int.TryParse(choice.ToString(), out var charIntEntered))
         {
@@ -102,53 +101,54 @@ public class DogsUI
                 ConsoleMainMenu.ShowInvalidMessage();
                 ConsoleMainMenu.Show();
             }
-            ShowDog(dog);
+            await ShowDog(dog);
         }
     }
-    
+
     public async Task ShowDog(Dog dog)
     {
-        Console.Clear();
-        Console.WriteLine("======================\n" +
-                          $"Name: {dog.Name}\n" +
-                          $"Age: {dog.Age}\n" +
-                          $"Breed: {dog.Breed}");
-
-        try
+        while (true)
         {
-            Console.WriteLine($"Owner: {dog.Owner.Name}");
-        }
-        catch (NullReferenceException e)
-        {
-            Console.WriteLine($"Owner: {dog.Name} does not have an owner yet!");
-        }
+            Console.Clear();
+            Console.WriteLine("======================\n" + $"Name: {dog.Name}\n" + $"Age: {dog.Age}\n" + $"Breed: {dog.Breed}");
 
-        Console.WriteLine("======================");
+            try
+            {
+                Console.WriteLine($"Owner: {dog.Owner.Name}");
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine($"Owner: {dog.Name} does not have an owner yet!");
+            }
 
-        Console.WriteLine("(a)dd owner, (u)pdate information, (d)elete, (b)ack:");
-        var userChoice = Console.ReadKey();
-        switch (userChoice.Key)
-        {
-            case ConsoleKey.A:
-                AddOwnerToDog(dog);
-                break;
-            case ConsoleKey.B:
-                await ShowDogs();
-                break;
-            // case ConsoleKey.U:
-            //     UpdateDog(foundDog);
-            //     break;
-            case ConsoleKey.D:
-                DeleteDog(dog);
-                break;
-            default:
-                ConsoleMainMenu.ShowInvalidMessage();
-                await ShowDog(dog);
-                break;
+            Console.WriteLine("======================");
+
+            Console.WriteLine("(a)dd owner, (u)pdate information, (d)elete, (b)ack:");
+            var userChoice = Console.ReadKey();
+            switch (userChoice.Key)
+            {
+                case ConsoleKey.A:
+                    await AddOwnerToDog(dog);
+                    break;
+                case ConsoleKey.B:
+                    await ShowDogs();
+                    break;
+                // case ConsoleKey.U:
+                //     UpdateDog(foundDog);
+                //     break;
+                case ConsoleKey.D:
+                    DeleteDog(dog);
+                    break;
+                default:
+                    ConsoleMainMenu.ShowInvalidMessage();
+                    continue;
+            }
+
+            break;
         }
     }
-    
-    public async void AddOwnerToDog(Dog dog)
+
+    public async Task AddOwnerToDog(Dog dog)
     {
         Console.Clear();
         Console.WriteLine($"Great! Who is adopting {dog.Name}?");
@@ -175,12 +175,12 @@ public class DogsUI
             catch
             {
                 ConsoleMainMenu.ShowInvalidMessage();
-                AddOwnerToDog(dog);
+                await AddOwnerToDog(dog);
             }
         }
         
         Thread.Sleep(1000);
-        ConsoleMainMenu.Show();
+        await ConsoleMainMenu.Show();
     }
 
     public async void DeleteDog(Dog dog)
