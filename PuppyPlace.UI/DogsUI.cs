@@ -220,6 +220,27 @@ public class DogsUI
         await ConsoleMainMenu.Show();
     }
 
+    private async Task UpdateAge(Dog dog)
+    {
+        Console.Clear();
+        Console.WriteLine("Enter new age:");
+        var userInput = Console.ReadLine();
+        var intAge = int.Parse(userInput);
+        dog.Age = intAge;
+        await _dogsService.UpdateDog(dog);
+        await ConsoleMainMenu.Show();
+    }
+    
+    private async Task UpdateBreed(Dog dog)
+    {
+        Console.Clear();
+        Console.WriteLine("Enter new name:");
+        var userInput = Console.ReadLine();
+        dog.Breed = userInput;
+        await _dogsService.UpdateDog(dog);
+        await ConsoleMainMenu.Show();
+    }
+
     public async Task DeleteDog(Dog dog)
     {
         await _dogsService.DeleteDogDb(dog);
