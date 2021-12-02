@@ -132,9 +132,9 @@ public class DogsUI
                 case ConsoleKey.B:
                     await ShowDogs();
                     break;
-                // case ConsoleKey.U:
-                //     UpdateDog(foundDog);
-                //     break;
+                case ConsoleKey.U:
+                    await UpdateDogPrompt(dog);
+                    break;
                 case ConsoleKey.D:
                     await DeleteDog(dog);
                     break;
@@ -177,6 +177,37 @@ public class DogsUI
                 await AddOwnerToDog(dog);
             }
         }
+        await ConsoleMainMenu.Show();
+    }
+
+    private async Task UpdateDogPrompt(Dog dog)
+    {
+        Console.Clear();
+        Console.WriteLine("What would you like to update?");
+        Console.WriteLine("(n)ame, (a)ge, (b)reed, (c)ancel update");
+        var userInput = Console.ReadKey();
+        while (true)
+        {
+            switch (userInput.Key)
+            {
+                case ConsoleKey.N:
+                    await UpdateName(dog);
+                    break;
+                default:
+                    ConsoleMainMenu.ShowInvalidMessage();
+                    continue;
+            }
+            break;
+        }
+    }
+    
+    private async Task UpdateName(Dog dog)
+    {
+        Console.Clear();
+        Console.WriteLine("Enter new name:");
+        var userInput = Console.ReadLine();
+        dog.Name = userInput;
+        await _dogsService.UpdateDog(dog);
         await ConsoleMainMenu.Show();
     }
 
