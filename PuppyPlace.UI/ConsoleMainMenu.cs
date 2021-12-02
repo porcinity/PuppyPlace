@@ -4,7 +4,7 @@ public static class ConsoleMainMenu
 {
     private static readonly PersonUI _personUi = DI.PersonUi;
     private static readonly DogsUI _dogsUi = DI.DogsUi;
-    public static void Show()
+    public static async Task Show()
     {
         while (true)
         {
@@ -14,16 +14,16 @@ public static class ConsoleMainMenu
             switch (userChoice.Key)
             {
                 case ConsoleKey.D1:
-                    _personUi.AddPersonPrompt();
+                    await _personUi.AddPersonPrompt();
                     break;
                 case ConsoleKey.D2:
-                    _dogsUi.AddDog();
+                    await _dogsUi.AddDog();
                     break;
                 case ConsoleKey.D3:
-                    _personUi.ShowPersons();
+                    await _personUi.ShowPersons();
                     break;
                 case ConsoleKey.D4:
-                    _dogsUi.ShowDogs();
+                    await _dogsUi.ShowDogs();
                     break;
                 case ConsoleKey.Q:
                     Quit();
