@@ -9,10 +9,14 @@ public class PuppyPlaceContext : DbContext
     public DbSet<Dog> Dogs { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Person>().HasMany(m => m.Dogs).WithOne(m => m.Owner).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder
+            .Entity<Person>()
+            .HasMany(m => m.Dogs)
+            .WithOne(m => m.Owner)
+            .OnDelete(DeleteBehavior.Cascade);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Filename=./datuh.sqlite");
+        optionsBuilder.UseSqlServer("Server=localhost,1433;Initial Catalog=helpme; User=sa; Password=Strong.Pwd-123");
     }
 }
