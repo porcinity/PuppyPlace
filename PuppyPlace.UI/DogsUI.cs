@@ -16,7 +16,6 @@ public class DogsUI
     }
     public async Task AddDog()
     {
-        ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("Great! Let's add a new dog!" +
                           "\n=========================");
@@ -137,7 +136,7 @@ public class DogsUI
                 //     UpdateDog(foundDog);
                 //     break;
                 case ConsoleKey.D:
-                    DeleteDog(dog);
+                    await DeleteDog(dog);
                     break;
                 default:
                     ConsoleMainMenu.ShowInvalidMessage();
@@ -159,7 +158,7 @@ public class DogsUI
             Console.WriteLine($"{num} - {person.Name}");
             num++;
         }
-        Console.WriteLine("Enter name of person:");
+        Console.WriteLine("Select person:");
         var userChoice = Console.ReadKey();
 
         if (int.TryParse(userChoice.KeyChar.ToString(), out var choice))
