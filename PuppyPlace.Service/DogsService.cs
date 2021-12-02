@@ -24,19 +24,11 @@ public class DogsService
         return await _context.Dogs.ToListAsync();
     }
 
-    public async Task<Dog> FindDog(Guid id)
+    public async Task<Dog?> FindDog(Guid id)
     {
-        try
-        {
-            return await _context.Dogs
-                .Include(m => m.Owner)
-                .FirstAsync(m => m.Id == id);
-        }
-        catch (NullReferenceException e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return await _context.Dogs
+            .Include(d => d.Owner)
+            .FirstOrDefaultAsync(m => m.Id == id);
     }
 
     public async Task UpdateDog(Dog dog)
