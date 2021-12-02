@@ -14,7 +14,7 @@ public class DogsUI
         _dogsService = dogsService;
         _personsService = personsService;
     }
-    public void AddDog()
+    public async Task AddDog()
     {
         ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
@@ -22,11 +22,11 @@ public class DogsUI
                           "\n=========================");
         
         Thread.Sleep(1000);
-        CreateDog();
+        await CreateDog();
         ConsoleMainMenu.Show();
     }
     
-    private void CreateDog()
+    private async Task CreateDog()
     {
         Console.Clear();
         Console.WriteLine("Please insert the dog's name:");
@@ -47,7 +47,7 @@ public class DogsUI
         Console.Clear();
         
         var newDog = new Dog(newDogName, intAge, newDogBreed);
-        _dogsService.AddDogDb(newDog);
+        await _dogsService.AddDogDb(newDog);
 
         Console.WriteLine("Success! We added the following information to the database:" +
                           "\n==========================================================" +
@@ -59,7 +59,7 @@ public class DogsUI
         Thread.Sleep(1500);
     }
 
-    public async void ShowDogs()
+    public async Task ShowDogs()
     {
         Console.Clear();
         var dogs = await _dogsService.FindDogs();
