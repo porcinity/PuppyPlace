@@ -13,7 +13,6 @@ public class PersonUI
     }
     public async Task AddPersonPrompt()
     {
-        ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
         Console.WriteLine("Great! Let's add a new person!" +
                           "\n==============================");
@@ -41,7 +40,7 @@ public class PersonUI
                               $"\nName: {addedPerson.Name}" +
                               $"\n=======================================================");
             Thread.Sleep(1500);
-            ConsoleMainMenu.Show();
+            await ConsoleMainMenu.Show();
         }
         catch (Exception e)
         {
@@ -115,15 +114,18 @@ public class PersonUI
 
             Console.WriteLine("===================");
 
-            Console.WriteLine("(u)pdate information, (d)elete person, (b)ack, (m)ain menu, (q)uit");
+            Console.WriteLine("(a)dopt dog, (u)pdate information, (d)elete person, (b)ack, (m)ain menu, (q)uit");
             var userInput = Console.ReadKey();
             switch (userInput.Key)
             {
+                case ConsoleKey.A:
+                    await AdoptDog(foundPerson);
+                    break;
                 case ConsoleKey.D:
-                    DeletePerson(foundPerson);
+                    await DeletePerson(foundPerson);
                     break;
                 case ConsoleKey.U:
-                    UpdatePerson(foundPerson);
+                    await UpdatePerson(foundPerson);
                     break;
                 case ConsoleKey.B:
                     await ShowPersons();
@@ -143,7 +145,42 @@ public class PersonUI
         }
     }
 
-    public void UpdatePerson(Person person)
+    private async Task AdoptDog(Person person)
+    {
+        Console.Clear();
+        Console.WriteLine("Great! Let's adopt a dog!");
+        var doggies = await _dogsService.FindDogs();
+
+        var num = 1;
+        foreach (var dog in doggies)
+        {
+            Console.WriteLine($"{num} - {dog.Name}");
+            num++;
+        }
+
+        Console.WriteLine("Choose dog to adopt:");
+
+        var userChoice = Console.ReadKey();
+
+        if (int.TryParse(userChoice.KeyChar.ToString(), out var choice))
+        {
+            try
+            {
+                var dogToAdopt = doggies[choice - 1];
+                await _personsService.AdoptDog(person, dogToAdopt);
+                Console.WriteLine($"Success! {person.Name} now owns {dogToAdopt.Name}!");
+            }
+            catch (Exception e)
+            {
+                ConsoleMainMenu.ShowInvalidMessage();
+                await AdoptDog(person);
+            }
+        }
+
+        await ConsoleMainMenu.Show();
+    }
+
+    public async Task UpdatePerson(Person person)
     {
         Console.Clear();
         Console.WriteLine($"What information would you like to update for {person.Name}");
@@ -157,21 +194,20 @@ public class PersonUI
                 Console.WriteLine($"Enter the updated information for {person.Name}:");
                 var updatedField = Console.ReadLine();
                 person.Name = updatedField;
-                _personsService.UpdatePerson(person);
+                await _personsService.UpdatePerson(person);
                 Console.WriteLine($"Success! We've updated {person.Name}'s information.");
                 break;
             default:
                 ConsoleMainMenu.ShowInvalidMessage();
-                UpdatePerson(person);
+                await UpdatePerson(person);
                 break;
         }
-        Thread.Sleep(500);
-        ConsoleMainMenu.Show();
+        await ConsoleMainMenu.Show();
     }
     
     public async Task DeletePerson(Person person)
     {
        await _personsService.DeletePersonDb(person);
-       ConsoleMainMenu.Show();
+       await ConsoleMainMenu.Show();
     }
 }
