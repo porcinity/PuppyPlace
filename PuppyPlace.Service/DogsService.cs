@@ -13,7 +13,7 @@ public class DogsService
         _context = context;
         _personsService = personsService;
     }
-    public async void AddDogDb(Dog dog)
+    public async Task AddDogDb(Dog dog)
     {
         await _context.Dogs.AddAsync(dog);
         await _context.SaveChangesAsync();
@@ -30,7 +30,7 @@ public class DogsService
         {
             return await _context.Dogs
                 .Include(m => m.Owner)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstAsync(m => m.Id == id);
         }
         catch (NullReferenceException e)
         {
@@ -39,7 +39,7 @@ public class DogsService
         }
     }
 
-    public async void UpdateDog(Guid id, string name, int age, string breed)
+    public async Task UpdateDog(Guid id, string name, int age, string breed)
     {
         var dog = await FindDog(id);
         dog.Name = name;
@@ -48,7 +48,7 @@ public class DogsService
         await _context.SaveChangesAsync();
     }
 
-    public async void DeleteDogDb(Dog dog)
+    public async Task DeleteDogDb(Dog dog)
     {
         _context.Dogs.Remove(dog);
         await _context.SaveChangesAsync();
