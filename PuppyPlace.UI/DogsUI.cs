@@ -100,7 +100,7 @@ public class DogsUi
             {
                 try
                 {
-                    await ShowDog(await _dogsService.FindDog(dog.Id));
+                    await ShowDog(await _dogsService.FindDogWithOwner(dog.Id));
                 }
                 catch (Exception e)
                 {
