@@ -1,9 +1,9 @@
-namespace PuppyPlace.UI;
+namespace PuppyPlace.Ui;
 
 public static class ConsoleMainMenu
 {
-    private static readonly PersonUI _personUi = DI.PersonUi;
-    private static readonly DogsUI _dogsUi = DI.DogsUi;
+    private static readonly PersonUi _personUi = DI.PersonUi;
+    private static readonly DogsUi _dogsUi = DI.DogsUi;
     public static async Task Show()
     {
         while (true)
