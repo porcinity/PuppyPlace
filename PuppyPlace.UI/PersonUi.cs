@@ -1,14 +1,14 @@
 using PuppyPlace.Domain;
 using PuppyPlace.Service;
 
-namespace PuppyPlace.UI;
+namespace PuppyPlace.Ui;
 
-public class PersonUI
+public class PersonUi
 {
     private readonly PersonsService _personsService;
     private readonly DogsService _dogsService;
     
-    public PersonUI(PersonsService personsService, DogsService dogsService)
+    public PersonUi(PersonsService personsService, DogsService dogsService)
     {
         _personsService = personsService;
         _dogsService = dogsService;
