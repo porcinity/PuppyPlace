@@ -1,15 +1,15 @@
 using PuppyPlace.Domain;
 using PuppyPlace.Service;
 
-namespace PuppyPlace.UI;
+namespace PuppyPlace.Ui;
 
-public class DogsUI
+public class DogsUi
 {
     private readonly DogsService _dogsService;
 
     private readonly PersonsService _personsService;
 
-    public DogsUI(DogsService dogsService, PersonsService personsService)
+    public DogsUi(DogsService dogsService, PersonsService personsService)
     {
         _dogsService = dogsService;
         _personsService = personsService;
@@ -34,8 +34,7 @@ public class DogsUI
         
         Console.WriteLine($"Please insert {newDogName}'s age:");
         var newDogAge = Console.ReadLine();
-        var intAge = Int32.Parse(newDogAge);
-        
+
         Console.Clear();
         
         Console.WriteLine($"Please insert {newDogName}'s breed:");
@@ -43,17 +42,20 @@ public class DogsUI
 
         
         Console.Clear();
-        
-        var newDog = new Dog(newDogName, intAge, newDogBreed);
-        await _dogsService.AddDogDb(newDog);
+        if (newDogAge is not null && newDogName is not null && newDogBreed is not null)
+        {
+            var intAge = int.Parse(newDogAge);
+            var newDog = new Dog(newDogName, intAge, newDogBreed);
+            await _dogsService.AddDogDb(newDog);
 
-        Console.WriteLine("Success! We added the following information to the database:" +
-                          "\n==========================================================" +
-                          $"\nName: {newDog.Name}" +
-                          $"\nAge: {newDogAge}" +
-                          $"\nBreed: {newDogBreed}" +
-                          $"\n========================================================="
-        );
+            Console.WriteLine("Success! We added the following information to the database:" +
+                              "\n==========================================================" +
+                              $"\nName: {newDog.Name}" +
+                              $"\nAge: {newDogAge}" +
+                              $"\nBreed: {newDogBreed}" +
+                              $"\n========================================================="
+            );
+        }
         await ConsoleMainMenu.Show();
     }
 
@@ -94,15 +96,19 @@ public class DogsUI
         {
             var dogIndex = charIntEntered - 1;
             var dog = dogs.ElementAtOrDefault(dogIndex);
-            try
+            if (dog is not null)
             {
-                await ShowDog(await _dogsService.FindDog(dog.Id));
+                try
+                {
+                    await ShowDog(await _dogsService.FindDog(dog.Id));
+                }
+                catch (Exception e)
+                {
+                    ConsoleMainMenu.ShowInvalidMessage();
+                    await ConsoleMainMenu.Show();
+                }
             }
-            catch (Exception e)
-            {
-                ConsoleMainMenu.ShowInvalidMessage();
-                await ConsoleMainMenu.Show();
-            }
+            
         }
     }
 
@@ -218,9 +224,12 @@ public class DogsUI
         Console.WriteLine($"Previous: {dog.Name}");
         Console.WriteLine("Enter updated name:");
         var userInput = Console.ReadLine();
-        dog.Name = userInput;
-        await _dogsService.UpdateDog(dog);
-        Console.WriteLine("Success!");
+        if (userInput is not null)
+        {
+            dog.Name = userInput;
+            await _dogsService.UpdateDog(dog);
+            Console.WriteLine("Success!");
+        }
         await ConsoleMainMenu.Show();
     }
 
@@ -230,10 +239,13 @@ public class DogsUI
         Console.WriteLine($"Previous: {dog.Age}");
         Console.WriteLine("Enter updated age:");
         var userInput = Console.ReadLine();
-        var intAge = int.Parse(userInput);
-        dog.Age = intAge;
-        await _dogsService.UpdateDog(dog);
-        Console.WriteLine("Success!");
+        if (userInput is not null)
+        {
+            var intAge = int.Parse(userInput);
+            dog.Age = intAge;
+            await _dogsService.UpdateDog(dog);
+            Console.WriteLine("Success!");
+        }
         await ConsoleMainMenu.Show();
     }
     
@@ -243,9 +255,12 @@ public class DogsUI
         Console.WriteLine($"Previous: {dog.Breed}");
         Console.WriteLine("Enter updated breed:");
         var userInput = Console.ReadLine();
-        dog.Breed = userInput;
-        await _dogsService.UpdateDog(dog);
-        Console.WriteLine("Success!");
+        if (userInput is not null)
+        {
+            dog.Breed = userInput;
+            await _dogsService.UpdateDog(dog);
+            Console.WriteLine("Success!");
+        }
         await ConsoleMainMenu.Show();
     }
 
