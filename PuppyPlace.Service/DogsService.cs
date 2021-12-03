@@ -26,9 +26,7 @@ public class DogsService
 
     public async Task<Dog?> FindDog(Guid id)
     {
-        return await _context.Dogs
-            .Include(d => d.Owner)
-            .FirstOrDefaultAsync(m => m.Id == id);
+        return await _context.Dogs.FirstOrDefaultAsync(m => m.Id == id);
     }
 
     public async Task UpdateDog(Dog dog)
