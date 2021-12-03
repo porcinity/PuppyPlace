@@ -14,8 +14,8 @@ public class Dog
     [Required]
     public string Breed { get; set; }
     [Column]
-    public Person? Owner { get; set; }
-    public Guid? OwnerId { get; set; }
+    public virtual Person? Owner { get; set; }
+    public virtual Guid? OwnerId { get; set; }
     public Dog(string name, int age, string breed)
     {
         Id = Guid.NewGuid();
