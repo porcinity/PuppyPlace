@@ -55,8 +55,10 @@ public class DogsUi
                               $"\nBreed: {newDogBreed}" +
                               $"\n========================================================="
             );
+            Thread.Sleep(1500);
+            await ConsoleMainMenu.Show();
         }
-        await ConsoleMainMenu.Show();
+       
     }
 
     public async Task ShowDogs()
@@ -100,7 +102,7 @@ public class DogsUi
             {
                 try
                 {
-                    await ShowDog(await _dogsService.FindDog(dog.Id));
+                    await ShowDog(await _dogsService.FindDogWithOwner(dog.Id));
                 }
                 catch (Exception e)
                 {
