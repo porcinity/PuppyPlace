@@ -55,8 +55,10 @@ public class DogsUi
                               $"\nBreed: {newDogBreed}" +
                               $"\n========================================================="
             );
+            Thread.Sleep(1500);
+            await ConsoleMainMenu.Show();
         }
-        await ConsoleMainMenu.Show();
+       
     }
 
     public async Task ShowDogs()
