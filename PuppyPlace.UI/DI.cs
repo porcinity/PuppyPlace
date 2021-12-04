@@ -1,15 +1,15 @@
 using PuppyPlace.Data;
 using PuppyPlace.Service;
 
-namespace PuppyPlace.UI;
+namespace PuppyPlace.Ui;
 
 public static class DI
 {
     public static readonly PuppyPlaceContext PuppyPlaceContext = new ();
 
-    public static readonly PersonUI PersonUi = new PersonUI(new PersonsService(PuppyPlaceContext), new DogsService(DI.PuppyPlaceContext, new PersonsService(PuppyPlaceContext)));
+    public static readonly PersonUi PersonUi = new PersonUi(new PersonsService(PuppyPlaceContext), new DogsService(DI.PuppyPlaceContext, new PersonsService(PuppyPlaceContext)));
 
-    public static readonly DogsUI DogsUi =
-        new DogsUI(new DogsService(DI.PuppyPlaceContext, new PersonsService(DI.PuppyPlaceContext)),
+    public static readonly DogsUi DogsUi =
+        new DogsUi(new DogsService(DI.PuppyPlaceContext, new PersonsService(DI.PuppyPlaceContext)),
             new PersonsService(DI.PuppyPlaceContext));
 }
