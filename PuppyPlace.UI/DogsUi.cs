@@ -1,3 +1,4 @@
+using System.Text;
 using PuppyPlace.Domain;
 using PuppyPlace.Service;
 
@@ -19,28 +20,28 @@ public class DogsUi
         Console.Clear();
         Console.WriteLine("Great! Let's add a new dog!" +
                           "\n=========================");
-        
+
         Thread.Sleep(1000);
         await CreateDog();
     }
-    
+
     private async Task CreateDog()
     {
         Console.Clear();
         Console.WriteLine("Please insert the dog's name:");
         var newDogName = Console.ReadLine();
-        
+
         Console.Clear();
-        
+
         Console.WriteLine($"Please insert {newDogName}'s age:");
         var newDogAge = Console.ReadLine();
 
         Console.Clear();
-        
+
         Console.WriteLine($"Please insert {newDogName}'s breed:");
         var newDogBreed = Console.ReadLine();
 
-        
+
         Console.Clear();
         if (newDogAge is not null && newDogName is not null && newDogBreed is not null)
         {
@@ -58,7 +59,7 @@ public class DogsUi
             Thread.Sleep(1500);
             await ConsoleMainMenu.Show();
         }
-       
+
     }
 
     public async Task ShowDogs()
@@ -110,7 +111,7 @@ public class DogsUi
                     await ConsoleMainMenu.Show();
                 }
             }
-            
+
         }
     }
 
@@ -119,18 +120,75 @@ public class DogsUi
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("======================\n" + $"Name: {dog.Name}\n" + $"Age: {dog.Age}\n" + $"Breed: {dog.Breed}");
 
-            try
+            var keyValuePairs = new List<KeyValuePair>
             {
-                Console.WriteLine($"Owner: {dog.Owner.Name}");
+                new KeyValuePair
+                {
+                    Key = "Name",
+                    Value = dog.Name
+                },
+                new KeyValuePair
+                {
+                    Key = "Age",
+                    Value = dog.Age.ToString()
+                },
+                new KeyValuePair
+                {
+                    Key = "Breed",
+                    Value = dog.Breed
+                },
+                new KeyValuePair
+                {
+                    Key = "Owner",
+                    Value = dog.Owner is not null ? dog.Owner.Name : $"Owner: {dog.Name} does not have an owner yet!"
+                },
+            };
+
+            var lines = new List<string>();
+
+            foreach (var pair in keyValuePairs)
+            {
+                lines.Add($"{pair.Key}: {pair.Value}");
             }
-            catch (NullReferenceException e)
+            
+            var longestCharacterLength = lines.Max(m => m.Length);
+
+            var barBuilder = new StringBuilder();
+
+            for (int i = 0; i < longestCharacterLength; i++)
             {
-                Console.WriteLine($"Owner: {dog.Name} does not have an owner yet!");
+                barBuilder.Append("=");
             }
 
-            Console.WriteLine("======================");
+            var bar = barBuilder.ToString();
+            
+            var outputBuilder = new StringBuilder();
+
+            outputBuilder.AppendLine(bar);
+
+            foreach (var line in lines)
+            {
+                outputBuilder.AppendLine(line);
+            }
+
+            outputBuilder.AppendLine(bar);
+
+
+            var output = outputBuilder.ToString();
+            
+            Console.WriteLine(output);
+
+            // try
+            // {
+            //     Console.WriteLine($"Owner: {dog.Owner.Name}");
+            // }
+            // catch (NullReferenceException e)
+            // {
+            //     Console.WriteLine($"Owner: {dog.Name} does not have an owner yet!");
+            // }
+
+            // Console.WriteLine("======================");
 
             Console.WriteLine("(a)dd owner, (u)pdate information, (d)elete, (b)ack:");
             var userChoice = Console.ReadKey();
@@ -219,7 +277,7 @@ public class DogsUi
             break;
         }
     }
-    
+
     private async Task UpdateName(Dog dog)
     {
         Console.Clear();
@@ -250,7 +308,7 @@ public class DogsUi
         }
         await ConsoleMainMenu.Show();
     }
-    
+
     private async Task UpdateBreed(Dog dog)
     {
         Console.Clear();
