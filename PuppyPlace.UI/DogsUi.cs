@@ -46,7 +46,7 @@ public class DogsUi
         {
             var intAge = int.Parse(newDogAge);
             var newDog = new Dog(newDogName, intAge, newDogBreed);
-            await _dogsService.AddDogDb(newDog);
+            await _dogsService.AddDog(newDog);
 
             Console.WriteLine("Success! We added the following information to the database:" +
                               "\n==========================================================" +
@@ -65,6 +65,7 @@ public class DogsUi
     {
         Console.Clear();
         var dogs = await _dogsService.FindDogs();
+        // var dogs = await _dogsService.ListDogNames();
         var num = 1;
         if (dogs.Count != 0)
         {
@@ -177,7 +178,7 @@ public class DogsUi
             {
                 var adoptingPerson = persons[choice - 1];
                 // dog.Owner = adoptingPerson;
-                await _dogsService.AddOwnerDb(dog, adoptingPerson);
+                await _dogsService.AddOwner(dog, adoptingPerson);
                 var newOwner = dog.Owner.Name;
                 Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
             }
@@ -268,7 +269,7 @@ public class DogsUi
 
     public async Task DeleteDog(Dog dog)
     {
-        await _dogsService.DeleteDogDb(dog);
+        await _dogsService.DeleteDog(dog);
         await ShowDogs();
     }
 }

@@ -13,7 +13,7 @@ public class DogsService
         _context = context;
         _personsService = personsService;
     }
-    public async Task AddDogDb(Dog dog)
+    public async Task AddDog(Dog dog)
     {
         await _context.Dogs.AddAsync(dog);
         await _context.SaveChangesAsync();
@@ -42,13 +42,13 @@ public class DogsService
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteDogDb(Dog dog)
+    public async Task DeleteDog(Dog dog)
     {
         _context.Dogs.Remove(dog);
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddOwnerDb(Dog dog, Person person)
+    public async Task AddOwner(Dog dog, Person person)
     {
         dog.AddOwner(person);
         await _context.SaveChangesAsync();
