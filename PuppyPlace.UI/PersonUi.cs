@@ -35,7 +35,7 @@ public class PersonUi
         var personId = newPerson.Id;
         try
         {
-            await _personsService.AddPersonDb(newPerson);
+            await _personsService.AddPerson(newPerson);
             var addedPerson = await _personsService.FindPerson(personId);
             Console.WriteLine("Success! We add the following information to the database:" +
                               "\n========================================================" +
@@ -209,7 +209,7 @@ public class PersonUi
     
     public async Task DeletePerson(Person person)
     {
-       await _personsService.DeletePersonDb(person);
+       await _personsService.DeletePerson(person);
        await ConsoleMainMenu.Show();
     }
 }

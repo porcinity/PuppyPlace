@@ -14,7 +14,7 @@ public class PersonsService
     {
         _context = context;
     }
-    public async Task AddPersonDb(Person person)
+    public async Task AddPerson(Person person)
     {
        await _context.Persons.AddAsync(person);
        await _context.SaveChangesAsync();
@@ -53,7 +53,7 @@ public class PersonsService
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeletePersonDb(Person person)
+    public async Task DeletePerson(Person person)
     {
         _context.Persons.Remove(person);
         await _context.SaveChangesAsync();
