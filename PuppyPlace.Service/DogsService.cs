@@ -24,6 +24,11 @@ public class DogsService
         return await _context.Dogs.ToListAsync();
     }
 
+    public async Task<List<string>> ListDogNames()
+    {
+        return await _context.Dogs.Select(d => d.Name).ToListAsync();
+    }
+
     public async Task<Dog?> FindDog(Guid id)
     {
         return await _context.Dogs.FirstOrDefaultAsync(m => m.Id == id);
