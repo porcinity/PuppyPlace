@@ -24,7 +24,7 @@ public class PersonsController : ControllerBase
 
     // GET: api/Dogs
     [HttpGet]
-    public async Task<List<Person>> GetPersons()
+    public async Task<ActionResult<IEnumerable<Person>>> GetPersons()
     {
         return await _personsService.FindPersons();
     }
