@@ -14,17 +14,24 @@ namespace PuppyPlace.Api.Controllers
         {
             _dogsService = dogsService;
         }
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Dog>>> GetDogs()
         {
             return await _dogsService.FindDogs();
         }
-
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Dog>> GetDog(Guid id)
         {
             return await _dogsService.FindDog(id);
         }
         
+        [HttpPost]
+        public async Task<ActionResult<Dog>> PostDog(Dog dog)
+        {
+            await _dogsService.AddDog(dog);
+            return CreatedAtAction("GetDog", new {id = dog.Id}, dog);
+        }
     }
 }
