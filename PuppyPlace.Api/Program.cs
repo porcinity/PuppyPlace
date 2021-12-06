@@ -10,17 +10,22 @@ using PuppyPlace.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// builder.Services.AddDbContext<PuppyPlaceContext>(options =>
+//
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("PuppyPlaceContext")));
+
 builder.Services.AddDbContext<PuppyPlaceContext>(options =>
 
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PuppyPlaceContext")));
+    options.UseNpgsql(connectionString: @"Host=localhost;Username=test;Password=test;Database=PuppyPlace"));
 
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
- {
-     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
- });
 builder.Services.AddTransient<IDogsService, DogsService>();
 builder.Services.AddTransient<IPersonsService, PersonsService>();
-// builder.Services.AddTransient<IAdoptionService, AdoptionService>();
+builder.Services.AddTransient<IAdoptionService, AdoptionService>();
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
