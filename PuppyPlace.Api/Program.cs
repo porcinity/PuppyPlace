@@ -18,6 +18,10 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
  });
 builder.Services.AddDbContext<PuppyPlaceContext>(opt =>
     opt.UseNpgsql(connectionString: @"Host=localhost;Username=test;Password=test;Database=PuppyPlace"));
+
+builder.Services.AddTransient<IDogsService, DogsService>();
+builder.Services.AddTransient<IPersonsService, PersonsService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
