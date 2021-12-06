@@ -8,6 +8,11 @@ public class PuppyPlaceContext : DbContext
 {
     public DbSet<Person> Persons { get; set; }
     public DbSet<Dog> Dogs { get; set; }
+
+    public PuppyPlaceContext(DbContextOptions<PuppyPlaceContext> options) : base(options)
+    {
+        
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
