@@ -13,6 +13,10 @@ public class PuppyPlaceContext : DbContext
     {
         
     }
+    public PuppyPlaceContext()
+    {
+        
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
