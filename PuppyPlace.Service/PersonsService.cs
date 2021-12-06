@@ -4,7 +4,7 @@ using PuppyPlace.Domain;
 
 namespace PuppyPlace.Service;
 
-public class PersonsService
+public class PersonsService : IPersonsService
 {
     private readonly PuppyPlaceContext _context;
 
