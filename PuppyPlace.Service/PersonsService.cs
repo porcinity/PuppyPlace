@@ -67,4 +67,10 @@ public class PersonsService : IPersonsService
         _context.Persons.Remove(person);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task DeletePerson(Person person)
+    {
+        _context.Persons.Remove(person);
+        await _context.SaveChangesAsync();
+    }
 }
