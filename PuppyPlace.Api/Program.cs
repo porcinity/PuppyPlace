@@ -3,6 +3,12 @@ using PuppyPlace.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<PuppyPlaceContext>(options =>
+
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PuppyPlaceContext")));
+
+// ContainerConfig.Configure();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
