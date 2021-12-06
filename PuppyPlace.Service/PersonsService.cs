@@ -51,8 +51,9 @@ public class PersonsService : IPersonsService
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeletePerson(Person person)
+    public async Task DeletePerson(Guid id)
     {
+        var person = await FindPerson(id);
         _context.Persons.Remove(person);
         await _context.SaveChangesAsync();
     }
