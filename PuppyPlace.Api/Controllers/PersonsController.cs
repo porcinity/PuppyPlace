@@ -17,10 +17,10 @@ public class PersonsController : ControllerBase
 { 
     private readonly IPersonsService _personsService;
     private readonly IAdoptionService _adoptionService;
-    public PersonsController(IPersonsService personsService)
+    public PersonsController(IPersonsService personsService, IAdoptionService adoptionService)
     {
         _personsService = personsService;
-        // _adoptionService = adoptionService;
+        _adoptionService = adoptionService;
     }
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Person>>> GetPersons()
