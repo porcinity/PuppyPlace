@@ -16,13 +16,12 @@ namespace PuppyPlace.Api.Controllers;
 public class PersonsController : ControllerBase
 { 
     private readonly IPersonsService _personsService;
-
+    private readonly IAdoptionService _adoptionService;
     public PersonsController(IPersonsService personsService)
     {
         _personsService = personsService;
+        // _adoptionService = adoptionService;
     }
-
-    // GET: api/Dogs
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Person>>> GetPersons()
     {
@@ -48,7 +47,13 @@ public class PersonsController : ControllerBase
         await _personsService.AddPerson(person);
         return CreatedAtAction("GetPerson", new {id = person.Id}, person);
     }
-
+    
+    [HttpPost("{personId}/adoptdog")]
+    public async Task AdoptDog(Guid personId, Guid dogId)
+    {
+        await _adoptionService.AdoptDog(personId, dogId);
+    }
+    
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeletePerson(Guid id)
     {
