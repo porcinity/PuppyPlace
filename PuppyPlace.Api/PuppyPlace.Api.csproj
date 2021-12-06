@@ -17,6 +17,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PuppyPlace.Data\PuppyPlace.Data.csproj" />
+      <ProjectReference Include="..\PuppyPlace.Service\PuppyPlace.Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models" />
     </ItemGroup>
 
 </Project>
