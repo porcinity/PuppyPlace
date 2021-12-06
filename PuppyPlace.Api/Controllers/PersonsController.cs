@@ -24,8 +24,14 @@ public class PersonsController : ControllerBase
 
     // GET: api/Dogs
     [HttpGet]
-    public async Task<List<Person>> GetPerson()
+    public async Task<List<Person>> GetPersons()
     {
         return await _personsService.FindPersons();
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<Person> GetPerson(Guid id)
+    {
+        return await _personsService.FindPerson(id);
     }
 }
