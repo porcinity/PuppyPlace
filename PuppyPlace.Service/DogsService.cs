@@ -4,7 +4,7 @@ using PuppyPlace.Domain;
 
 namespace PuppyPlace.Service;
 
-public class DogsService
+public class DogsService : IDogsService
 {
     private readonly PuppyPlaceContext _context;
     private readonly PersonsService _personsService;
@@ -18,7 +18,6 @@ public class DogsService
         await _context.Dogs.AddAsync(dog);
         await _context.SaveChangesAsync();
     }
-
     public async Task<List<Dog>> FindDogs()
     {
         return await _context.Dogs.ToListAsync();
@@ -52,7 +51,12 @@ public class DogsService
         _context.Dogs.Remove(dog);
         await _context.SaveChangesAsync();
     }
-
+    public async Task DeleteDog(Guid id)
+    {
+        var dog = await FindDog(id);
+        _context.Dogs.Remove(dog);
+        await _context.SaveChangesAsync();
+    }
     public async Task AddOwner(Dog dog, Person person)
     {
         dog.AddOwner(person);
