@@ -8,18 +8,6 @@ public class PuppyPlaceContext : DbContext
 {
     public DbSet<Person> Persons { get; set; }
     public DbSet<Dog> Dogs { get; set; }
-    // protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-    //     modelBuilder
-    //         .Entity<Person>()
-    //         .HasMany(m => m.Dogs)
-    //         .WithOne(m => m.Owner)
-    //         .OnDelete(DeleteBehavior.Cascade);
-    //
-    //     modelBuilder
-    //         .Entity<Dog>()
-    //         .HasOne(m => m.Owner);
-    // }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
