@@ -34,4 +34,11 @@ public class PersonsController : ControllerBase
     {
         return await _personsService.FindPerson(id);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<Person>> PostPerson(Person person)
+    {
+        await _personsService.AddPerson(person);
+        return CreatedAtAction("GetPerson", new {id = person.Id}, person);
+    }
 }
