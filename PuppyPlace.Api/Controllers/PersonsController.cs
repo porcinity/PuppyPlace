@@ -48,4 +48,11 @@ public class PersonsController : ControllerBase
         await _personsService.AddPerson(person);
         return CreatedAtAction("GetPerson", new {id = person.Id}, person);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeletePerson(Guid id)
+    {
+        await _personsService.DeletePerson(id);
+        return NoContent();
+    }
 }
