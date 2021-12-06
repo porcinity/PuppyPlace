@@ -10,7 +10,7 @@ public class Person
     [Required]
     public string Name { get; set; }
     [Column] 
-    public virtual List<Dog> Dogs { get; set; } = new List<Dog>();
+    public List<Dog> Dogs { get; set; } = new List<Dog>();
     public Person(string name)
     {
         Name = name;
