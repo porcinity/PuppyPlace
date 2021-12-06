@@ -4,14 +4,15 @@ namespace PuppyPlace.Service;
 
 public class AdoptionService : IAdoptionService
 {
-    private readonly PersonsService _personsService;
-    private readonly DogsService _dogsService;
-    // private readonly PuppyPlaceContext _context;
+    private readonly IPersonsService _personsService;
+    private readonly IDogsService _dogsService;
+    private readonly PuppyPlaceContext _context;
 
-    public AdoptionService(DogsService dogsService, PersonsService personsService)
+    public AdoptionService(PuppyPlaceContext puppyPlaceContext, IDogsService dogsService, IPersonsService personsService)
     {
         _personsService = personsService;
         _dogsService = dogsService;
+        _context = puppyPlaceContext;
     }
 
     public async Task AdoptDog(Guid personId, Guid dogId)
@@ -19,7 +20,9 @@ public class AdoptionService : IAdoptionService
         var person = await _personsService.FindPerson(personId);
         var dog = await _dogsService.FindDog(dogId);
         
-        await _dogsService.AddOwner(dog, person);
-        // await _context.SaveChangesAsync();
+        dog.AddOwner(person);
+        // person.Dogs.Add(dog);
+        // await _dogsService.AddOwner()
+        await _context.SaveChangesAsync();
     }
 }
