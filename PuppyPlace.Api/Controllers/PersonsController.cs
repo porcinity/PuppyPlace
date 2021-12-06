@@ -30,9 +30,16 @@ public class PersonsController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<Person> GetPerson(Guid id)
+    public async Task<ActionResult<Person>> GetPerson(Guid id)
     {
-        return await _personsService.FindPerson(id);
+        var person = await _personsService.FindPerson(id);
+
+        if (person == null)
+        {
+            return NotFound();
+        }
+
+        return person;
     }
 
     [HttpPost]
