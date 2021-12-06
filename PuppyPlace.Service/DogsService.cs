@@ -7,11 +7,11 @@ namespace PuppyPlace.Service;
 public class DogsService : IDogsService
 {
     private readonly PuppyPlaceContext _context;
-    private readonly PersonsService _personsService;
-    public DogsService(PuppyPlaceContext context, PersonsService personsService)
+    // private readonly PersonsService _personsService;
+    public DogsService(PuppyPlaceContext context)
     {
         _context = context;
-        _personsService = personsService;
+        // _personsService = personsService;
     }
     public async Task AddDog(Dog dog)
     {
@@ -45,7 +45,12 @@ public class DogsService : IDogsService
         _context.Dogs.Update(dog);
         await _context.SaveChangesAsync();
     }
-
+    public async Task UpdateDog (Guid id)
+    {
+        var dog = await FindDog(id);
+        _context.Dogs.Update(dog);
+        await _context.SaveChangesAsync();
+    }
     public async Task DeleteDog(Dog dog)
     {
         _context.Dogs.Remove(dog);
