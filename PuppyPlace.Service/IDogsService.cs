@@ -7,5 +7,6 @@ public interface IDogsService
     Task<List<Dog>> FindDogs();
     Task<Dog> FindDog(Guid id);
     Task AddDog(Dog dog);
+    Task UpdateDog(Dog dog);
     Task DeleteDog(Guid id);
 }
