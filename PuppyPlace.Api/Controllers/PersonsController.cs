@@ -54,6 +54,36 @@ public class PersonsController : ControllerBase
         await _adoptionService.AdoptDog(personId, dogId);
     }
     
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutPerson(Guid id, Person person)
+    {
+        if (id != person.Id)
+        {
+            return BadRequest();
+        }
+
+        // _context.Entry(todoItem).State = EntityState.Modified;
+        //
+        // try
+        // {
+        //     await _context.SaveChangesAsync();
+        // }
+        // catch (DbUpdateConcurrencyException)
+        // {
+        //     if (!TodoItemExists(id))
+        //     {
+        //         return NotFound();
+        //     }
+        //     else
+        //     {
+        //         throw;
+        //     }
+        // }
+
+        await _personsService.UpdatePerson(person);
+        return NoContent();
+    }
+    
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeletePerson(Guid id)
     {
