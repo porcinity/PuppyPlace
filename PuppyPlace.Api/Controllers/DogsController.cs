@@ -33,6 +33,18 @@ namespace PuppyPlace.Api.Controllers
             await _dogsService.AddDog(dog);
             return CreatedAtAction("GetDog", new {id = dog.Id}, dog);
         }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutDog(Guid id, Dog dog)
+        {
+            if (id != dog.Id)
+            {
+                return BadRequest();
+            }
+
+            await _dogsService.UpdateDog(dog);
+            return NoContent();
+        }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDog(Guid id)
