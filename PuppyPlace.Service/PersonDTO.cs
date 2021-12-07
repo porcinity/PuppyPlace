@@ -1,6 +1,11 @@
-namespace PuppyPlace.Domain;
+using System.ComponentModel.DataAnnotations;
+
+namespace PuppyPlace.Service;
 
 public class PersonDTO
 {
-    public string name { get; set; }
+    [Key]
+    public Guid Id { get; set; }
+    [Required]
+    public string Name { get; set; }
 }

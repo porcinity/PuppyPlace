@@ -4,38 +4,19 @@ using PuppyPlace.Domain;
 
 namespace PuppyPlace.Repository;
 
-public class PersonsService : IPersonsService
+public class PersonsRepository : IPersonsRepository
 {
     private readonly PuppyPlaceContext _context;
-    public PersonsService(PuppyPlaceContext context)
+    public PersonsRepository(PuppyPlaceContext context)
     {
         _context = context;
     }
-    public async Task AddPerson(Person person)
+    
+    public IQueryable<Person> FindPersons()
     {
-       await _context.Persons.AddAsync(person);
-       await _context.SaveChangesAsync();
+        return _context.Persons.AsNoTracking();
     }
-
-    public async Task AdoptDog(Person person, Dog dog)
-    {
-        person.AddDog(dog);
-        await _context.SaveChangesAsync();
-    }
-
-    // public async Task AdoptDog(Guid personId, Guid dogId)
-    // {
-    //     var person = await FindPerson(personId);
-    //     var dog = await _dogsService.FindDog(dogId);
-    //     person.AddDog(dog);
-    //     await _context.SaveChangesAsync();
-    // }
-
-    public async Task<List<Person>> FindPersons()
-    {
-        return await _context.Persons.ToListAsync();
-    }
-
+    
     public async Task<Person> FindPerson(Guid id)
     {
         try
@@ -52,6 +33,18 @@ public class PersonsService : IPersonsService
         }
     }
     
+    public async Task AddPerson(Person person)
+    {
+       await _context.Persons.AddAsync(person);
+       await _context.SaveChangesAsync();
+    }
+
+    public async Task AdoptDog(Person person, Dog dog)
+    {
+        person.AddDog(dog);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task UpdatePerson(Person person)
     {
         _context.Persons.Update(person);

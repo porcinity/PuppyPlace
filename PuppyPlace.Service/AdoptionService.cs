@@ -1,6 +1,6 @@
 using PuppyPlace.Data;
 
-namespace PuppyPlace.Repository;
+namespace PuppyPlace.Service;
 
 public class AdoptionService : IAdoptionService
 {
@@ -20,7 +20,7 @@ public class AdoptionService : IAdoptionService
         var person = await _personsService.FindPerson(personId);
         var dog = await _dogsService.FindDog(dogId);
         
-        dog.AddOwner(person);
+        dog.OwnerId = personId;
         // person.Dogs.Add(dog);
         // await _dogsService.AddOwner()
         await _context.SaveChangesAsync();

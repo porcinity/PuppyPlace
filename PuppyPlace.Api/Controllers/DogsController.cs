@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Domain;
-using PuppyPlace.Repository;
+using PuppyPlace.Service;
+
 
 namespace PuppyPlace.Api.Controllers
 {
@@ -16,41 +17,41 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DogDTO>>> GetDogs()
+        public async Task<IEnumerable<DogDTO>> GetDogs()
         {
             return await _dogsService.FindDogs();
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<Dog>> GetDog(Guid id)
+        public async Task<ActionResult<DogDTO>> GetDog(Guid id)
         {
-            return await _dogsService.FindDogWithOwner(id);
+            return await _dogsService.FindDog(id);
         }
         
         [HttpPost]
-        public async Task<ActionResult<Dog>> PostDog(Dog dog)
+        public async Task<ActionResult<Dog>> PostDog(DogDTO dogDto)
         {
-            await _dogsService.AddDog(dog);
-            return CreatedAtAction("GetDog", new {id = dog.Id}, dog);
+            await _dogsService.AddDog(dogDto);
+            return CreatedAtAction("GetDog", new {id = dogDto.Id}, dogDto);
         }
         
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDog(Guid id, Dog dog)
-        {
-            if (id != dog.Id)
-            {
-                return BadRequest();
-            }
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> PutDog(Guid id, Dog dog)
+        // {
+        //     if (id != dog.Id)
+        //     {
+        //         return BadRequest();
+        //     }
+        //
+        //     await _dogsService.UpdateDog(dog);
+        //     return NoContent();
+        // }
 
-            await _dogsService.UpdateDog(dog);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteDog(Guid id)
-        {
-            await _dogsService.DeleteDog(id);
-            return NoContent();
-        }
+        // [HttpDelete("{id}")]
+        // public async Task<ActionResult> DeleteDog(Guid id)
+        // {
+        //     await _dogsService.DeleteDog(id);
+        //     return NoContent();
+        // }
     }
 }

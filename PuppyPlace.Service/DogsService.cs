@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using PuppyPlace.Domain;
 using PuppyPlace.Repository;
 
-namespace PuppyPlace.Domain;
+namespace PuppyPlace.Service;
 
-public class DogsService
+public class DogsService : IDogsService
 {
-    private readonly DogsRepository _dogsRepository;
+    private readonly IDogsRepository _dogsRepository;
 
-    public DogsService(DogsRepository dogsRepository)
+    public DogsService(IDogsRepository dogsRepository)
     {
         _dogsRepository = dogsRepository;
     }
@@ -33,5 +34,11 @@ public class DogsService
     {
         var dog = await _dogsRepository.FindDog(id);
         return ItemToDTO(dog);
+    }
+    
+    public async Task AddDog(DogDTO dogDto)
+    {
+        var dog = new Dog(dogDto.Name, dogDto.Age, dogDto.Breed);
+        await _dogsRepository.AddDog(dog);
     }
 }

@@ -2,11 +2,10 @@ using PuppyPlace.Domain;
 
 namespace PuppyPlace.Repository;
 
-public interface IPersonsService
+public interface IPersonsRepository
 {
-    Task<List<Person>> FindPersons();
+    IQueryable<Person> FindPersons();
     Task<Person> FindPerson(Guid id);
-    // Task AdoptDog(Guid personId, Guid dogId);
     Task AddPerson(Person person);
     Task UpdatePerson(Person person);
     Task DeletePerson(Guid id);

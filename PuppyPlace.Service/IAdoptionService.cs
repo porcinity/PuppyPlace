@@ -1,4 +1,4 @@
-namespace PuppyPlace.Repository;
+namespace PuppyPlace.Service;
 
 public interface IAdoptionService
 {

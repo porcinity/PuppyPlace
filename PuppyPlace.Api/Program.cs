@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Data;
 using Newtonsoft.Json;
 using PuppyPlace.Repository;
+using PuppyPlace.Service;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddDbContext<PuppyPlaceContext>(options =>
 
     options.UseNpgsql(builder.Configuration.GetConnectionString("PuppyPlaceContext")));
 
+builder.Services.AddTransient<IDogsRepository, DogsRepository>();
+builder.Services.AddTransient<IPersonsRepository, PersonsRepository>();
 builder.Services.AddTransient<IDogsService, DogsService>();
 builder.Services.AddTransient<IPersonsService, PersonsService>();
 builder.Services.AddTransient<IAdoptionService, AdoptionService>();

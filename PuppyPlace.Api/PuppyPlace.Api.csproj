@@ -18,6 +18,7 @@
     <ItemGroup>
       <ProjectReference Include="..\PuppyPlace.Data\PuppyPlace.Data.csproj" />
       <ProjectReference Include="..\PuppyPlace.Repository\PuppyPlace.Repository.csproj" />
+      <ProjectReference Include="..\PuppyPlace.Service\PuppyPlace.Service.csproj" />
     </ItemGroup>
 
     <ItemGroup>
