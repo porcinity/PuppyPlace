@@ -4,21 +4,10 @@ using PuppyPlace.Domain;
 
 namespace PuppyPlace.Repository;
 
-public class DogsService : IDogsService
+public class DogsRepository
 {
     private readonly PuppyPlaceContext _context;
-    
-    private static DogDTO ItemToDTO(Dog dog) =>
-        new DogDTO
-        {
-            Id = dog.Id,
-            Name = dog.Name,
-            Age = dog.Age,
-            Breed = dog.Breed,
-            OwnerId = dog.OwnerId
-        };
-    
-    public DogsService(PuppyPlaceContext context)
+    public DogsRepository(PuppyPlaceContext context)
     {
         _context = context;
     }
@@ -27,10 +16,16 @@ public class DogsService : IDogsService
         await _context.Dogs.AddAsync(dog);
         await _context.SaveChangesAsync();
     }
-    public async Task<List<DogDTO>> FindDogs()
+    public IQueryable<Dog> FindDogs()
     {
-        return await _context.Dogs.Select(x => ItemToDTO(x)).ToListAsync();
+        return  _context.Dogs.AsNoTracking();
     }
+
+    // public async Task<List<Dog>> FindDogs()
+    // {
+    //     return await _context.Dogs.ToListAsync();
+    // }
+    
 
     public async Task<List<string>> ListDogNames()
     {
