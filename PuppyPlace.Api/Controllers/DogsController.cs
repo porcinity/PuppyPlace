@@ -17,9 +17,9 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpGet]
-        public async Task<IEnumerable<DogDTO>> GetDogs()
+        public async Task<ActionResult<IEnumerable<DogDTO>>> GetDogs()
         {
-            return await _dogsService.FindDogs();
+            return Ok(await _dogsService.FindDogs());
         }
         
         [HttpGet("{id}")]
@@ -35,23 +35,23 @@ namespace PuppyPlace.Api.Controllers
             return CreatedAtAction("GetDog", new {id = dogDto.Id}, dogDto);
         }
         
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutDog(Guid id, Dog dog)
-        // {
-        //     if (id != dog.Id)
-        //     {
-        //         return BadRequest();
-        //     }
-        //
-        //     await _dogsService.UpdateDog(dog);
-        //     return NoContent();
-        // }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutDog(Guid id, DogDTO dogDto)
+        {
+            if (id != dogDto.Id)
+            {
+                return BadRequest();
+            }
+        
+            await _dogsService.UpdateDog(dogDto);
+            return NoContent();
+        }
 
-        // [HttpDelete("{id}")]
-        // public async Task<ActionResult> DeleteDog(Guid id)
-        // {
-        //     await _dogsService.DeleteDog(id);
-        //     return NoContent();
-        // }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteDog(Guid id)
+        {
+            await _dogsService.DeleteDog(id);
+            return NoContent();
+        }
     }
 }
