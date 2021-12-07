@@ -45,8 +45,8 @@ public class PersonsService : IPersonsService
         await _personsRepository.UpdatePerson(person);
     }
 
-    // public Task DeletePerson()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    public async Task DeletePerson(Guid id)
+    {
+        await _personsRepository.DeletePerson(id);
+    }
 }
