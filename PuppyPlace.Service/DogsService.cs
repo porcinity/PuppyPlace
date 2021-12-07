@@ -8,6 +8,16 @@ public class DogsService : IDogsService
 {
     private readonly PuppyPlaceContext _context;
     
+    private static DogDTO ItemToDTO(Dog dog) =>
+        new DogDTO
+        {
+            Id = dog.Id,
+            Name = dog.Name,
+            Age = dog.Age,
+            Breed = dog.Breed,
+            OwnerId = dog.OwnerId
+        };
+    
     public DogsService(PuppyPlaceContext context)
     {
         _context = context;
@@ -17,9 +27,9 @@ public class DogsService : IDogsService
         await _context.Dogs.AddAsync(dog);
         await _context.SaveChangesAsync();
     }
-    public async Task<List<Dog>> FindDogs()
+    public async Task<List<DogDTO>> FindDogs()
     {
-        return await _context.Dogs.ToListAsync();
+        return await _context.Dogs.Select(x => ItemToDTO(x)).ToListAsync();
     }
 
     public async Task<List<string>> ListDogNames()
