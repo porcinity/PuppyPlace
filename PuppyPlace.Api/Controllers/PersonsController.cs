@@ -18,7 +18,7 @@ public class PersonsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PersonDTO>>> GetPersons()
     {
-        return await _personsService.FindPersons();
+        return Ok(await _personsService.FindPersons());
     }
     
     [HttpGet("{id}")]
@@ -47,40 +47,22 @@ public class PersonsController : ControllerBase
         await _adoptionService.AdoptDog(personId, dogId);
     }
     
-    // [HttpPut("{id}")]
-    // public async Task<IActionResult> PutPerson(Guid id, Person person)
-    // {
-    //     if (id != person.Id)
-    //     {
-    //         return BadRequest();
-    //     }
-    //
-    //     // _context.Entry(todoItem).State = EntityState.Modified;
-    //     //
-    //     // try
-    //     // {
-    //     //     await _context.SaveChangesAsync();
-    //     // }
-    //     // catch (DbUpdateConcurrencyException)
-    //     // {
-    //     //     if (!TodoItemExists(id))
-    //     //     {
-    //     //         return NotFound();
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         throw;
-    //     //     }
-    //     // }
-    //
-    //     await _personsService.UpdatePerson(person);
-    //     return NoContent();
-    // }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutPerson(Guid id, PersonDTO personDto)
+    {
+        if (id != personDto.Id)
+        {
+            return BadRequest();
+        }
+        
+        await _personsService.UpdatePerson(personDto);
+        return NoContent();
+    }
     
-    // [HttpDelete("{id}")]
-    // public async Task<ActionResult> DeletePerson(Guid id)
-    // {
-    //     await _personsService.DeletePerson(id);
-    //     return NoContent();
-    // }
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeletePerson(Guid id)
+    {
+        await _personsService.DeletePerson(id);
+        return NoContent();
+    }
 }
