@@ -17,7 +17,8 @@ public class PersonsService : IPersonsService
         new PersonDTO
         {
             Id = person.Id, 
-            Name = person.Name
+            Name = person.Name,
+            Dogs = person.Dogs
         };
     public async Task<IEnumerable<PersonDTO>> FindPersons()
     {
