@@ -16,7 +16,7 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Dog>>> GetDogs()
+        public async Task<ActionResult<IEnumerable<DogDTO>>> GetDogs()
         {
             return await _dogsService.FindDogs();
         }
@@ -24,7 +24,7 @@ namespace PuppyPlace.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Dog>> GetDog(Guid id)
         {
-            return await _dogsService.FindDog(id);
+            return await _dogsService.FindDogWithOwner(id);
         }
         
         [HttpPost]
