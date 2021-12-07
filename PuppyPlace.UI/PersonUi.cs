@@ -1,5 +1,5 @@
 using PuppyPlace.Domain;
-using PuppyPlace.Service;
+using PuppyPlace.Repository;
 
 namespace PuppyPlace.Ui;
 

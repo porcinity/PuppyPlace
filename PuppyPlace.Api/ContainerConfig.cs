@@ -1,6 +1,6 @@
 using Autofac;
 using PuppyPlace.Data;
-using PuppyPlace.Service;
+using PuppyPlace.Repository;
 
 namespace PuppyPlace.Api;
 

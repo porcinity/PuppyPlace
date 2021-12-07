@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Data", "PuppyPla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Domain", "PuppyPlace.Domain\PuppyPlace.Domain.csproj", "{2D367341-9DFE-46E4-8B6A-2D1F55258A42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Service", "PuppyPlace.Service\PuppyPlace.Service.csproj", "{758102ED-0512-4EDA-B982-F90288A807D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Repository", "PuppyPlace.Repository\PuppyPlace.Repository.csproj", "{758102ED-0512-4EDA-B982-F90288A807D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Api", "PuppyPlace.Api\PuppyPlace.Api.csproj", "{F58F12E2-203C-4C41-A43F-23408D697531}"
 EndProject

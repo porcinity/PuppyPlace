@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Data;
 using PuppyPlace.Domain;
 
-namespace PuppyPlace.Service;
+namespace PuppyPlace.Repository;
 
 public class DogsService : IDogsService
 {

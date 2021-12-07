@@ -1,6 +1,6 @@
 using PuppyPlace.Domain;
 
-namespace PuppyPlace.Service;
+namespace PuppyPlace.Repository;
 
 public interface IDogsService
 {

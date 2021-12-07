@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Data;
 using Newtonsoft.Json;
-using PuppyPlace.Service;
+using PuppyPlace.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

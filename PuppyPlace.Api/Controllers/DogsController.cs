@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Domain;
-using PuppyPlace.Service;
+using PuppyPlace.Repository;
 
 namespace PuppyPlace.Api.Controllers
 {

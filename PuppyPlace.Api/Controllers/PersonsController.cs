@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Domain;
 using PuppyPlace.Data;
-using PuppyPlace.Service;
+using PuppyPlace.Repository;
 
 namespace PuppyPlace.Api.Controllers;
 
