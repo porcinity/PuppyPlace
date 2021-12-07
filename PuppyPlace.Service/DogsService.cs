@@ -7,11 +7,10 @@ namespace PuppyPlace.Service;
 public class DogsService : IDogsService
 {
     private readonly PuppyPlaceContext _context;
-    // private readonly PersonsService _personsService;
+    
     public DogsService(PuppyPlaceContext context)
     {
         _context = context;
-        // _personsService = personsService;
     }
     public async Task AddDog(Dog dog)
     {
