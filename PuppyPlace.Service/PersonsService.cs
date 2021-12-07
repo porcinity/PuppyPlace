@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
@@ -18,12 +19,10 @@ public class PersonsService : IPersonsService
             Id = person.Id, 
             Name = person.Name
         };
-    public async Task<List<PersonDTO>> FindPersons()
+    public async Task<IEnumerable<PersonDTO>> FindPersons()
     {
-        return await _personsRepository
-            .FindPersons()
-            .Select(m => ItemToDTO(m))
-            .ToListAsync();
+        var persons = await _personsRepository.FindPersons();
+        return persons.Select(m => ItemToDTO(m)).ToList();
     }
 
     public async Task<PersonDTO> FindPerson(Guid id)
