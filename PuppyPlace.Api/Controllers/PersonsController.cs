@@ -15,6 +15,7 @@ public class PersonsController : ControllerBase
         _personsService = personsService;
         _adoptionService = adoptionService;
     }
+    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
     {
@@ -25,7 +26,6 @@ public class PersonsController : ControllerBase
     public async Task<ActionResult<PersonDto>> GetPerson(Guid id)
     {
         var person = await _personsService.FindPerson(id);
-
         if (person == null)
         {
             return NotFound();
