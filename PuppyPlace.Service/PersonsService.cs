@@ -21,7 +21,7 @@ public class PersonsService : IPersonsService
         };
     public async Task<IEnumerable<PersonDTO>> FindPersons()
     {
-        var persons = _personsRepository.FindPersons();
+        var persons = await _personsRepository.FindPersons();
         return persons.Select(m => ItemToDTO(m)).ToList();
     }
 
