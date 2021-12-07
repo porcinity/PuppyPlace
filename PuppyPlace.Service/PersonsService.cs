@@ -21,7 +21,7 @@ public class PersonsService : IPersonsService
         };
     public async Task<IEnumerable<PersonDTO>> FindPersons()
     {
-        var persons = await _personsRepository.FindPersons();
+        var persons = _personsRepository.FindPersons();
         return persons.Select(m => ItemToDTO(m)).ToList();
     }
 
@@ -37,6 +37,13 @@ public class PersonsService : IPersonsService
         await _personsRepository.AddPerson(person);
     }
 
+    public async Task UpdatePerson(PersonDTO personDto)
+    {
+        var person = await _personsRepository.FindPerson(personDto.Id);
+        person.Name = personDto.Name;
+        person.Id = personDto.Id;
+        await _personsRepository.UpdatePerson(person);
+    }
 
     // public Task DeletePerson()
     // {
