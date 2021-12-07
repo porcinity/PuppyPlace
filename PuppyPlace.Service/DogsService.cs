@@ -25,9 +25,8 @@ public class DogsService : IDogsService
 
     public async Task<IEnumerable<DogDTO>> FindDogs()
     {
-        return await _dogsRepository.FindDogs()
-            .Select(m => ItemToDTO(m))
-            .ToListAsync();
+        var dog = await _dogsRepository.FindDogs();
+        return dog.Select(m => ItemToDTO(m)).ToList();
     }
 
     public async Task<DogDTO> FindDog(Guid id)
@@ -40,5 +39,21 @@ public class DogsService : IDogsService
     {
         var dog = new Dog(dogDto.Name, dogDto.Age, dogDto.Breed);
         await _dogsRepository.AddDog(dog);
+    }
+
+    public async Task UpdateDog(DogDTO dogDto)
+    {
+        var dog = await _dogsRepository.FindDog(dogDto.Id);
+        dog.Id = dogDto.Id;
+        dog.Name = dogDto.Name;
+        dog.Age = dogDto.Age;
+        dog.Breed = dogDto.Breed;
+        dog.OwnerId = dogDto.OwnerId;
+        await _dogsRepository.UpdateDog(dog);
+    }
+
+    public async Task DeleteDog(Guid id)
+    {
+        await _dogsRepository.DeleteDog(id);
     }
 }
