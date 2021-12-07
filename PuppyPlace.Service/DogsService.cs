@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
 
@@ -13,7 +12,7 @@ public class DogsService : IDogsService
         _dogsRepository = dogsRepository;
     }
         
-    private static DogDTO ItemToDTO(Dog dog) =>
+    private static DogDTO ItemToDto(Dog dog) =>
         new DogDTO
         {
             Id = dog.Id,
@@ -26,13 +25,13 @@ public class DogsService : IDogsService
     public async Task<IEnumerable<DogDTO>> FindDogs()
     {
         var dog = await _dogsRepository.FindDogs();
-        return dog.Select(m => ItemToDTO(m)).ToList();
+        return dog.Select(m => ItemToDto(m)).ToList();
     }
 
     public async Task<DogDTO> FindDog(Guid id)
     {
         var dog = await _dogsRepository.FindDog(id);
-        return ItemToDTO(dog);
+        return ItemToDto(dog);
     }
     
     public async Task AddDog(DogDTO dogDto)
