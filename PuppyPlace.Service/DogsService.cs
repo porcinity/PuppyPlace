@@ -12,8 +12,8 @@ public class DogsService : IDogsService
         _dogsRepository = dogsRepository;
     }
         
-    private static DogDTO ItemToDto(Dog dog) =>
-        new DogDTO
+    private static DogDto ItemToDto(Dog dog) =>
+        new DogDto
         {
             Id = dog.Id,
             Name = dog.Name,
@@ -22,25 +22,25 @@ public class DogsService : IDogsService
             OwnerId = dog.OwnerId
         };
 
-    public async Task<IEnumerable<DogDTO>> FindDogs()
+    public async Task<IEnumerable<DogDto>> FindDogs()
     {
         var dog = await _dogsRepository.FindDogs();
         return dog.Select(m => ItemToDto(m)).ToList();
     }
 
-    public async Task<DogDTO> FindDog(Guid id)
+    public async Task<DogDto> FindDog(Guid id)
     {
         var dog = await _dogsRepository.FindDog(id);
         return ItemToDto(dog);
     }
     
-    public async Task AddDog(DogDTO dogDto)
+    public async Task AddDog(DogDto dogDto)
     {
         var dog = new Dog(dogDto.Name, dogDto.Age, dogDto.Breed);
         await _dogsRepository.AddDog(dog);
     }
 
-    public async Task UpdateDog(DogDTO dogDto)
+    public async Task UpdateDog(DogDto dogDto)
     {
         var dog = await _dogsRepository.FindDog(dogDto.Id);
         dog.Id = dogDto.Id;

@@ -2,9 +2,9 @@ namespace PuppyPlace.Service;
 
 public interface IPersonsService
 {
-    Task<IEnumerable<PersonDTO>> FindPersons();
-    Task<PersonDTO> FindPerson(Guid id);
-    Task AddPerson(PersonDTO personDto);
-    Task UpdatePerson(PersonDTO personDto);
+    Task<IEnumerable<PersonDto>> FindPersons();
+    Task<PersonDto> FindPerson(Guid id);
+    Task AddPerson(PersonDto personDto);
+    Task UpdatePerson(PersonDto personDto);
     Task DeletePerson(Guid id);
 }

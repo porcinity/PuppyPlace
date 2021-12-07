@@ -17,26 +17,26 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DogDTO>>> GetDogs()
+        public async Task<ActionResult<IEnumerable<DogDto>>> GetDogs()
         {
             return Ok(await _dogsService.FindDogs());
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<DogDTO>> GetDog(Guid id)
+        public async Task<ActionResult<DogDto>> GetDog(Guid id)
         {
             return await _dogsService.FindDog(id);
         }
         
         [HttpPost]
-        public async Task<ActionResult<Dog>> PostDog(DogDTO dogDto)
+        public async Task<ActionResult<Dog>> PostDog(DogDto dogDto)
         {
             await _dogsService.AddDog(dogDto);
             return CreatedAtAction("GetDog", new {id = dogDto.Id}, dogDto);
         }
         
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDog(Guid id, DogDTO dogDto)
+        public async Task<IActionResult> PutDog(Guid id, DogDto dogDto)
         {
             if (id != dogDto.Id)
             {

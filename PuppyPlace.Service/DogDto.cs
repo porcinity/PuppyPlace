@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PuppyPlace.Service;
 
-public class DogDTO
+public class DogDto
 {
     [Key]
     public Guid Id { get; set; }

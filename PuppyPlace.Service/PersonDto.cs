@@ -3,7 +3,7 @@ using PuppyPlace.Domain;
 
 namespace PuppyPlace.Service;
 
-public class PersonDTO
+public class PersonDto
 {
     [Key]
     public Guid Id { get; set; }

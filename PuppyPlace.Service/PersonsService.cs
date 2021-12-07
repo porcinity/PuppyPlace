@@ -11,32 +11,32 @@ public class PersonsService : IPersonsService
     {
         _personsRepository = personsRepository;
     }
-    private static PersonDTO ItemToDto(Person person) =>
-        new PersonDTO
+    private static PersonDto ItemToDto(Person person) =>
+        new PersonDto
         {
             Id = person.Id, 
             Name = person.Name,
             Dogs = person.Dogs
         };
-    public async Task<IEnumerable<PersonDTO>> FindPersons()
+    public async Task<IEnumerable<PersonDto>> FindPersons()
     {
         var persons = await _personsRepository.FindPersons();
         return persons.Select(m => ItemToDto(m)).ToList();
     }
 
-    public async Task<PersonDTO> FindPerson(Guid id)
+    public async Task<PersonDto> FindPerson(Guid id)
     {
         var person = await _personsRepository.FindPerson(id);
         return ItemToDto(person);
     }
 
-    public async Task AddPerson(PersonDTO personDto)
+    public async Task AddPerson(PersonDto personDto)
     {
         Person person = new(personDto.Name);
         await _personsRepository.AddPerson(person);
     }
 
-    public async Task UpdatePerson(PersonDTO personDto)
+    public async Task UpdatePerson(PersonDto personDto)
     {
         var person = await _personsRepository.FindPerson(personDto.Id);
         person.Name = personDto.Name;

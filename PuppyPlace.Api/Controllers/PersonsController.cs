@@ -16,13 +16,13 @@ public class PersonsController : ControllerBase
         _adoptionService = adoptionService;
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PersonDTO>>> GetPersons()
+    public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
     {
         return Ok(await _personsService.FindPersons());
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<PersonDTO>> GetPerson(Guid id)
+    public async Task<ActionResult<PersonDto>> GetPerson(Guid id)
     {
         var person = await _personsService.FindPerson(id);
 
@@ -35,7 +35,7 @@ public class PersonsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Person>> PostPerson(PersonDTO personDto)
+    public async Task<ActionResult<Person>> PostPerson(PersonDto personDto)
     {
         await _personsService.AddPerson(personDto);
         return CreatedAtAction("GetPerson", new {id = personDto.Id}, personDto);
@@ -48,7 +48,7 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutPerson(Guid id, PersonDTO personDto)
+    public async Task<IActionResult> PutPerson(Guid id, PersonDto personDto)
     {
         if (id != personDto.Id)
         {
