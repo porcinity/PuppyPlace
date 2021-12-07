@@ -21,8 +21,7 @@ public class AdoptionService : IAdoptionService
         var dog = await _dogsService.FindDog(dogId);
         
         dog.OwnerId = personId;
-        // person.Dogs.Add(dog);
-        // await _dogsService.AddOwner()
+        await _dogsService.UpdateDog(dog);
         await _context.SaveChangesAsync();
     }
 }
