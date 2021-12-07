@@ -12,10 +12,11 @@ public class PersonsRepository : IPersonsRepository
         _context = context;
     }
     
-    public async Task<IEnumerable<Person>> FindPersons()
+    public IEnumerable<Person> FindPersons()
     {
         // return  await _context.Persons.AsNoTracking().ToListAsync();
-        return await _context.Set<Person>().AsNoTracking().ToListAsync();
+        // return await _context.Set<Person>().AsNoTracking().ToListAsync()
+        return _context.Set<Person>().AsNoTracking();
     }
     
     public async Task<Person> FindPerson(Guid id)
