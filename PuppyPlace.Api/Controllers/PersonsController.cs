@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Domain;
+using PuppyPlace.Repository;
 using PuppyPlace.Service;
 
 namespace PuppyPlace.Api.Controllers;
@@ -10,18 +11,27 @@ public class PersonsController : ControllerBase
 { 
     private readonly IPersonsService _personsService;
     private readonly IAdoptionService _adoptionService;
-    public PersonsController(IPersonsService personsService, IAdoptionService adoptionService)
+    private readonly IPersonsRepository _personsRepository;
+
+    public PersonsController(IPersonsService personsService, IAdoptionService adoptionService, IPersonsRepository personsRepository)
     {
         _personsService = personsService;
         _adoptionService = adoptionService;
+        _personsRepository = personsRepository;
     }
     
+    // [HttpGet]
+    // public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
+    // {
+    //     return Ok(await _personsService.FindPersons());
+    // }
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
     {
-        return Ok(await _personsService.FindPersons());
+        return Ok(await _personsRepository.FindPersons());
     }
-    
+
     [HttpGet("{id}")]
     public async Task<ActionResult<PersonDto>> GetPerson(Guid id)
     {
