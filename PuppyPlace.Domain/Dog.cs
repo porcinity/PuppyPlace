@@ -8,6 +8,7 @@ public class Dog
     [Key]
     public Guid Id { get; set; }
     [Required]
+    [MaxLength(30,ErrorMessage = "Max length for name is 30 characters")]
     public string Name { get; set; }
     [Required]
     public int Age { get; set; }
