@@ -195,9 +195,12 @@ public class PersonUi
                 Console.Clear();
                 Console.WriteLine($"Enter the updated information for {person.Name}:");
                 var updatedField = Console.ReadLine();
-                person.Name = updatedField;
-                await _personsService.UpdatePerson(person);
-                Console.WriteLine($"Success! We've updated {person.Name}'s information.");
+                if (updatedField is not null)
+                {
+                    person.Name = updatedField;
+                    await _personsService.UpdatePerson(person);
+                    Console.WriteLine($"Success! We've updated {person.Name}'s information.");
+                }
                 break;
             default:
                 ConsoleMainMenu.ShowInvalidMessage();
