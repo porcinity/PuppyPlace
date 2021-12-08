@@ -8,7 +8,6 @@ using PuppyPlace.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<PuppyPlaceContext>(options =>
-
     options.UseNpgsql(builder.Configuration.GetConnectionString("PuppyPlaceContext")));
 
 builder.Services.AddTransient<IDogsRepository, DogsRepository>();
