@@ -21,8 +21,4 @@
       <ProjectReference Include="..\PuppyPlace.Service\PuppyPlace.Service.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Models" />
-    </ItemGroup>
-
 </Project>
