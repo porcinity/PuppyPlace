@@ -20,8 +20,6 @@ public class PuppyPlaceContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
-            // .UseLazyLoadingProxies()
-            // .UseSqlServer("Server=localhost,1433;Initial Catalog=helpme; User=sa; Password=Strong.Pwd-123")
             .UseNpgsql(@"Host=localhost;Username=test;Password=test;Database=PuppyPlace");
     }
 }
