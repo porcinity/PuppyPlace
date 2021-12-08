@@ -9,5 +9,6 @@ public class PersonDto
     public Guid Id { get; set; }
     [Required]
     public string Name { get; set; }
-    public List<Dog> Dogs { get; set; } = new List<Dog>();
+
+    public IEnumerable<Dog> Dogs { get; set; } = new List<Dog>();
 }
