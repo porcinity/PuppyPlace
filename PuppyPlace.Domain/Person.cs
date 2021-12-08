@@ -17,10 +17,11 @@ public class Person
     {
         Name = name;
         Id = Guid.NewGuid();
+        _dogs = new List<Dog>();
     }
 
     public void AddDog(Dog dog)
     {
-        Dogs.Add(dog);
+        _dogs.Add(dog);
     }
 }
