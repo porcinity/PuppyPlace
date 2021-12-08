@@ -19,12 +19,6 @@ public class PersonsController : ControllerBase
         _adoptionService = adoptionService;
         _personsRepository = personsRepository;
     }
-    
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
-    // {
-    //     return Ok(await _personsService.FindPersons());
-    // }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
