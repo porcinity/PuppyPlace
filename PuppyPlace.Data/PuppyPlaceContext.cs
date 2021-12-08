@@ -17,9 +17,17 @@ public class PuppyPlaceContext : DbContext
     {
         
     }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+    public class SqliteContext : PuppyPlaceContext
     {
-        optionsBuilder
-            .UseNpgsql(@"Host=localhost;Username=test;Password=test;Database=PuppyPlace");
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite("Data Source=/Users/anthony/source/csharp/PuppyPlace/PuppyPlace.Data/Migrations/Sqlite/db/datuh.db");
     }
+
+    public class PostgresContext : PuppyPlaceContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder options) 
+            => options.UseNpgsql(@"Host=localhost;Username=test;Password=test;Database=PuppyPlace");
+    }
+    
 }
