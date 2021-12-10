@@ -20,18 +20,15 @@ public class PersonsRepository : IPersonsRepository
     
     public async Task<Person> FindPerson(Guid id)
     {
-        try
-        {
-            return await _context
-                .Persons
+        var person = await _context.Persons
                 .Include(m => m.Dogs)
-                .FirstAsync(m => m.Id == id);
-        }
-        catch (NullReferenceException e)
+                .FirstOrDefaultAsync(m => m.Id == id);
+        if (person is null)
         {
-            Console.WriteLine(e);
-            throw;
+            return null;
         }
+
+        return person;
     }
     
     public async Task AddPerson(Person person)
