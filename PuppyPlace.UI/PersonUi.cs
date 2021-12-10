@@ -9,12 +9,14 @@ public class PersonUi : IPersonUi
     private readonly IPersonsRepository _personsRepository;
     private readonly IDogsRepository _dogsRepository;
     private readonly IAdoptionService _adoptionService;
+    private readonly IMainMenu _mainMenu;
 
-    public PersonUi(IPersonsRepository personsRepository, IDogsRepository dogsRepository, IAdoptionService adoptionService)
+    public PersonUi(IPersonsRepository personsRepository, IDogsRepository dogsRepository, IAdoptionService adoptionService, IMainMenu mainMenu)
     {
         _personsRepository = personsRepository;
         _dogsRepository = dogsRepository;
         _adoptionService = adoptionService;
+        _mainMenu = mainMenu;
     }
     public async Task AddPersonPrompt()
     {
@@ -45,7 +47,7 @@ public class PersonUi : IPersonUi
                               $"\nName: {addedPerson.Name}" +
                               $"\n=======================================================");
             Thread.Sleep(1500);
-            await ConsoleMainMenu.Show();
+            await _mainMenu.Return();
         }
         catch (Exception e)
         {
@@ -75,7 +77,7 @@ public class PersonUi : IPersonUi
        switch (userInput.Key)
        {
            case ConsoleKey.B:
-               await ConsoleMainMenu.Show();
+               await _mainMenu.Return();
                break;
            default:
                if (int.TryParse(userInput.KeyChar.ToString(), out var charIntEntered))
@@ -136,13 +138,13 @@ public class PersonUi : IPersonUi
                     await ShowPersons();
                     break;
                 case ConsoleKey.M:
-                    await ConsoleMainMenu.Show();
+                    await _mainMenu.Return();
                     break;
                 case ConsoleKey.Q:
-                    ConsoleMainMenu.Quit();
+                    _mainMenu.Quit();
                     break;
                 default:
-                    ConsoleMainMenu.ShowInvalidMessage();
+                    _mainMenu.ShowInvalidMessage();
                     continue;
             }
 
@@ -178,12 +180,12 @@ public class PersonUi : IPersonUi
             }
             catch (Exception e)
             {
-                ConsoleMainMenu.ShowInvalidMessage();
+                _mainMenu.ShowInvalidMessage();
                 await AdoptDog(person);
             }
         }
 
-        await ConsoleMainMenu.Show();
+        await _mainMenu.Return();
     }
 
     public async Task UpdatePerson(Person person)
@@ -207,16 +209,17 @@ public class PersonUi : IPersonUi
                 }
                 break;
             default:
-                ConsoleMainMenu.ShowInvalidMessage();
+                _mainMenu.ShowInvalidMessage();
                 await UpdatePerson(person);
                 break;
         }
-        await ConsoleMainMenu.Show();
+
+        await _mainMenu.Return();
     }
     
     public async Task DeletePerson(Person person)
     {
        await _personsRepository.DeletePerson(person.Id);
-       await ConsoleMainMenu.Show();
+       await _mainMenu.Return();
     }
 }

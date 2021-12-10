@@ -2,15 +2,13 @@ namespace PuppyPlace.Ui;
 
 public class ConsoleMenu : IConsoleMenu
 {
-    private readonly PersonUi PersonUi;
-    private readonly DogsUi DogsUi;
-
-    public ConsoleMenu(PersonUi personUi, DogsUi dogsUi)
+    private readonly IPersonUi _personUi;
+    private readonly IDogsUi _dogsUi;
+    public ConsoleMenu(IPersonUi personUi, IDogsUi dogsUi)
     {
-        PersonUi = personUi;
-        DogsUi = dogsUi;
+        _personUi = personUi;
+        _dogsUi = dogsUi;
     }
-        
     public async Task Show()
     {
         while (true)
@@ -21,16 +19,16 @@ public class ConsoleMenu : IConsoleMenu
             switch (userChoice.Key)
             {
                 case ConsoleKey.D1:
-                    await PersonUi.AddPersonPrompt();
+                    await _personUi.AddPersonPrompt();
                     break;
                 case ConsoleKey.D2:
-                    await DogsUi.AddDog();
+                    await _dogsUi.AddDog();
                     break;
                 case ConsoleKey.D3:
-                    await PersonUi.ShowPersons();
+                    await _personUi.ShowPersons();
                     break;
                 case ConsoleKey.D4:
-                    await DogsUi.ShowDogs();
+                    await _dogsUi.ShowDogs();
                     break;
                 case ConsoleKey.Q:
                     Quit();
