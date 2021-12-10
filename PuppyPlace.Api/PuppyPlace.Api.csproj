@@ -23,8 +23,4 @@
       <ProjectReference Include="..\PuppyPlace.Service\PuppyPlace.Service.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Commands" />
-    </ItemGroup>
-
 </Project>
