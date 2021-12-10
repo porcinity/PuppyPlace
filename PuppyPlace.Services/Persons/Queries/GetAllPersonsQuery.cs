@@ -5,7 +5,7 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Persons.Queries;
 
-public class GetAllPersonsQuery : IRequest<IEnumerable<Person>> { }
+public record GetAllPersonsQuery : IRequest<IEnumerable<Person>>;
 public class GetAllPersonsHandler : IRequestHandler<GetAllPersonsQuery, IEnumerable<Person>>
 {
     private readonly IPersonsRepository _personsRepository;
