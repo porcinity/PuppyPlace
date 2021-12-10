@@ -50,7 +50,7 @@ public class PersonsController : ControllerBase
     [HttpPost("{personId}/adoptdog")]
     public async Task AdoptDog(Guid personId, AdoptDogDto adoptDogDto)
     {
-        var dogId = adoptDogDto.id;
+        var dogId = adoptDogDto.Id;
         await _adoptionService.AdoptDog(personId, dogId);
     }
     
