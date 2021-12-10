@@ -1,11 +1,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PuppyPlace.Api.Commands;
 using PuppyPlace.Api.DataTransferObjects;
 using PuppyPlace.Api.Queries;
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
 using PuppyPlace.Service;
+using PuppyPlace.Services.Persons.Commands;
+using PuppyPlace.Services.Persons.Queries;
 using PersonDto = PuppyPlace.Service.PersonDto;
 
 namespace PuppyPlace.Api.Controllers;
@@ -28,9 +29,9 @@ public class PersonsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
+    public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons(GetAllPersonsQuery query)
     {
-        return Ok(await _mediator.Send(new GetAllPersons.Query()));
+        return Ok(await _mediator.Send(query));
     }
     
     [HttpGet("{id}")]
