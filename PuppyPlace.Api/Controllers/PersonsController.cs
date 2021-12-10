@@ -55,15 +55,10 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutPerson(Guid id, PersonDto personDto)
+    public async Task<IActionResult> PutPerson(Guid id, PutPersonCommand command)
     {
-        if (id != personDto.Id)
-        {
-            return BadRequest();
-        }
-        
-        await _personsService.UpdatePerson(personDto);
-        return NoContent();
+        command.Id = id;
+        return Ok(await _mediator.Send(command));
     }
     
     [HttpDelete("{id}")]
