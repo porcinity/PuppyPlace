@@ -4,7 +4,7 @@ using PuppyPlace.Service;
 
 namespace PuppyPlace.Ui;
 
-public class DogsUi
+public class DogsUi : IDogsUi
 {
     private readonly IDogsRepository _dogsRepository;
 
