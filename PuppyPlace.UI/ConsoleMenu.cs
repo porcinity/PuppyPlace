@@ -1,6 +1,6 @@
 namespace PuppyPlace.Ui;
 
-public class ConsoleMenu
+public class ConsoleMenu : IConsoleMenu
 {
     private readonly PersonUi PersonUi;
     private readonly DogsUi DogsUi;
