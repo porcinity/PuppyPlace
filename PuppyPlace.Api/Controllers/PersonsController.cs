@@ -29,7 +29,7 @@ public class PersonsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons()
     {
-        return Ok(await _personsRepository.FindPersons());
+        return Ok(await _mediator.Send(new GetAllPersons.Query()));
     }
     
     [HttpGet("{id}")]
