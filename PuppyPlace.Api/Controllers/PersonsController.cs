@@ -1,5 +1,7 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Api.DataTransferObjects;
+using PuppyPlace.Api.Queries;
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
 using PuppyPlace.Service;
@@ -14,12 +16,14 @@ public class PersonsController : ControllerBase
     private readonly IPersonsService _personsService;
     private readonly IAdoptionService _adoptionService;
     private readonly IPersonsRepository _personsRepository;
+    private readonly IMediator _mediator;
 
-    public PersonsController(IPersonsService personsService, IAdoptionService adoptionService, IPersonsRepository personsRepository)
+    public PersonsController(IPersonsService personsService, IAdoptionService adoptionService, IPersonsRepository personsRepository, IMediator mediator)
     {
         _personsService = personsService;
         _adoptionService = adoptionService;
         _personsRepository = personsRepository;
+        _mediator = mediator;
     }
 
     [HttpGet]
