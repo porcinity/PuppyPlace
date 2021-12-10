@@ -67,9 +67,8 @@ public class PersonsController : ControllerBase
     }
     
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeletePerson(Guid id)
+    public async Task<ActionResult> DeletePerson([FromRoute] DeletePersonCommand command)
     {
-        await _personsService.DeletePerson(id);
-        return NoContent();
+        return Ok(await _mediator.Send(command));
     }
 }
