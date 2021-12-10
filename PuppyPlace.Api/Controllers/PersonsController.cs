@@ -31,17 +31,12 @@ public class PersonsController : ControllerBase
     {
         return Ok(await _personsRepository.FindPersons());
     }
-
+    
     [HttpGet("{id}")]
-    public async Task<ActionResult<PersonDto>> GetPerson(Guid id)
+    public async Task<IActionResult> GetPerson(Guid id)
     {
-        var person = await _personsService.FindPerson(id);
-        if (person == null)
-        {
-            return NotFound();
-        }
-
-        return person;
+        var response = await _mediator.Send(new GetPersonById.Query(id));
+        return response == null ? NotFound() : Ok(response);
     }
 
     [HttpPost]
