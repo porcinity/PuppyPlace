@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Data;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ builder.Services.AddTransient<IPersonsRepository, PersonsRepository>();
 builder.Services.AddTransient<IDogsService, DogsService>();
 builder.Services.AddTransient<IPersonsService, PersonsService>();
 builder.Services.AddTransient<IAdoptionService, AdoptionService>();
-
+builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
