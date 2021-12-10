@@ -1,18 +1,19 @@
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
+using PuppyPlace.Service;
 
 namespace PuppyPlace.Ui;
 
 public class DogsUi
 {
-    private readonly DogsService _dogsService;
+    private readonly IDogsRepository _dogsRepository;
 
-    private readonly PersonsService _personsService;
+    private readonly IPersonsRepository _personsRepository;
 
-    public DogsUi(DogsService dogsService, PersonsService personsService)
+    public DogsUi(IDogsRepository dogsRepository, IPersonsRepository personsRepository)
     {
-        _dogsService = dogsService;
-        _personsService = personsService;
+        _dogsRepository = dogsRepository;
+        _personsRepository = personsRepository;
     }
     public async Task AddDog()
     {
@@ -46,7 +47,7 @@ public class DogsUi
         {
             var intAge = int.Parse(newDogAge);
             var newDog = new Dog(newDogName, intAge, newDogBreed);
-            await _dogsService.AddDog(newDog);
+            await _dogsRepository.AddDog(newDog);
 
             Console.WriteLine("Success! We added the following information to the database:" +
                               "\n==========================================================" +
@@ -64,10 +65,10 @@ public class DogsUi
     public async Task ShowDogs()
     {
         Console.Clear();
-        var dogs = await _dogsService.FindDogs();
+        var dogs = await _dogsRepository.FindDogs();
         // var dogs = await _dogsService.ListDogNames();
         var num = 1;
-        if (dogs.Count != 0)
+        if (dogs.Count() != 0)
         {
             foreach (var dog in dogs)
             {
@@ -93,7 +94,7 @@ public class DogsUi
         }
     }
 
-    public async Task SelectDog(List<Dog> dogs, char choice)
+    public async Task SelectDog(IEnumerable<Dog> dogs, char choice)
     {
         if (int.TryParse(choice.ToString(), out var charIntEntered))
         {
@@ -103,7 +104,7 @@ public class DogsUi
             {
                 try
                 {
-                    await ShowDog(await _dogsService.FindDogWithOwner(dog.Id));
+                    await ShowDog(await _dogsRepository.FindDogWithOwner(dog.Id));
                 }
                 catch (Exception e)
                 {
@@ -162,7 +163,7 @@ public class DogsUi
     {
         Console.Clear();
         Console.WriteLine($"Great! Who is adopting {dog.Name}?");
-        var persons = await _personsService.FindPersons();
+        var persons = await _personsRepository.FindPersons();
         var num = 1;
         foreach (var person in persons)
         {
@@ -176,9 +177,12 @@ public class DogsUi
         {
             try
             {
-                var adoptingPerson = persons[choice - 1];
+                var personList = persons.ToList();
+                var adoptingPerson = personList[choice - 1];
                 // dog.Owner = adoptingPerson;
-                await _dogsService.AddOwner(dog, adoptingPerson);
+                
+                // Fix this
+                // await _dogsRepository.AddOwner(dog, adoptingPerson);
                 var newOwner = dog.Owner.Name;
                 Console.WriteLine($"Success! {dog.Name} now belongs to {newOwner}");
             }
@@ -230,7 +234,7 @@ public class DogsUi
         if (userInput is not null)
         {
             dog.Name = userInput;
-            await _dogsService.UpdateDog(dog);
+            await _dogsRepository.UpdateDog(dog);
             Console.WriteLine("Success!");
         }
         await ConsoleMainMenu.Show();
@@ -246,7 +250,7 @@ public class DogsUi
         {
             var intAge = int.Parse(userInput);
             dog.Age = intAge;
-            await _dogsService.UpdateDog(dog);
+            await _dogsRepository.UpdateDog(dog);
             Console.WriteLine("Success!");
         }
         await ConsoleMainMenu.Show();
@@ -261,7 +265,7 @@ public class DogsUi
         if (userInput is not null)
         {
             dog.Breed = userInput;
-            await _dogsService.UpdateDog(dog);
+            await _dogsRepository.UpdateDog(dog);
             Console.WriteLine("Success!");
         }
         await ConsoleMainMenu.Show();
@@ -269,7 +273,7 @@ public class DogsUi
 
     public async Task DeleteDog(Dog dog)
     {
-        await _dogsService.DeleteDog(dog);
+        await _dogsRepository.DeleteDog(dog.Id);
         await ShowDogs();
     }
 }
