@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using PuppyPlace.Api.Commands;
 using PuppyPlace.Api.DataTransferObjects;
 using PuppyPlace.Api.Queries;
 using PuppyPlace.Domain;
@@ -40,10 +41,10 @@ public class PersonsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Person>> PostPerson(PersonDto personDto)
+    public async Task<ActionResult<Person>> PostPerson([FromBody] CreatePersonCommand command)
     {
-        await _personsService.AddPerson(personDto);
-        return CreatedAtAction("GetPerson", new {id = personDto.Id}, personDto);
+        var newPersonId = await _mediator.Send(command);
+        return CreatedAtAction("GetPerson", new {id = newPersonId}, newPersonId);
     }
     
     [HttpPost("{personId}/adoptdog")]
