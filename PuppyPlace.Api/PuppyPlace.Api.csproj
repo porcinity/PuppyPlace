@@ -19,7 +19,12 @@
     <ItemGroup>
       <ProjectReference Include="..\PuppyPlace.Data\PuppyPlace.Data.csproj" />
       <ProjectReference Include="..\PuppyPlace.Repository\PuppyPlace.Repository.csproj" />
+      <ProjectReference Include="..\PuppyPlace.Services\PuppyPlace.Services.csproj" />
       <ProjectReference Include="..\PuppyPlace.Service\PuppyPlace.Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands" />
     </ItemGroup>
 
 </Project>
