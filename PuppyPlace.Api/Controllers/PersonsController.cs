@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Api.DataTransferObjects;
-using PuppyPlace.Api.Queries;
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
 using PuppyPlace.Service;
@@ -35,9 +34,9 @@ public class PersonsController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPerson(Guid id)
+    public async Task<IActionResult> GetPerson([FromRoute] GetPersonByIdQuery query)
     {
-        var response = await _mediator.Send(new GetPersonById.Query(id));
+        var response = await _mediator.Send(query);
         return response == null ? NotFound() : Ok(response);
     }
 
