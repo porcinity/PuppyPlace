@@ -17,13 +17,7 @@ public class PuppyPlaceContext : DbContext
     {
         
     }
-
-    public class SqliteContext : PuppyPlaceContext
-    {
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=/Users/anthony/source/csharp/PuppyPlace/PuppyPlace.Data/Migrations/Sqlite/db/datuh.db");
-    }
-
+    
     public class PostgresContext : PuppyPlaceContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options) 
