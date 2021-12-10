@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using PuppyPlace.Api.DataTransferObjects;
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
 using PuppyPlace.Service;
+using PersonDto = PuppyPlace.Service.PersonDto;
 
 namespace PuppyPlace.Api.Controllers;
 
@@ -46,8 +48,9 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPost("{personId}/adoptdog")]
-    public async Task AdoptDog(Guid personId, Guid dogId)
+    public async Task AdoptDog(Guid personId, AdoptDogDto adoptDogDto)
     {
+        var dogId = adoptDogDto.id;
         await _adoptionService.AdoptDog(personId, dogId);
     }
     
