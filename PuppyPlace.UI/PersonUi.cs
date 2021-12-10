@@ -1,17 +1,20 @@
 using PuppyPlace.Domain;
 using PuppyPlace.Repository;
+using PuppyPlace.Service;
 
 namespace PuppyPlace.Ui;
 
 public class PersonUi
 {
-    private readonly PersonsService _personsService;
-    private readonly DogsService _dogsService;
-    
-    public PersonUi(PersonsService personsService, DogsService dogsService)
+    private readonly IPersonsRepository _personsRepository;
+    private readonly IDogsRepository _dogsRepository;
+    private readonly IAdoptionService _adoptionService;
+
+    public PersonUi(IPersonsRepository personsRepository, IDogsRepository dogsRepository, IAdoptionService adoptionService)
     {
-        _personsService = personsService;
-        _dogsService = dogsService;
+        _personsRepository = personsRepository;
+        _dogsRepository = dogsRepository;
+        _adoptionService = adoptionService;
     }
     public async Task AddPersonPrompt()
     {
@@ -35,8 +38,8 @@ public class PersonUi
         var personId = newPerson.Id;
         try
         {
-            await _personsService.AddPerson(newPerson);
-            var addedPerson = await _personsService.FindPerson(personId);
+            await _personsRepository.AddPerson(newPerson);
+            var addedPerson = await _personsRepository.FindPerson(personId);
             Console.WriteLine("Success! We add the following information to the database:" +
                               "\n========================================================" +
                               $"\nName: {addedPerson.Name}" +
@@ -57,7 +60,7 @@ public class PersonUi
     {
         // ConsoleMainMenu.ShowLoadingAnimation();
         Console.Clear();
-        var persons = await _personsService.FindPersons();
+        var persons = await _personsRepository.FindPersons();
         var personNum = 1;
         foreach (var person in persons)
         {
@@ -98,10 +101,10 @@ public class PersonUi
     {
         while (true)
         {
-            var foundPerson = await _personsService.FindPerson(id);
+            var foundPerson = await _personsRepository.FindPerson(id);
             Console.Clear();
             Console.WriteLine("====================" + $"\nName: {foundPerson.Name}");
-            if (foundPerson.Dogs.Count != 0)
+            if (foundPerson.Dogs.Count() != 0)
             {
                 Console.WriteLine("Dogs:");
                 foreach (var dog in foundPerson.Dogs)
@@ -151,7 +154,7 @@ public class PersonUi
     {
         Console.Clear();
         Console.WriteLine("Great! Let's adopt a dog!");
-        var doggies = await _dogsService.FindDogs();
+        var doggies = await _dogsRepository.FindDogs();
 
         var num = 1;
         foreach (var dog in doggies)
@@ -168,8 +171,9 @@ public class PersonUi
         {
             try
             {
-                var dogToAdopt = doggies[choice - 1];
-                await _personsService.AdoptDog(person, dogToAdopt);
+                var dogList = doggies.ToList();
+                var dogToAdopt = dogList[choice - 1];
+                await _adoptionService.AdoptDog(person.Id, dogToAdopt.Id);
                 Console.WriteLine($"Success! {person.Name} now owns {dogToAdopt.Name}!");
             }
             catch (Exception e)
@@ -198,7 +202,7 @@ public class PersonUi
                 if (updatedField is not null)
                 {
                     person.Name = updatedField;
-                    await _personsService.UpdatePerson(person);
+                    await _personsRepository.UpdatePerson(person);
                     Console.WriteLine($"Success! We've updated {person.Name}'s information.");
                 }
                 break;
@@ -212,7 +216,7 @@ public class PersonUi
     
     public async Task DeletePerson(Person person)
     {
-       await _personsService.DeletePerson(person);
+       await _personsRepository.DeletePerson(person.Id);
        await ConsoleMainMenu.Show();
     }
 }
