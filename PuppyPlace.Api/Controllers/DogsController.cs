@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Domain;
 using PuppyPlace.Service;
+using PuppyPlace.Services.Dogs.Queries;
 
 
 namespace PuppyPlace.Api.Controllers
