@@ -12,12 +12,10 @@ namespace PuppyPlace.Api.Controllers
     [ApiController]
     public class DogsController : ControllerBase
     {
-        private readonly IDogsService _dogsService;
         private readonly IMediator _mediator;
 
-        public DogsController(IDogsService dogsService, IMediator mediator)
+        public DogsController(IMediator mediator)
         {
-            _dogsService = dogsService;
             _mediator = mediator;
         }
         
@@ -41,15 +39,10 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDog(Guid id, DogDto dogDto)
+        public async Task<IActionResult> PutDog(Guid id, [FromBody] PutDogCommand command)
         {
-            if (id != dogDto.Id)
-            {
-                return BadRequest();
-            }
-        
-            await _dogsService.UpdateDog(dogDto);
-            return NoContent();
+            command.Id = id;
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
