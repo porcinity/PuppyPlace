@@ -13,17 +13,10 @@ namespace PuppyPlace.Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class PersonsController : ControllerBase
-{ 
-    private readonly IPersonsService _personsService;
-    private readonly IAdoptionService _adoptionService;
-    private readonly IPersonsRepository _personsRepository;
+{
     private readonly IMediator _mediator;
-
-    public PersonsController(IPersonsService personsService, IAdoptionService adoptionService, IPersonsRepository personsRepository, IMediator mediator)
+    public PersonsController(IAdoptionService adoptionService, IMediator mediator)
     {
-        _personsService = personsService;
-        _adoptionService = adoptionService;
-        _personsRepository = personsRepository;
         _mediator = mediator;
     }
 
