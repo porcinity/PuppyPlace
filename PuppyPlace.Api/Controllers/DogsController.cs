@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Domain;
 using PuppyPlace.Service;
+using PuppyPlace.Services.Dogs.Commands;
 using PuppyPlace.Services.Dogs.Queries;
 
 
@@ -33,10 +34,10 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<Dog>> PostDog(DogDto dogDto)
+        public async Task<ActionResult<Dog>> PostDog([FromBody] CreateDogCommand command)
         {
-            await _dogsService.AddDog(dogDto);
-            return CreatedAtAction("GetDog", new {id = dogDto.Id}, dogDto);
+            var dogId = await _mediator.Send(command);
+            return CreatedAtAction("GetDog", new {id = dogId}, dogId);
         }
         
         [HttpPut("{id}")]
