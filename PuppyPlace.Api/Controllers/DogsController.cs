@@ -53,10 +53,9 @@ namespace PuppyPlace.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteDog(Guid id)
+        public async Task<ActionResult> DeleteDog([FromRoute] DeleteDogCommand command)
         {
-            await _dogsService.DeleteDog(id);
-            return NoContent();
+            return Ok(await _mediator.Send(command));
         }
     }
 }
