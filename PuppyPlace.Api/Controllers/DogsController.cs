@@ -10,10 +10,12 @@ namespace PuppyPlace.Api.Controllers
     public class DogsController : ControllerBase
     {
         private readonly IDogsService _dogsService;
+        private readonly IMediator _mediator;
 
-        public DogsController(IDogsService dogsService)
+        public DogsController(IDogsService dogsService, IMediator mediator)
         {
             _dogsService = dogsService;
+            _mediator = mediator;
         }
         
         [HttpGet]
