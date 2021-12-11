@@ -41,10 +41,10 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPost("{personId}/adoptdog")]
-    public async Task AdoptDog(Guid personId, AdoptDogDto adoptDogDto)
+    public async Task<ActionResult> AdoptDog(Guid personId, AdoptDogCommand command)
     {
-        var dogId = adoptDogDto.Id;
-        await _adoptionService.AdoptDog(personId, dogId);
+        command.PersonId = personId;
+        return Ok(await _mediator.Send(command));
     }
     
     [HttpPut("{id}")]
