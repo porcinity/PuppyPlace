@@ -8,13 +8,11 @@ public class DogsUi : IDogsUi
 {
     private readonly IDogsRepository _dogsRepository;
     private readonly IPersonsRepository _personsRepository;
-    private readonly IMainMenu _mainMenu;
 
-    public DogsUi(IDogsRepository dogsRepository, IPersonsRepository personsRepository, IMainMenu mainMenu)
+    public DogsUi(IDogsRepository dogsRepository, IPersonsRepository personsRepository)
     {
         _dogsRepository = dogsRepository;
         _personsRepository = personsRepository;
-        _mainMenu = mainMenu;
     }
     public async Task AddDog()
     {
@@ -58,7 +56,7 @@ public class DogsUi : IDogsUi
                               $"\n========================================================="
             );
             Thread.Sleep(1500);
-            await _mainMenu.Return();
+            await ConsoleMainMenu.Show();
         }
        
     }
@@ -67,7 +65,6 @@ public class DogsUi : IDogsUi
     {
         Console.Clear();
         var dogs = await _dogsRepository.FindDogs();
-        // var dogs = await _dogsService.ListDogNames();
         var num = 1;
         if (dogs.Count() != 0)
         {
@@ -87,7 +84,7 @@ public class DogsUi : IDogsUi
         switch (userInput.Key)
         {
             case ConsoleKey.B:
-                await _mainMenu.Return();
+                await ConsoleMainMenu.Show();
                 break;
             default:
                 await SelectDog(dogs, userInput.KeyChar);
@@ -109,8 +106,8 @@ public class DogsUi : IDogsUi
                 }
                 catch (Exception e)
                 {
-                    _mainMenu.ShowInvalidMessage();
-                    await _mainMenu.Return();
+                    ConsoleMainMenu.ShowInvalidMessage();
+                    await ConsoleMainMenu.Show();
                 }
             }
             
@@ -152,7 +149,7 @@ public class DogsUi : IDogsUi
                     await DeleteDog(dog);
                     break;
                 default:
-                    _mainMenu.ShowInvalidMessage();
+                    ConsoleMainMenu.ShowInvalidMessage();
                     continue;
             }
 
@@ -189,12 +186,12 @@ public class DogsUi : IDogsUi
             }
             catch
             {
-                _mainMenu.ShowInvalidMessage();
+                ConsoleMainMenu.ShowInvalidMessage();
                 await AddOwnerToDog(dog);
             }
         }
 
-        await _mainMenu.Return();
+        await ConsoleMainMenu.Show();
     }
 
     private async Task UpdateDogPrompt(Dog dog)
@@ -217,10 +214,10 @@ public class DogsUi : IDogsUi
                     await UpdateBreed(dog);
                     break;
                 case ConsoleKey.C:
-                    await _mainMenu.Return();
+                    await ConsoleMainMenu.Show();
                     break;
                 default:
-                    _mainMenu.Return();
+                    ConsoleMainMenu.Show();
                     continue;
             }
             break;
@@ -240,7 +237,7 @@ public class DogsUi : IDogsUi
             Console.WriteLine("Success!");
         }
 
-        await _mainMenu.Return();
+        await ConsoleMainMenu.Show();
     }
 
     private async Task UpdateAge(Dog dog)
@@ -257,7 +254,7 @@ public class DogsUi : IDogsUi
             Console.WriteLine("Success!");
         }
 
-        await _mainMenu.Return();
+        await ConsoleMainMenu.Show();
     }
     
     private async Task UpdateBreed(Dog dog)
@@ -273,7 +270,7 @@ public class DogsUi : IDogsUi
             Console.WriteLine("Success!");
         }
 
-        await _mainMenu.Return();
+        await ConsoleMainMenu.Show();
     }
 
     public async Task DeleteDog(Dog dog)
