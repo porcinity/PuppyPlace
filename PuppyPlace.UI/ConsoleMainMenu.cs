@@ -2,8 +2,9 @@ namespace PuppyPlace.Ui;
 
 public static class ConsoleMainMenu
 {
-    private static readonly PersonUi PersonUi;
-    private static readonly DogsUi DogsUi;
+    private static readonly PersonUi PersonUi = DI.PersonUi;
+    private static readonly DogsUi _dogsUi = DI.DoggieUi;
+
     public static async Task Show()
     {
         while (true)
@@ -17,13 +18,13 @@ public static class ConsoleMainMenu
                     await PersonUi.AddPersonPrompt();
                     break;
                 case ConsoleKey.D2:
-                    await DogsUi.AddDog();
+                    await _dogsUi.AddDog();
                     break;
                 case ConsoleKey.D3:
                     await PersonUi.ShowPersons();
                     break;
                 case ConsoleKey.D4:
-                    await DogsUi.ShowDogs();
+                    await _dogsUi.ShowDogs();
                     break;
                 case ConsoleKey.Q:
                     Quit();
