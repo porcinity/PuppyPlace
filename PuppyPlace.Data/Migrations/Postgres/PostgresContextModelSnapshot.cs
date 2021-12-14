@@ -22,6 +22,17 @@ namespace PuppyPlace.Data.Migrations.Postgres
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("PuppyPlace.Domain.Client", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
+
             modelBuilder.Entity("PuppyPlace.Domain.Dog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -59,6 +70,30 @@ namespace PuppyPlace.Data.Migrations.Postgres
                     b.HasKey("Id");
 
                     b.ToTable("Persons");
+                });
+
+            modelBuilder.Entity("PuppyPlace.Domain.Client", b =>
+                {
+                    b.OwnsOne("PuppyPlace.Domain.Value_Ojbects.PersonValueObjects.PersonName", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("ClientId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Name");
+
+                            b1.HasKey("ClientId");
+
+                            b1.ToTable("Clients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClientId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PuppyPlace.Domain.Dog", b =>
