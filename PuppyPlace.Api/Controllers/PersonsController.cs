@@ -28,10 +28,10 @@ public class PersonsController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPerson([FromRoute] GetPersonByIdQuery query)
+    public async Task<ActionResult<GetPersonDto>> GetPerson([FromRoute] GetPersonByIdQuery query)
     {
         var response = await _mediator.Send(query);
-        return response == null ? NotFound() : Ok(response);
+        return response == null ? NotFound() : Ok(_mapper.Map<GetPersonDto>(response));
     }
 
     [HttpPost]
