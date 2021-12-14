@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PuppyPlace.Domain;
+using PuppyPlace.Domain.Value_Ojbects.PersonValueObjects;
 
 namespace PuppyPlace.Data;
 
@@ -10,9 +11,10 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
     {
         // builder.HasKey(nameof(PersonPersistence.Id));
         builder.HasKey(m => m.Id);
-        builder.OwnsOne(m => m.Name)
+        builder.OwnsOne<PersonName>("_name")
             .Property(x => x.Value)
-            .HasColumnName("Name");
+            .HasColumnName("Name")
+            .IsRequired();
     }
 }
 
