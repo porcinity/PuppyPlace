@@ -1,4 +1,4 @@
-namespace PuppyPlace.Api.DataTransferObjects;
+namespace PuppyPlace.Api.Dtos;
 
 public class AdoptDogDto
 {
