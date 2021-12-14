@@ -17,11 +17,14 @@ public class PuppyPlaceContext : DbContext
     {
         
     }
-    
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfiguration(new PersonConfiguration());
+    }
     public class PostgresContext : PuppyPlaceContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options) 
-            => options.UseNpgsql(@"Host=localhost;Username=test;Password=test;Database=PuppyPlace");
+            => options.UseNpgsql(@"Host=localhost;Username=test;Password=test;Database=TheNewPuppyPlace");
     }
     
 }

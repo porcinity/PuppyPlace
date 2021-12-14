@@ -1,5 +1,6 @@
 using MediatR;
 using PuppyPlace.Domain;
+using PuppyPlace.Domain.Value_Ojbects.PersonValueObjects;
 using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Persons.Commands;
@@ -20,7 +21,8 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, G
 
     public async Task<Guid> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
-        var person = new Person(request.Name);
+        var name = new PersonName(request.Name);
+        var person = new Person(name);
         await _personsRepository.AddPerson(person);
         return person.Id;
     }

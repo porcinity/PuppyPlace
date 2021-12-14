@@ -14,16 +14,17 @@ builder.Services.AddDbContext<PuppyPlaceContext>(options =>
 
 builder.Services.AddTransient<IDogsRepository, DogsRepository>();
 builder.Services.AddTransient<IPersonsRepository, PersonsRepository>();
-builder.Services.AddTransient<IDogsService, DogsService>();
-builder.Services.AddTransient<IPersonsService, PersonsService>();
+// builder.Services.AddTransient<IDogsService, DogsService>();
+// builder.Services.AddTransient<IPersonsService, PersonsService>();
 builder.Services.AddTransient<IAdoptionService, AdoptionService>();
 builder.Services.AddMediatR(typeof(MediatorEntry).Assembly);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
-{
-    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-});
+builder.Services.AddControllers();
+    
+//     .AddNewtonsoftJson(options =>
+// {
+//     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+// });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

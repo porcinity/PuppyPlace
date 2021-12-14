@@ -56,10 +56,6 @@ namespace PuppyPlace.Data.Migrations.Postgres
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.ToTable("Persons");
@@ -72,6 +68,30 @@ namespace PuppyPlace.Data.Migrations.Postgres
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
+                {
+                    b.OwnsOne("PuppyPlace.Domain.Value_Ojbects.PersonValueObjects.PersonName", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Name");
+
+                            b1.HasKey("PersonId");
+
+                            b1.ToTable("Persons");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PersonId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
