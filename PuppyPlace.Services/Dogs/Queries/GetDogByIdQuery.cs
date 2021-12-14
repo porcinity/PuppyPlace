@@ -19,6 +19,6 @@ public class GetDogByIdQueryHandler : IRequestHandler<GetDogByIdQuery, Dog>
     }
     public async Task<Dog> Handle(GetDogByIdQuery request, CancellationToken cancellationToken)
     {
-        return await _dogsRepository.FindDog(request.Id);
+        return await _dogsRepository.FindDogWithOwner(request.Id);
     }
 }
