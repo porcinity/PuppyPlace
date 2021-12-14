@@ -20,13 +20,7 @@ public class DogsRepository : IDogsRepository
     {
         return await _context.Dogs.AsNoTracking().ToListAsync();
     }
-
-    // public async Task<List<Dog>> FindDogs()
-    // {
-    //     return await _context.Dogs.ToListAsync();
-    // }
     
-
     public async Task<List<string>> ListDogNames()
     {
         return await _context.Dogs.Select(d => d.Name).ToListAsync();
