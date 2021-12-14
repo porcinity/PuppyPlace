@@ -28,7 +28,7 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<DogDto>> GetDog([FromRoute] GetDogByIdQuery query)
+        public async Task<ActionResult<GetDogDto>> GetDog([FromRoute] GetDogByIdQuery query)
         {
             return Ok(await _mediator.Send(query));
         }
