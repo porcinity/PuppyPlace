@@ -1,12 +1,10 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PuppyPlace.Api.DataTransferObjects;
+using PuppyPlace.Api.Dtos;
 using PuppyPlace.Domain;
-using PuppyPlace.Repository;
-using PuppyPlace.Service;
 using PuppyPlace.Services.Persons.Commands;
 using PuppyPlace.Services.Persons.Queries;
-using PersonDto = PuppyPlace.Service.PersonDto;
 
 namespace PuppyPlace.Api.Controllers;
 
@@ -15,9 +13,12 @@ namespace PuppyPlace.Api.Controllers;
 public class PersonsController : ControllerBase
 {
     private readonly IMediator _mediator;
-    public PersonsController(IAdoptionService adoptionService, IMediator mediator)
+    private readonly IMapper _mapper;
+
+    public PersonsController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpGet]
