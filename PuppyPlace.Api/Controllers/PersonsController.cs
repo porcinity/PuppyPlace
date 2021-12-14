@@ -22,7 +22,7 @@ public class PersonsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PersonDto>>> GetPersons([FromRoute] GetAllPersonsQuery query)
+    public async Task<ActionResult<IEnumerable<GetPersonDto>>> GetPersons([FromRoute] GetAllPersonsQuery query)
     {
         return Ok(await _mediator.Send(query));
     }
