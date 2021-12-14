@@ -1,5 +1,7 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using PuppyPlace.Api.Dtos;
 using PuppyPlace.Domain;
 using PuppyPlace.Service;
 using PuppyPlace.Services.Dogs.Commands;
