@@ -18,6 +18,8 @@ builder.Services.AddTransient<IDogsService, DogsService>();
 builder.Services.AddTransient<IPersonsService, PersonsService>();
 builder.Services.AddTransient<IAdoptionService, AdoptionService>();
 builder.Services.AddMediatR(typeof(MediatorEntry).Assembly);
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
