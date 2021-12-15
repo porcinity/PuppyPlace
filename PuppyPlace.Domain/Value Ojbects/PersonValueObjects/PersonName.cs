@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace PuppyPlace.Domain.Value_Ojbects.PersonValueObjects;
@@ -18,17 +19,14 @@ public record PersonName
     {
         return _value;
     }
-
+    
     private bool IsValid(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
             throw new EmptyNameException();
         }
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new WhiteSpaceNameException();
-        }
+        
         if (value.Length > 30)
         {
             throw new NameTooLongException();
@@ -43,7 +41,11 @@ public record PersonName
         {
             throw new Exception();
         }
-
+        
+        if (value.Any(c => !char.IsLetter(c)))
+        {
+            throw new InvalidOperationException("Name cannot contain special chars.");
+        }
         return true;
     }
     
