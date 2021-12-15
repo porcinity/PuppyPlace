@@ -6,6 +6,23 @@ public record PersonAge
 
     public PersonAge(int value)
     {
-        Value = value;
+        if (IsValidAge(value))
+        {
+            Value = value;
+        }
+    }
+
+    private bool IsValidAge(int value)
+    {
+        if (value < 1)
+        {
+            throw new Exception("Too young.");
+        }
+        if (value > 100)
+        {
+            throw new Exception("Too old.");
+        }
+
+        return true;
     }
 }
