@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace PuppyPlace.Domain.Value_Ojbects.PersonValueObjects;
 
 public record PersonName
@@ -5,6 +7,19 @@ public record PersonName
     private readonly string _value;
 
     public PersonName(string value)
+    {
+        if (IsValid(value))
+        {
+            _value = value;
+        }
+    }
+    public string Value => _value;
+    public override string ToString()
+    {
+        return _value;
+    }
+
+    private bool IsValid(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -18,13 +33,20 @@ public record PersonName
         {
             throw new NameTooLongException();
         }
-        _value = value;
+        
+        if (Regex.IsMatch(value, @"\s"))
+        {
+            throw new WhiteSpaceNameException();
+        }
+
+        if (Regex.IsMatch(value, @"[0-9]"))
+        {
+            throw new Exception();
+        }
+
+        return true;
     }
-    public string Value => _value;
-    public override string ToString()
-    {
-        return _value;
-    }
+    
     public static implicit operator PersonName(string value) => new PersonName(value);
 }
 
