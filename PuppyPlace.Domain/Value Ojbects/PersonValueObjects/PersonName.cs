@@ -9,7 +9,7 @@ public record PersonName
 
     public PersonName(string value)
     {
-        if (IsValid(value))
+        if (IsValidName(value))
         {
             _value = value;
         }
@@ -20,7 +20,7 @@ public record PersonName
         return _value;
     }
     
-    private bool IsValid(string value)
+    private bool IsValidName(string value)
     {
         if (string.IsNullOrEmpty(value))
         {
