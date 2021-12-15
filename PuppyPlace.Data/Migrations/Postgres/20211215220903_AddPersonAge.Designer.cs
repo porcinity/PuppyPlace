@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PuppyPlace.Data;
@@ -11,9 +12,10 @@ using PuppyPlace.Data;
 namespace PuppyPlace.Data.Migrations.Postgres
 {
     [DbContext(typeof(PuppyPlaceContext.PostgresContext))]
-    partial class PostgresContextModelSnapshot : ModelSnapshot
+    [Migration("20211215220903_AddPersonAge")]
+    partial class AddPersonAge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +74,7 @@ namespace PuppyPlace.Data.Migrations.Postgres
 
             modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
                 {
-                    b.OwnsOne("PuppyPlace.Domain.Value_Ojbects.PersonValueObjects.PersonAge", "_age", b1 =>
+                    b.OwnsOne("PuppyPlace.Domain.Value_Ojbects.PersonValueObjects.PersonAge", "Age", b1 =>
                         {
                             b1.Property<Guid>("PersonId")
                                 .HasColumnType("uuid");
@@ -107,7 +109,8 @@ namespace PuppyPlace.Data.Migrations.Postgres
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.Navigation("_age");
+                    b.Navigation("Age")
+                        .IsRequired();
 
                     b.Navigation("_name");
                 });
