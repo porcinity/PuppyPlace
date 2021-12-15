@@ -8,6 +8,7 @@ namespace PuppyPlace.Services.Persons.Commands;
 public class CreatePersonCommand : IRequest<Guid>
 {
     public string Name { get; set; }
+    public int Age { get; set; }
 }
 
 public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, Guid>
@@ -22,7 +23,8 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, G
     public async Task<Guid> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
         var name = new PersonName(request.Name);
-        var person = new Person(name);
+        var age = new PersonAge(request.Age);
+        var person = new Person(name, age);
         await _personsRepository.AddPerson(person);
         return person.Id;
     }
