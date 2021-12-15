@@ -15,14 +15,9 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
             .Property(x => x.Value)
             .HasColumnName("Name")
             .IsRequired();
+        builder.OwnsOne<PersonAge>("_age")
+            .Property(a => a.Value)
+            .HasColumnName("Age")
+            .IsRequired();
     }
-}
-
-public class PersonPersistence
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-
-    public static implicit operator Person(PersonPersistence persistence) =>
-        new Person(persistence.Name);
 }
