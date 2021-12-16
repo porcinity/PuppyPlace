@@ -10,21 +10,23 @@ public class Dog
 
     private readonly DogName _name;
     public string Name => _name.Value;
+
+    private readonly DogAge _age;
+    public int Age => _age.Value;
     
-    [Required]
-    public int Age { get; set; }
     [Required]
     public string Breed { get; set; }
     [Column]
     public Person? Owner { get; set; }
     public Guid? OwnerId { get; set; }
-    public Dog(DogName name, int age, string breed)
+    public Dog(DogName name, DogAge age, string breed)
     {
         Id = Guid.NewGuid();
         _name = name;
-        Age = age;
+        _age = age;
         Breed = breed;
     }
+    public Dog(){}
     public void AddOwner(Person owner)
     {
         Owner = owner;
