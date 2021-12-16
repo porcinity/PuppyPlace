@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace PuppyPlace.Domain.Value_Objects.DogValueObjects;
 
-public readonly record struct DogName
+public record DogName
 {
     public readonly string Value;
 
