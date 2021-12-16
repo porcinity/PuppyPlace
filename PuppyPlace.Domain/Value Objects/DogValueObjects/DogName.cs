@@ -1,14 +1,14 @@
 using System.Text.RegularExpressions;
 
-namespace PuppyPlace.Domain.Value_Ojbects.DogValueObjects;
+namespace PuppyPlace.Domain.Value_Objects.DogValueObjects;
 
 public readonly record struct DogName
 {
-    private readonly string _value;
+    public readonly string Value;
 
     private DogName(string value)
     {
-        _value = value;
+        Value = value;
     }
     public static DogName Create(string value)
     {
