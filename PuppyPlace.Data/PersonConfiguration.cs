@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PuppyPlace.Domain;
-using PuppyPlace.Domain.Value_Ojbects.PersonValueObjects;
+using PuppyPlace.Domain.Value_Objects.PersonValueObjects;
 
 namespace PuppyPlace.Data;
 

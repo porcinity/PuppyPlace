@@ -1,7 +1,6 @@
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace PuppyPlace.Domain.Value_Ojbects.PersonValueObjects;
+namespace PuppyPlace.Domain.Value_Objects.PersonValueObjects;
 
 public record PersonName
 {

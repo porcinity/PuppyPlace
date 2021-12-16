@@ -1,5 +1,5 @@
 using MediatR;
-using PuppyPlace.Domain.Value_Ojbects.PersonValueObjects;
+using PuppyPlace.Domain.Value_Objects.PersonValueObjects;
 using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Persons.Commands;
