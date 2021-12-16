@@ -24,7 +24,8 @@ public class CreateDogCommandHandler : IRequestHandler<CreateDogCommand, Guid>
     {
         var dogName = DogName.Create(request.Name);
         var dogAge = DogAge.Create(request.Age);
-        var dog = new Dog(dogName, dogAge, request.Breed);
+        var dogBreed = DogBreed.Create(request.Breed);
+        var dog = new Dog(dogName, dogAge, dogBreed);
         await _dogsRepository.AddDog(dog);
         return dog.Id;
     }
