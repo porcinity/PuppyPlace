@@ -14,9 +14,13 @@ public class DogConfiguration : IEntityTypeConfiguration<Dog>
             .Property(x => x.Value)
             .HasColumnName("Name")
             .IsRequired();
-        builder.OwnsOne<DogName>("_age")
+        builder.OwnsOne<DogAge>("_age")
             .Property(x => x.Value)
             .HasColumnName("Age")
+            .IsRequired();
+        builder.OwnsOne<DogBreed>("_breed")
+            .Property(x => x.Value)
+            .HasColumnName("Breed")
             .IsRequired();
     }
 }
