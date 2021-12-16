@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PuppyPlace.Data;
@@ -11,9 +12,10 @@ using PuppyPlace.Data;
 namespace PuppyPlace.Data.Migrations.Postgres
 {
     [DbContext(typeof(PuppyPlaceContext.PostgresContext))]
-    partial class PostgresContextModelSnapshot : ModelSnapshot
+    [Migration("20211216215300_DogBreed")]
+    partial class DogBreed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,66 +57,7 @@ namespace PuppyPlace.Data.Migrations.Postgres
                         .WithMany("Dogs")
                         .HasForeignKey("OwnerId");
 
-                    b.OwnsOne("PuppyPlace.Domain.Value_Objects.DogValueObjects.DogAge", "_age", b1 =>
-                        {
-                            b1.Property<Guid>("DogId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("integer")
-                                .HasColumnName("Age");
-
-                            b1.HasKey("DogId");
-
-                            b1.ToTable("Dogs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DogId");
-                        });
-
-                    b.OwnsOne("PuppyPlace.Domain.Value_Objects.DogValueObjects.DogBreed", "_breed", b1 =>
-                        {
-                            b1.Property<Guid>("DogId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("Breed");
-
-                            b1.HasKey("DogId");
-
-                            b1.ToTable("Dogs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DogId");
-                        });
-
-                    b.OwnsOne("PuppyPlace.Domain.Value_Objects.DogValueObjects.DogName", "_name", b1 =>
-                        {
-                            b1.Property<Guid>("DogId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("Name");
-
-                            b1.HasKey("DogId");
-
-                            b1.ToTable("Dogs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DogId");
-                        });
-
                     b.Navigation("Owner");
-
-                    b.Navigation("_age");
-
-                    b.Navigation("_breed");
-
-                    b.Navigation("_name");
                 });
 
             modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
