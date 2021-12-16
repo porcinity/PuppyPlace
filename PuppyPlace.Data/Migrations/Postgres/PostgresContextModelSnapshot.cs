@@ -28,17 +28,9 @@ namespace PuppyPlace.Data.Migrations.Postgres
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Breed")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
 
                     b.Property<Guid?>("OwnerId")
                         .HasColumnType("uuid");
@@ -72,7 +64,7 @@ namespace PuppyPlace.Data.Migrations.Postgres
 
             modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
                 {
-                    b.OwnsOne("PuppyPlace.Domain.Value_Ojbects.PersonValueObjects.PersonAge", "_age", b1 =>
+                    b.OwnsOne("PuppyPlace.Domain.Value_Objects.PersonValueObjects.PersonAge", "_age", b1 =>
                         {
                             b1.Property<Guid>("PersonId")
                                 .HasColumnType("uuid");
@@ -89,7 +81,7 @@ namespace PuppyPlace.Data.Migrations.Postgres
                                 .HasForeignKey("PersonId");
                         });
 
-                    b.OwnsOne("PuppyPlace.Domain.Value_Ojbects.PersonValueObjects.PersonName", "_name", b1 =>
+                    b.OwnsOne("PuppyPlace.Domain.Value_Objects.PersonValueObjects.PersonName", "_name", b1 =>
                         {
                             b1.Property<Guid>("PersonId")
                                 .HasColumnType("uuid");
