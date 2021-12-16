@@ -6,29 +6,29 @@ namespace PuppyPlace.Domain;
 
 public class Person
 {
-    [Key]
-    public Guid Id { get; set; }
-
+    public Guid Id { get; }
+    
     private readonly PersonName _name;
     public string Name => _name.Value;
-
+    
     private readonly PersonAge _age;
     public int Age => _age.Value;
-
-    [Column] private readonly List<Dog> _dogs;
+    
+    private readonly List<Dog> _dogs;
+    public IEnumerable<Dog> Dogs => _dogs;
+    
     public Person(PersonName name, PersonAge age)
     {
-        _name = name;
         Id = Guid.NewGuid();
-        _dogs = new List<Dog>();
+        _name = name;
         _age = age;
+        _dogs = new List<Dog>();
     }
 
     private Person()
     {
     }
 
-    public IEnumerable<Dog> Dogs => _dogs;
 
     public void AddDog(Dog dog)
     {
