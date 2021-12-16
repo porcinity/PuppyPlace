@@ -20,6 +20,7 @@ public class PuppyPlaceContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new PersonConfiguration());
+        builder.ApplyConfiguration(new DogConfiguration());
     }
     public class PostgresContext : PuppyPlaceContext
     {
