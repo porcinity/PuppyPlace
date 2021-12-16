@@ -1,15 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PuppyPlace.Domain.Value_Objects.DogValueObjects;
 
 namespace PuppyPlace.Domain;
 
 public class Dog
 {
-    [Key]
     public Guid Id { get; set; }
-    [Required]
-    [MaxLength(30,ErrorMessage = "Max length for name is 30 characters")]
-    public string Name { get; set; }
+
+    private readonly DogName _name;
+    public string Name => _name.Value;
+    
     [Required]
     public int Age { get; set; }
     [Required]
@@ -17,10 +18,10 @@ public class Dog
     [Column]
     public Person? Owner { get; set; }
     public Guid? OwnerId { get; set; }
-    public Dog(string name, int age, string breed)
+    public Dog(DogName name, int age, string breed)
     {
         Id = Guid.NewGuid();
-        Name = name;
+        _name = name;
         Age = age;
         Breed = breed;
     }
