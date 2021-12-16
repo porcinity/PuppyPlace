@@ -9,8 +9,7 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
 {
     public void Configure(EntityTypeBuilder<Person> builder)
     {
-        // builder.HasKey(nameof(PersonPersistence.Id));
-        builder.HasKey(m => m.Id);
+        builder.HasKey("Id");
         builder.OwnsOne<PersonName>("_name")
             .Property(x => x.Value)
             .HasColumnName("Name")
