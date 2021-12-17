@@ -13,7 +13,7 @@ public class GetPersonsDto
         
         foreach (var person in persons)
         {
-            var personDto = GetPersonDto.Create(person);
+            var personDto = GetPersonDto.FromPerson(person);
             dto._people.Add(personDto);
         }
         
