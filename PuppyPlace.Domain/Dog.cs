@@ -8,15 +8,15 @@ public class Dog
 {
     public Guid Id { get; set; }
 
-    private readonly DogName _name;
+    private DogName _name;
     public string Name => _name.Value;
 
-    private readonly DogAge _age;
+    private DogAge _age;
     public int Age => _age.Value;
 
-    private readonly DogBreed _breed;
+    private DogBreed _breed;
     public string Breed => _breed.Value;
-    
+
     public Person? Owner { get; set; }
     public Guid? OwnerId { get; set; }
     
