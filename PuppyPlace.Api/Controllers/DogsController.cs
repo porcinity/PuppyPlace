@@ -34,23 +34,26 @@ namespace PuppyPlace.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GetDogDto>> GetDog([FromRoute] GetDogByIdQuery query)
         {
-            var response = await _mediator.Send(query);
-            return response == null ? NotFound() : Ok(_mapper.Map<GetDogDto>(response));
+            var dog = await _mediator.Send(query);
+            var response = GetDogDto.Create(dog);
+            return response == null ? NotFound() : Ok(response);
         }
         
         [HttpPost]
         public async Task<ActionResult<PostDogDto>> PostDog([FromBody] CreateDogCommand command)
         {
-            var response = await _mediator.Send(command);
-            return Ok(_mapper.Map<PostDogDto>(response));
+            var dog =  await _mediator.Send(command);
+            var response = GetDogDto.Create(dog);
+            return Ok(response);
         }
         
         [HttpPut("{id}")]
         public async Task<ActionResult<GetDogDto>> PutDog(Guid id, [FromBody] PutDogCommand command)
         {
             command.Id = id;
-            var response = await _mediator.Send(command);
-            return Ok(_mapper.Map<GetDogDto>(response));
+            var dog = await _mediator.Send(command);
+            var response = GetDogDto.Create(dog);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
