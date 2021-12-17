@@ -22,10 +22,7 @@ public class PuppyPlaceContext : DbContext
         builder.ApplyConfiguration(new PersonConfiguration());
         builder.ApplyConfiguration(new DogConfiguration());
     }
-    public class PostgresContext : PuppyPlaceContext
-    {
-        protected override void OnConfiguring(DbContextOptionsBuilder options) 
-            => options.UseNpgsql(@"Host=localhost;Username=test;Password=test;Database=TheNewPuppyPlace");
-    }
     
+    protected override void OnConfiguring(DbContextOptionsBuilder options) 
+        => options.UseNpgsql(@"Host=localhost;Username=test;Password=test;Database=TheNewPuppyPlace");
 }
