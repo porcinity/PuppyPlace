@@ -14,9 +14,9 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
             .Property(x => x.Value)
             .HasColumnName("Name")
             .IsRequired();
-        builder.OwnsOne<PersonAge>("_age")
-            .Property(a => a.Value)
-            .HasColumnName("Age")
+        builder.Property(p => p.Age)
+            .HasConversion(p => p.Value,
+                value => PersonAge.Create(value))
             .IsRequired();
     }
 }
