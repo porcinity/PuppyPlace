@@ -10,5 +10,6 @@ public class DogProfile : Profile
     {
         CreateMap<Person, DogOwnerDto>();
         CreateMap<Dog, GetDogDto>();
+        CreateMap<Dog, PostDogDto>();
     }
 }
