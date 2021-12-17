@@ -34,6 +34,14 @@ public class PersonsController : ControllerBase
         return response == null ? NotFound() : Ok(response);
     }
 
+    [HttpGet("{id}/dogs")]
+    public async Task<ActionResult<IEnumerable<GetDogDto>>> ShowDogs([FromRoute] GetPersonByIdQuery query)
+    {
+        var person = await _mediator.Send(query);
+        var response = person.Dogs.Select(GetDogDto.FromDog);
+        return Ok(response);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Person>> PostPerson([FromBody] CreatePersonCommand command)
     {
