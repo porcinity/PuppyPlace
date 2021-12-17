@@ -9,7 +9,7 @@ public class GetDogDto
     public int Age { get; init; }
     public string Breed { get; init; }
 
-    public static GetDogDto Create(Dog dog)
+    public static GetDogDto FromDog(Dog dog)
     {
         return new GetDogDto
         {
