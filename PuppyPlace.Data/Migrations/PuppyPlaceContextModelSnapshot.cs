@@ -10,8 +10,8 @@ using PuppyPlace.Data;
 
 namespace PuppyPlace.Data.Migrations
 {
-    [DbContext(typeof(PuppyPlaceContext.PostgresContext))]
-    partial class PostgresContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(PuppyPlaceContext))]
+    partial class PuppyPlaceContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
