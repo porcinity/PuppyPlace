@@ -30,7 +30,7 @@ public class PersonsController : ControllerBase
     public async Task<ActionResult<GetPersonDto>> GetPerson([FromRoute] GetPersonByIdQuery query)
     {
         var person = await _mediator.Send(query);
-        var response = GetPersonDto.Create(person);
+        var response = GetPersonDto.FromPerson(person);
         return response == null ? NotFound() : Ok(response);
     }
 
@@ -38,7 +38,7 @@ public class PersonsController : ControllerBase
     public async Task<ActionResult<Person>> PostPerson([FromBody] CreatePersonCommand command)
     {
         var person = await _mediator.Send(command);
-        var response = GetPersonDto.Create(person);
+        var response = GetPersonDto.FromPerson(person);
         return Ok(response);
     }
     
@@ -54,7 +54,7 @@ public class PersonsController : ControllerBase
     {
         command.Id = id;
         var person = await _mediator.Send(command);
-        var response = GetPersonDto.Create(person);
+        var response = GetPersonDto.FromPerson(person);
         return Ok(response);
     }
     
