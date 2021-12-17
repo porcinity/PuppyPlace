@@ -1,18 +1,13 @@
 namespace PuppyPlace.Domain.Value_Objects.PersonValueObjects;
 
-public record PersonAge
+public readonly record struct PersonAge
 {
-    public int Value { get; }
-
-    public PersonAge(int value)
+    public readonly int Value;
+    private PersonAge(int value)
     {
-        if (IsValidAge(value))
-        {
-            Value = value;
-        }
+        Value = value;
     }
-
-    private bool IsValidAge(int value)
+    public static PersonAge Create(int value)
     {
         if (value < 1)
         {
@@ -23,6 +18,6 @@ public record PersonAge
             throw new Exception("Too old.");
         }
 
-        return true;
+        return new PersonAge(value);
     }
 }
