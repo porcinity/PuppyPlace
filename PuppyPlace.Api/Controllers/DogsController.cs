@@ -1,9 +1,6 @@
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Api.Dtos;
-using PuppyPlace.Domain;
-using PuppyPlace.Service;
 using PuppyPlace.Services.Dogs.Commands;
 using PuppyPlace.Services.Dogs.Queries;
 
@@ -16,7 +13,7 @@ namespace PuppyPlace.Api.Controllers
     {
         private readonly IMediator _mediator;
 
-        public DogsController(IMediator mediator, IMapper mapper)
+        public DogsController(IMediator mediator)
         {
             _mediator = mediator;
         }
