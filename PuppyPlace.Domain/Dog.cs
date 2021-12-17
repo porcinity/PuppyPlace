@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using PuppyPlace.Domain.Value_Objects.DogValueObjects;
 
 namespace PuppyPlace.Domain;
