@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Data;
 using PuppyPlace.Repository;
-using PuppyPlace.Service;
 using PuppyPlace.Services;
 
 
