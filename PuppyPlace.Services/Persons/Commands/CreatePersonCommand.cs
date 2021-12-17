@@ -5,13 +5,13 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Persons.Commands;
 
-public class CreatePersonCommand : IRequest<Guid>
+public class CreatePersonCommand : IRequest<Person>
 {
     public string Name { get; set; }
     public int Age { get; set; }
 }
 
-public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, Guid>
+public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, Person>
 {
     private readonly IPersonsRepository _personsRepository;
 
@@ -20,13 +20,13 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, G
         _personsRepository = personsRepository;
     }
 
-    public async Task<Guid> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
+    public async Task<Person> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
     {
         var name = new PersonName(request.Name);
         var age = PersonAge.Create(request.Age);
         var person = new Person(name, age);
         await _personsRepository.AddPerson(person);
-        return person.Id;
+        return person;
     }
 }
 
