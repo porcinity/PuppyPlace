@@ -7,6 +7,14 @@ public class AdoptDogCommand : IRequest<Unit>
 {
     public Guid PersonId { get; set; }
     public Guid DogId { get; set; }
+
+    public static AdoptDogCommand Create(Guid personId, Guid dogId)
+    {
+        var command = new AdoptDogCommand();
+        command.PersonId = personId;
+        command.DogId = dogId;
+        return command;
+    }
 }
 
 public class AdoptDogCommandHandler : IRequestHandler<AdoptDogCommand, Unit>
