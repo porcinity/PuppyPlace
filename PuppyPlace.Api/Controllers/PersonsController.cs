@@ -13,12 +13,10 @@ namespace PuppyPlace.Api.Controllers;
 public class PersonsController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
 
-    public PersonsController(IMediator mediator, IMapper mapper)
+    public PersonsController(IMediator mediator)
     {
         _mediator = mediator;
-        _mapper = mapper;
     }
 
     [HttpGet]
