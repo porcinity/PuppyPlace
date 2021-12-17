@@ -27,6 +27,11 @@ public class Person
     {
     }
 
+    public void Update(PersonName name, PersonAge age)
+    {
+        _name = name;
+        _age = age;
+    }
 
     public void AddDog(Dog dog)
     {
