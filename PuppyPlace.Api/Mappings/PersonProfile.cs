@@ -8,7 +8,10 @@ public class PersonProfile : Profile
 {
     public PersonProfile()
     {
-        CreateMap<Person, GetPersonDto>();
+        CreateMap<Person, GetPersonDto>()
+            .ForMember(p => p.Age, 
+                opt => opt.MapFrom(src => src.Age.Value) );
         CreateMap<Dog, PersonDogsDto>();
+        CreateMap<IEnumerable<GetPersonDto>, GetPersonsDto>();
     }
 }
