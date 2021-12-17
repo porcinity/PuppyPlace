@@ -23,7 +23,7 @@ public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Unit>
     {
         var person = await _personsRepository.FindPerson(request.Id);
         var newName = new PersonName(request.Name);
-        var newAge = new PersonAge(request.Age);
+        var newAge = PersonAge.Create(request.Age);
         person.Update(newName, newAge);
         await _personsRepository.UpdatePerson(person);
         return Unit.Value;
