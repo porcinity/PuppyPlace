@@ -22,8 +22,8 @@ public class PersonsController : ControllerBase
     public async Task<ActionResult<GetPersonsDto>> GetPersons([FromRoute] GetAllPersonsQuery query)
     {
         var people = await _mediator.Send(query);
-        var response = GetPersonsDto.Create(people);
-        return Ok(response.peeps);
+        var response = people.Select(GetPersonDto.FromPerson);
+        return Ok(response);
     }
     
     [HttpGet("{id}")]
