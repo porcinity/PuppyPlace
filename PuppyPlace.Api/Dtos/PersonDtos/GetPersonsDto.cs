@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using PuppyPlace.Domain;
 
 namespace PuppyPlace.Api.Dtos;
@@ -12,14 +13,10 @@ public class GetPersonsDto
         
         foreach (var person in persons)
         {
-            var personDto = new GetPersonDto();
-            personDto.Id = person.Id;
-            personDto.Name = person.Name;
-            personDto.Age = person.Age.Value;
-            // personDto.Dogs = person.Dogs;
+            var personDto = GetPersonDto.Create(person);
             dto._people.Add(personDto);
         }
-
+        
         return dto;
     }
 }
