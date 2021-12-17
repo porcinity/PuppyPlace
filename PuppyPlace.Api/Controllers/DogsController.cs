@@ -22,7 +22,7 @@ namespace PuppyPlace.Api.Controllers
         public async Task<ActionResult<GetDogsDto>> GetDogs([FromRoute] GetAllDogsQuery query)
         {
             var dogs = await _mediator.Send(query);
-            var response = GetDogsDto.Create(dogs);
+            var response = GetDogsDto.FromDogs(dogs);
             return Ok(response.Dogs);
         }
         
@@ -30,7 +30,7 @@ namespace PuppyPlace.Api.Controllers
         public async Task<ActionResult<GetDogDto>> GetDog([FromRoute] GetDogByIdQuery query)
         {
             var dog = await _mediator.Send(query);
-            var response = GetDogDto.Create(dog);
+            var response = GetDogDto.FromDog(dog);
             return response == null ? NotFound() : Ok(response);
         }
         
@@ -38,7 +38,7 @@ namespace PuppyPlace.Api.Controllers
         public async Task<ActionResult<PostDogDto>> PostDog([FromBody] CreateDogCommand command)
         {
             var dog =  await _mediator.Send(command);
-            var response = GetDogDto.Create(dog);
+            var response = GetDogDto.FromDog(dog);
             return Ok(response);
         }
         
@@ -47,7 +47,7 @@ namespace PuppyPlace.Api.Controllers
         {
             command.Id = id;
             var dog = await _mediator.Send(command);
-            var response = GetDogDto.Create(dog);
+            var response = GetDogDto.FromDog(dog);
             return Ok(response);
         }
 
