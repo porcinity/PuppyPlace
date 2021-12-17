@@ -30,15 +30,17 @@ public class PersonsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<GetPersonDto>> GetPerson([FromRoute] GetPersonByIdQuery query)
     {
-        var response = await _mediator.Send(query);
-        return response == null ? NotFound() : Ok(_mapper.Map<GetPersonDto>(response));
+        var person = await _mediator.Send(query);
+        var response = GetPersonDto.Create(person);
+        return response == null ? NotFound() : Ok(response);
     }
 
     [HttpPost]
     public async Task<ActionResult<Person>> PostPerson([FromBody] CreatePersonCommand command)
     {
-        var newPersonId = await _mediator.Send(command);
-        return CreatedAtAction("GetPerson", new {id = newPersonId}, newPersonId);
+        var person = await _mediator.Send(command);
+        var response = GetPersonDto.Create(person);
+        return Ok(response);
     }
     
     [HttpPost("{personId}/adoptdog")]
@@ -52,7 +54,9 @@ public class PersonsController : ControllerBase
     public async Task<IActionResult> PutPerson(Guid id, PutPersonCommand command)
     {
         command.Id = id;
-        return Ok(await _mediator.Send(command));
+        var person = await _mediator.Send(command);
+        var response = GetPersonDto.Create(person);
+        return Ok(response);
     }
     
     [HttpDelete("{id}")]
