@@ -9,8 +9,7 @@ public class Person
     private PersonName _name;
     public string Name => _name.Value;
     
-    private PersonAge _age;
-    public int Age => _age.Value;
+    public PersonAge Age { get; private set; }
     
     private readonly List<Dog> _dogs;
     public IEnumerable<Dog> Dogs => _dogs;
@@ -19,7 +18,7 @@ public class Person
     {
         Id = Guid.NewGuid();
         _name = name;
-        _age = age;
+        Age = age;
         _dogs = new List<Dog>();
     }
 
@@ -30,7 +29,7 @@ public class Person
     public void Update(PersonName name, PersonAge age)
     {
         _name = name;
-        _age = age;
+        Age = age;
     }
 
     public void AddDog(Dog dog)
