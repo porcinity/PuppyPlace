@@ -11,8 +11,8 @@ using PuppyPlace.Data;
 
 namespace PuppyPlace.Data.Migrations
 {
-    [DbContext(typeof(PuppyPlaceContext.PostgresContext))]
-    [Migration("20211216235913_initial")]
+    [DbContext(typeof(PuppyPlaceContext))]
+    [Migration("20211217185519_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace PuppyPlace.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -121,23 +124,6 @@ namespace PuppyPlace.Data.Migrations
 
             modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
                 {
-                    b.OwnsOne("PuppyPlace.Domain.Value_Objects.PersonValueObjects.PersonAge", "_age", b1 =>
-                        {
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("integer")
-                                .HasColumnName("Age");
-
-                            b1.HasKey("PersonId");
-
-                            b1.ToTable("Persons");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PersonId");
-                        });
-
                     b.OwnsOne("PuppyPlace.Domain.Value_Objects.PersonValueObjects.PersonName", "_name", b1 =>
                         {
                             b1.Property<Guid>("PersonId")
@@ -155,8 +141,6 @@ namespace PuppyPlace.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
                         });
-
-                    b.Navigation("_age");
 
                     b.Navigation("_name");
                 });

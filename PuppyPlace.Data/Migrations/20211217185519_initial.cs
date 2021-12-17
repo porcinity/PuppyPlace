@@ -14,7 +14,7 @@ namespace PuppyPlace.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Age = table.Column<int>(type: "integer", nullable: true),
+                    Age = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
