@@ -8,7 +8,7 @@ using PuppyPlace.Data;
 
 #nullable disable
 
-namespace PuppyPlace.Data.Migrations.Postgres
+namespace PuppyPlace.Data.Migrations
 {
     [DbContext(typeof(PuppyPlaceContext.PostgresContext))]
     partial class PostgresContextModelSnapshot : ModelSnapshot

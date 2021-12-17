@@ -9,11 +9,11 @@ using PuppyPlace.Data;
 
 #nullable disable
 
-namespace PuppyPlace.Data.Migrations.Postgres
+namespace PuppyPlace.Data.Migrations
 {
     [DbContext(typeof(PuppyPlaceContext.PostgresContext))]
-    [Migration("20211216215956_DogConfiguration")]
-    partial class DogConfiguration
+    [Migration("20211216235913_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
