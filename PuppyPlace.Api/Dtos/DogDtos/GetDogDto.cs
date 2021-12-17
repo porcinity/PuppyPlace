@@ -2,8 +2,19 @@ namespace PuppyPlace.Api.Dtos;
 
 public class GetDogDto
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public int Age { get; set; }
-    public string Breed { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public int Age { get; init; }
+    public string Breed { get; init; }
+
+    public static GetDogDto Create(Dog dog)
+    {
+        return new GetDogDto
+        {
+            Id = dog.Id,
+            Name = dog.Name,
+            Age = dog.Age,
+            Breed = dog.Breed
+        };
+    }
 }
