@@ -8,7 +8,7 @@ public class GetPersonDto
     public string Name { get; init; }
     public int Age { get; init; }
 
-    public static GetPersonDto Create(Person person)
+    public static GetPersonDto FromPerson(Person person)
     {
         return new GetPersonDto
         {
