@@ -6,10 +6,10 @@ public class Person
 {
     public Guid Id { get; }
     
-    private readonly PersonName _name;
+    private PersonName _name;
     public string Name => _name.Value;
     
-    private readonly PersonAge _age;
+    private PersonAge _age;
     public int Age => _age.Value;
     
     private readonly List<Dog> _dogs;
