@@ -37,10 +37,10 @@ namespace PuppyPlace.Api.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<GetDogDto>> PostDog([FromBody] CreateDogCommand command)
+        public async Task<ActionResult<PostDogDto>> PostDog([FromBody] CreateDogCommand command)
         {
             var response = await _mediator.Send(command);
-            return Ok(_mapper.Map<GetDogDto>(response));
+            return Ok(_mapper.Map<PostDogDto>(response));
         }
         
         [HttpPut("{id}")]
