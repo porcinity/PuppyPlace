@@ -14,7 +14,6 @@ public class PersonsRepository : IPersonsRepository
     
     public async Task<IEnumerable<Person>> FindPersons()
     {
-        // return _context.Set<Person>().AsNoTracking();
         return await _context.Set<Person>().AsNoTracking().ToListAsync();
     }
     
