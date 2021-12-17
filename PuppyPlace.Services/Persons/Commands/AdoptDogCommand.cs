@@ -1,6 +1,5 @@
 using MediatR;
 using PuppyPlace.Repository;
-using PuppyPlace.Service;
 
 namespace PuppyPlace.Services.Persons.Commands;
 
