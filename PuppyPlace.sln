@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Repository", "Pu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Api", "PuppyPlace.Api\PuppyPlace.Api.csproj", "{F58F12E2-203C-4C41-A43F-23408D697531}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Service", "PuppyPlace.Service\PuppyPlace.Service.csproj", "{8AAEC8B2-0E1E-4B22-B989-6986AA04C252}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppyPlace.Services", "PuppyPlace.Services\PuppyPlace.Services.csproj", "{CFDDDA29-A05C-421F-885C-5D2355AA2EA3}"
 EndProject
 Global
@@ -40,10 +38,6 @@ Global
 		{F58F12E2-203C-4C41-A43F-23408D697531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F58F12E2-203C-4C41-A43F-23408D697531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F58F12E2-203C-4C41-A43F-23408D697531}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AAEC8B2-0E1E-4B22-B989-6986AA04C252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AAEC8B2-0E1E-4B22-B989-6986AA04C252}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AAEC8B2-0E1E-4B22-B989-6986AA04C252}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AAEC8B2-0E1E-4B22-B989-6986AA04C252}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CFDDDA29-A05C-421F-885C-5D2355AA2EA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CFDDDA29-A05C-421F-885C-5D2355AA2EA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFDDDA29-A05C-421F-885C-5D2355AA2EA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
