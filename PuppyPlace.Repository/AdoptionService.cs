@@ -1,7 +1,6 @@
 using PuppyPlace.Data;
-using PuppyPlace.Repository;
 
-namespace PuppyPlace.Service;
+namespace PuppyPlace.Repository;
 
 public class AdoptionService : IAdoptionService
 {
