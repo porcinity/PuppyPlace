@@ -44,6 +44,9 @@ namespace PuppyPlace.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Persons");
@@ -119,23 +122,6 @@ namespace PuppyPlace.Data.Migrations
 
             modelBuilder.Entity("PuppyPlace.Domain.Person", b =>
                 {
-                    b.OwnsOne("PuppyPlace.Domain.Value_Objects.PersonValueObjects.PersonAge", "_age", b1 =>
-                        {
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("integer")
-                                .HasColumnName("Age");
-
-                            b1.HasKey("PersonId");
-
-                            b1.ToTable("Persons");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PersonId");
-                        });
-
                     b.OwnsOne("PuppyPlace.Domain.Value_Objects.PersonValueObjects.PersonName", "_name", b1 =>
                         {
                             b1.Property<Guid>("PersonId")
@@ -153,8 +139,6 @@ namespace PuppyPlace.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
                         });
-
-                    b.Navigation("_age");
 
                     b.Navigation("_name");
                 });
