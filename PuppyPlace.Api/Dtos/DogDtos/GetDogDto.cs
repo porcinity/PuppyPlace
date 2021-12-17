@@ -1,3 +1,5 @@
+using PuppyPlace.Domain;
+
 namespace PuppyPlace.Api.Dtos;
 
 public class GetDogDto
