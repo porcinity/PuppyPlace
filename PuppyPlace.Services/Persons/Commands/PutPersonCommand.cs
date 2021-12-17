@@ -8,6 +8,7 @@ public class PutPersonCommand : IRequest<Unit>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public int Age { get; set; }
 }
 
 public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Unit>
@@ -22,7 +23,8 @@ public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Unit>
     {
         var person = await _personsRepository.FindPerson(request.Id);
         var newName = new PersonName(request.Name);
-        // person.Name = newName;
+        var newAge = new PersonAge(request.Age);
+        person.Update(newName, newAge);
         await _personsRepository.UpdatePerson(person);
         return Unit.Value;
     }
