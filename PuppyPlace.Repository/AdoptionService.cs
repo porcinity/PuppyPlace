@@ -21,8 +21,6 @@ public class AdoptionService : IAdoptionService
         var person = await _personsRepository.FindPerson(personId);
         
         person.AddDog(dog);
-        // dog.OwnerId = personId;
-        await _dogsRepository.UpdateDog(dog);
         await _context.SaveChangesAsync();
     }
 }
