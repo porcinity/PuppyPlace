@@ -20,12 +20,9 @@ public class PersonsRepository : IPersonsRepository
     public async Task<Person> FindPerson(Guid id)
     {
         var person = await _context.Persons
+                .AsNoTracking()
                 .Include(m => m.Dogs)
                 .FirstOrDefaultAsync(m => m.Id == id);
-        if (person is null)
-        {
-            return null;
-        }
 
         return person;
     }
