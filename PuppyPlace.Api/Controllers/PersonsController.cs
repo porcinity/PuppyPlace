@@ -43,11 +43,10 @@ public class PersonsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Person>> PostPerson([FromBody] CreatePersonCommand command)
+    public async Task<IActionResult> PostPerson([FromBody] CreatePersonCommand command)
     {
         var person = await _mediator.Send(command);
-        var response = GetPersonDto.FromPerson(person);
-        return Ok(response);
+        return person.Match<IActionResult>(p => Ok(GetPersonDto.FromPerson(p)), () => NotFound());
     }
     
     [HttpPost("{personId}/adoptdog")]
