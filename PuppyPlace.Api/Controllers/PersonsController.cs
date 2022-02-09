@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Api.Dtos;
-using PuppyPlace.Domain;
 using PuppyPlace.Services.Persons.Commands;
 using PuppyPlace.Services.Persons.Queries;
 
