@@ -1,3 +1,4 @@
+using LanguageExt.UnsafeValueAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PuppyPlace.Domain;
@@ -16,7 +17,7 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
             .IsRequired();
         builder.Property(p => p.Age)
             .HasConversion(p => p.Value,
-                value => PersonAge.Create(value))
+                value => PersonAge.Create(value).Value())
             .IsRequired();
     }
 }
