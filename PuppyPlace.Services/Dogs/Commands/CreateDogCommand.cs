@@ -1,3 +1,5 @@
+using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
 using PuppyPlace.Domain;
 using PuppyPlace.Domain.Value_Objects.DogValueObjects;
@@ -5,7 +7,7 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Dogs.Commands;
 
-public class CreateDogCommand : IRequest<Dog>
+public class CreateDogCommand : IRequest<Validation<Error, Dog>>
 {
     public string Name { get; set; }
     public int Age { get; set; }
@@ -19,7 +21,7 @@ public class CreateDogCommand : IRequest<Dog>
     }
 }
 
-public class CreateDogCommandHandler : IRequestHandler<CreateDogCommand, Dog>
+public class CreateDogCommandHandler : IRequestHandler<CreateDogCommand, Validation<Error, Dog>>
 {
     private readonly IDogsRepository _dogsRepository;
 
@@ -27,13 +29,20 @@ public class CreateDogCommandHandler : IRequestHandler<CreateDogCommand, Dog>
     {
         _dogsRepository = dogsRepository;
     }
-    public async Task<Dog> Handle(CreateDogCommand request, CancellationToken cancellationToken)
+
+    public async Task<Validation<Error, Dog>> Handle(CreateDogCommand request, CancellationToken cancellationToken)
     {
         var dogName = DogName.Create(request.Name);
         var dogAge = DogAge.Create(request.Age);
         var dogBreed = DogBreed.Create(request.Breed);
-        var dog = new Dog(dogName, dogAge, dogBreed);
-        await _dogsRepository.AddDog(dog);
+
+        var dog = (dogName, dogAge, dogBreed)
+            .Apply((n, a, b) => new Dog(n, a, b));
+
+        dog
+            .Succ(async d => { await _dogsRepository.AddDog(d); })
+            .Fail(e => { return e.AsTask(); });
+
         return dog;
     }
 }
