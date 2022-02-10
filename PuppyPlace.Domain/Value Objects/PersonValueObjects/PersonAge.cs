@@ -13,15 +13,11 @@ public readonly record struct PersonAge
         Value = value;
     }
 
-    public static Validation<Error, PersonAge> Create(int value)
-    {
-
-        if (value < 15)
-            return Fail<Error, PersonAge>("Age must be older than 15.");
-
-        if (value > 90)
-            return Fail<Error, PersonAge>("Age must be less than 90");
-
-        return Success<Error, PersonAge>(new PersonAge(value));
-    }
+    public static Validation<Error, PersonAge> Create(int value) =>
+        value switch
+        {
+            < 16 => Fail<Error, PersonAge>("Age must be older than 16."),
+            > 100 => Fail<Error, PersonAge>("Age must be less than 100"),
+            _ => Success<Error, PersonAge>(new PersonAge(value))
+        };
 }
