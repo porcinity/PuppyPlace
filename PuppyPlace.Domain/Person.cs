@@ -26,10 +26,11 @@ public class Person
     {
     }
 
-    public void Update(PersonName name, PersonAge age)
+    public Person Update(PersonName name, PersonAge age)
     {
         _name = name;
         Age = age;
+        return this;
     }
 
     public void AddDog(Dog dog)
