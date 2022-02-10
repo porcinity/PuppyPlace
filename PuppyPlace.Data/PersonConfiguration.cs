@@ -17,7 +17,7 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
             .IsRequired();
         builder.Property(p => p.Age)
             .HasConversion(p => p.Value,
-                value => PersonAge.Create(value).Value())
+                value => PersonAge.Create(value).ToEither().Value())
             .IsRequired();
     }
 }
