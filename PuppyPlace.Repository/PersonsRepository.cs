@@ -39,10 +39,11 @@ public class PersonsRepository : IPersonsRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdatePerson(Person person)
+    public async Task<Person> UpdatePerson(Person person)
     {
         _context.Persons.Update(person);
         await _context.SaveChangesAsync();
+        return person;
     }
 
     public async Task DeletePerson(Guid id)
