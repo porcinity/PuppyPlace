@@ -1,4 +1,6 @@
+
 using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
 using PuppyPlace.Domain;
 using PuppyPlace.Domain.Value_Objects.PersonValueObjects;
@@ -6,14 +8,14 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Persons.Commands;
 
-public class PutPersonCommand : IRequest<Option<Person>>
+public class PutPersonCommand : IRequest<Validation<Error, Person>>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
 }
 
-public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Option<Person>>
+public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Validation<Error, Person>>
 {
     private readonly IPersonsRepository _personsRepository;
 
@@ -21,18 +23,24 @@ public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Option<
     {
         _personsRepository = personsRepository;
     }
-    public async Task<Option<Person>> Handle(PutPersonCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, Person>> Handle(PutPersonCommand command, CancellationToken cancellationToken)
     {
-        var person = await _personsRepository.FindPerson(request.Id);
-        var newName = new PersonName(request.Name);
-        var newAge = PersonAge.Create(request.Age);
+        var person = await _personsRepository.FindPerson(command.Id);
+        var name = PersonName.Create(command.Name);
+        var age = PersonAge.Create(command.Age);
 
-        newAge.MapAsync(async a =>
-        {
-            person.Update(newName, a);
-            await _personsRepository.UpdatePerson(person);
-        });
+        var updatedPerson = (name, age).Apply(person.Update);
 
-        return person;
+        updatedPerson
+            .Succ(async p =>
+            {
+                await _personsRepository.UpdatePerson(p);
+            })
+            .Fail(e =>
+            {
+                return e.AsTask();
+            });
+
+        return updatedPerson;
     }
-} 
+}
