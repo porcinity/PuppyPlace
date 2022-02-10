@@ -1,3 +1,7 @@
+using LanguageExt;
+using LanguageExt.Common;
+using static LanguageExt.Prelude;
+
 namespace PuppyPlace.Domain.Value_Objects.DogValueObjects;
 
 public record DogAge
@@ -9,17 +13,11 @@ public record DogAge
         Value = value;
     }
 
-    public static DogAge Create(int value)
-    {
-        if (value < 0)
+    public static Validation<Error, DogAge> Create(int value) =>
+        value switch
         {
-            throw new Exception("Too young.");
-        }
-        if (value > 20)
-        {
-            throw new Exception("Too old.");
-        }
-
-        return new DogAge(value);
-    }
+            < 0 => Fail<Error, DogAge>("Age must be greater than 0."),
+            > 20 => Fail<Error, DogAge>("Age must be less than 20"),
+            _ => Success<Error, DogAge>(new DogAge(value))
+        };
 }
