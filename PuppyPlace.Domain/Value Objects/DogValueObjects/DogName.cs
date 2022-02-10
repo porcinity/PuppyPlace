@@ -1,4 +1,7 @@
 using System.Text.RegularExpressions;
+using LanguageExt;
+using LanguageExt.Common;
+using static LanguageExt.Prelude;
 
 namespace PuppyPlace.Domain.Value_Objects.DogValueObjects;
 
@@ -10,33 +13,25 @@ public record DogName
     {
         Value = value;
     }
-    public static DogName Create(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            throw new Exception();
-        }
-        
-        if (value.Length > 30)
-        {
-            throw new Exception();
-        }
-        
-        if (Regex.IsMatch(value, @"\s"))
-        {
-            throw new Exception();
-        }
 
-        if (Regex.IsMatch(value, @"[0-9]"))
+    public static Validation<Error, DogName> Create(string value) =>
+        value switch
         {
-            throw new Exception();
-        }
-        
-        if (value.Any(c => !char.IsLetter(c)))
-        {
-            throw new InvalidOperationException("Name cannot contain special chars.");
-        }
+            var x when string.IsNullOrEmpty(x) =>
+                Fail<Error, DogName>("Name can't be null or empty."),
 
-        return new DogName(value);
-    }
+            var x when x.Length > 30 =>
+                Fail<Error, DogName>("Name can't be longer than 30 characters."),
+
+            var x when Regex.IsMatch(x, @"\s") =>
+                Fail<Error, DogName>("Name can't contain whitespace."),
+
+            var x when Regex.IsMatch(x, @"[0-9]") =>
+                Fail<Error, DogName>("Name can't contain numbers."),
+
+            var x when x.Any(c => !char.IsLetter(c)) =>
+                Fail<Error, DogName>("Name cannot contain special chars."),
+
+            _ => Success<Error, DogName>(new DogName(value))
+        };
 }
