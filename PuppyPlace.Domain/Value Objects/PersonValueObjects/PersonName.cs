@@ -1,4 +1,7 @@
 using System.Text.RegularExpressions;
+using LanguageExt;
+using LanguageExt.Common;
+using static LanguageExt.Prelude;
 
 namespace PuppyPlace.Domain.Value_Objects.PersonValueObjects;
 
@@ -6,70 +9,27 @@ public record PersonName
 {
     private readonly string _value;
 
-    public PersonName(string value)
+    private PersonName(string value)
     {
-        if (IsValidName(value))
-        {
-            _value = value;
-        }
+        _value = value;
     }
+
     public string Value => _value;
-    public override string ToString()
-    {
-        return _value;
-    }
-    
-    private bool IsValidName(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            throw new EmptyNameException();
-        }
-        
-        if (value.Length > 30)
-        {
-            throw new NameTooLongException();
-        }
-        
-        if (Regex.IsMatch(value, @"\s"))
-        {
-            throw new WhiteSpaceNameException();
-        }
 
-        if (Regex.IsMatch(value, @"[0-9]"))
+    public static Validation<Error, PersonName> Create(string value) =>
+        value switch
         {
-            throw new Exception();
-        }
-        
-        if (value.Any(c => !char.IsLetter(c)))
-        {
-            throw new InvalidOperationException("Name cannot contain special chars.");
-        }
-        return true;
-    }
-    
-    public static implicit operator PersonName(string value) => new PersonName(value);
-}
+            var x when string.IsNullOrEmpty(x) =>
+                Fail<Error, PersonName>("Name cannot be empty."),
+            var x when x.Length > 30 =>
+                Fail<Error, PersonName>("Name cannot be longer than 30 characters."),
+            var x when Regex.IsMatch(x, @"\s") =>
+                Fail<Error, PersonName>("Name cannot contain white space."),
+            var x when Regex.IsMatch(x, @"[0-9]") =>
+                Fail<Error, PersonName>("Name cannot contain numbers."),
+            var x when x.Any(c => !char.IsLetter(c)) =>
+                Fail<Error, PersonName>("Name cannot contain special characters."),
 
-public class EmptyNameException : Exception
-{
-    public EmptyNameException() : base("Name cannot be empty.")
-    {
-    }
-}
-
-public class NameTooLongException : Exception
-{
-    public NameTooLongException() : base("Name is too long.")
-    {
-        
-    }
-}
-
-public class WhiteSpaceNameException : Exception
-{
-    public WhiteSpaceNameException() : base("Name cannot contain whitespace.")
-    {
-        
-    }
+            _ => Success<Error, PersonName>(new PersonName(value))
+        };
 }
