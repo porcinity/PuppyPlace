@@ -24,7 +24,7 @@ public class PersonsController : ControllerBase
         var response = people.Select(GetPersonDto.FromPerson);
         return Ok(response);
     }
-    
+
     [HttpGet("{id}")]
     public async Task<ActionResult<GetPersonDto>> GetPerson([FromRoute] GetPersonByIdQuery query)
     {
@@ -45,25 +45,36 @@ public class PersonsController : ControllerBase
     public async Task<IActionResult> PostPerson([FromBody] CreatePersonCommand command)
     {
         var person = await _mediator.Send(command);
-        return person.Match<IActionResult>(p => Ok(GetPersonDto.FromPerson(p)), () => NotFound());
+        return person.Match<IActionResult>(
+            p => Ok(GetPersonDto.FromPerson(p)),
+            e =>
+            {
+                var errorList = e.Select(e => e.Message).ToList();
+                return UnprocessableEntity(new {code = 422, errors = errorList});
+            });
     }
-    
+
     [HttpPost("{personId}/adoptdog")]
     public async Task<ActionResult> AdoptDog(Guid personId, AdoptDogDto adoptDogDto)
     {
         var command = AdoptDogCommand.Create(personId, adoptDogDto.Id);
         return Ok(await _mediator.Send(command));
     }
-    
+
     [HttpPut("{id}")]
     public async Task<IActionResult> PutPerson(Guid id, PutPersonCommand command)
     {
         command.Id = id;
         var person = await _mediator.Send(command);
-        var response = GetPersonDto.FromPerson(person);
-        return Ok(response);
+        return person.Match<IActionResult>(
+            p => Ok(GetPersonDto.FromPerson(p)),
+            e =>
+            {
+                var list = e.Select(x => x.Message).ToList();
+                return UnprocessableEntity(new {errors = list});
+            });
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeletePerson([FromRoute] DeletePersonCommand command)
     {
