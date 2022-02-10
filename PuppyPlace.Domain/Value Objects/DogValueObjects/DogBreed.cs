@@ -1,4 +1,7 @@
 using System.Text.RegularExpressions;
+using LanguageExt;
+using LanguageExt.Common;
+using static LanguageExt.Prelude;
 
 namespace PuppyPlace.Domain.Value_Objects.DogValueObjects;
 
@@ -11,33 +14,24 @@ public record DogBreed
         Value = value;
     }
 
-    public static DogBreed Create(string value)
-    {
-        if (string.IsNullOrEmpty(value))
+    public static Validation<Error, DogBreed> Create(string value) =>
+        value switch
         {
-            throw new Exception();
-        }
-        
-        if (value.Length > 30)
-        {
-            throw new Exception();
-        }
-        
-        if (Regex.IsMatch(value, @"\s"))
-        {
-            throw new Exception();
-        }
+            var x when string.IsNullOrEmpty(x) =>
+                Fail<Error, DogBreed>("Breed can't be null or empty."),
 
-        if (Regex.IsMatch(value, @"[0-9]"))
-        {
-            throw new Exception();
-        }
-        
-        if (value.Any(c => !char.IsLetter(c)))
-        {
-            throw new InvalidOperationException("Name cannot contain special chars.");
-        }
+            var x when x.Length > 30 =>
+                Fail<Error, DogBreed>("Breed can't be longer than 30 characters."),
 
-        return new DogBreed(value);
-    }
+            var x when Regex.IsMatch(x, @"\s") =>
+                Fail<Error, DogBreed>("Breed can't contain whitespace."),
+
+            var x when Regex.IsMatch(x, @"[0-9]") =>
+                Fail<Error, DogBreed>("Breed can't contain numbers."),
+
+            var x when x.Any(c => !char.IsLetter(c)) =>
+                Fail<Error, DogBreed>("Breed cannot contain special chars."),
+
+            _ => Success<Error, DogBreed>(new DogBreed(value))
+        };
 }
