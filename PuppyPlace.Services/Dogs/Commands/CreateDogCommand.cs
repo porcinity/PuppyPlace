@@ -36,6 +36,11 @@ public class CreateDogCommandHandler : IRequestHandler<CreateDogCommand, Validat
         var dogAge = DogAge.Create(request.Age);
         var dogBreed = DogBreed.Create(request.Breed);
 
+        var newDog =  from name in dogName
+                                        from age in dogAge
+                                        from breed in dogBreed
+                                        select new Dog(name, age, breed);
+
         var dog = (dogName, dogAge, dogBreed)
             .Apply((n, a, b) => new Dog(n, a, b));
 
