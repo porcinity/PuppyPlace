@@ -1,3 +1,5 @@
+using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
 using PuppyPlace.Domain;
 using PuppyPlace.Domain.Value_Objects.DogValueObjects;
@@ -5,7 +7,7 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Dogs.Commands;
 
-public class PutDogCommand : IRequest<Dog>
+public class PutDogCommand : IRequest<Validation<Error, Dog>>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -13,7 +15,7 @@ public class PutDogCommand : IRequest<Dog>
     public string Breed { get; set; }
 }
 
-public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Dog>
+public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Validation<Error, Dog>>
 {
     private readonly IDogsRepository _dogsRepository;
 
@@ -21,14 +23,26 @@ public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Dog>
     {
         _dogsRepository = dogsRepository;
     }
-    public async Task<Dog> Handle(PutDogCommand request, CancellationToken cancellationToken)
+    public async Task<Validation<Error, Dog>> Handle(PutDogCommand request, CancellationToken cancellationToken)
     {
         var dog = await _dogsRepository.FindDog(request.Id);
         var newName = DogName.Create(request.Name);
         var newAge = DogAge.Create(request.Age);
         var newBreed = DogBreed.Create(request.Breed);
-        dog.Update(newName, newAge, newBreed);
-        await _dogsRepository.UpdateDog(dog);
-        return dog;
+
+        var updatedDog = (newName, newAge, newBreed)
+            .Apply((name, age, breed) =>
+                dog.Update(name, age, breed));
+
+        updatedDog
+            .Succ(async d => await _dogsRepository.UpdateDog(dog))
+            .Fail(e => {
+                return e
+                    .Select(e => e.Message)
+                    .ToList()
+                    .AsTask();
+            });
+
+        return updatedDog;
     }
 }
