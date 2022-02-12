@@ -31,10 +31,11 @@ public class Dog
         Owner = owner;
     }
 
-    public void Update(DogName name, DogAge age, DogBreed breed)
+    public Dog Update(DogName name, DogAge age, DogBreed breed)
     {
         _name = name;
         _age = age;
         _breed = breed;
+        return this;
     }
 }
