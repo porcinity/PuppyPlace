@@ -40,7 +40,7 @@ namespace PuppyPlace.Api.Controllers
         {
             var dog =  await _mediator.Send(command);
             return dog
-                .Succ<IActionResult>(d => Ok(GetDogDto.FromDog(d)))
+                .Succ<IActionResult>(d => Ok(GetDogDto.FromDog))
                 .Fail(e =>
                 {
                     var errors = e.Select(x => x.Message).ToList();
