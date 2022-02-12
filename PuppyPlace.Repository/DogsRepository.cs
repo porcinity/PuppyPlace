@@ -16,7 +16,7 @@ public class DogsRepository : IDogsRepository
         await _context.Dogs.AddAsync(dog);
         await _context.SaveChangesAsync();
     }
-    public async Task<IEnumerable<Dog>> FindDogs()
+    public async Task<IList<Dog>> FindDogs()
     {
         return await _context.Dogs.AsNoTracking().ToListAsync();
     }
