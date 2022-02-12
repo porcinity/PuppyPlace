@@ -1,4 +1,6 @@
+using System.Text.RegularExpressions;
 using LanguageExt;
+using static LanguageExt.Prelude;
 using LanguageExt.Common;
 using MediatR;
 using PuppyPlace.Domain;
@@ -7,7 +9,7 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Dogs.Commands;
 
-public class PutDogCommand : IRequest<Validation<Error, Dog>>
+public class PutDogCommand : IRequest<Option<Validation<Error, Dog>>>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -15,7 +17,7 @@ public class PutDogCommand : IRequest<Validation<Error, Dog>>
     public string Breed { get; set; }
 }
 
-public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Validation<Error, Dog>>
+public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Option<Validation<Error, Dog>>>
 {
     private readonly IDogsRepository _dogsRepository;
 
@@ -23,25 +25,26 @@ public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Validation<Er
     {
         _dogsRepository = dogsRepository;
     }
-    public async Task<Validation<Error, Dog>> Handle(PutDogCommand request, CancellationToken cancellationToken)
+    public async Task<Option<Validation<Error, Dog>>> Handle(PutDogCommand request, CancellationToken cancellationToken)
     {
         var dog = await _dogsRepository.FindDog(request.Id);
         var newName = DogName.Create(request.Name);
         var newAge = DogAge.Create(request.Age);
         var newBreed = DogBreed.Create(request.Breed);
 
-        var updatedDog = (newName, newAge, newBreed)
+        var updatedDog = dog.Map(d =>
+            (newName, newAge, newBreed)
             .Apply((name, age, breed) =>
-                dog.Update(name, age, breed));
+                d.Update(name, age, breed)));
 
-        updatedDog
-            .Succ(async d => await _dogsRepository.UpdateDog(dog))
-            .Fail(e => {
-                return e
-                    .Select(e => e.Message)
-                    .ToList()
-                    .AsTask();
-            });
+        // updatedDog
+        //     .Succ(async d => await _dogsRepository.UpdateDog(dog))
+        //     .Fail(e => {
+        //         return e
+        //             .Select(e => e.Message)
+        //             .ToList()
+        //             .AsTask();
+        //     });
 
         return updatedDog;
     }
