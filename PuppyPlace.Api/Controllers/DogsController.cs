@@ -45,16 +45,16 @@ namespace PuppyPlace.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostDog([FromBody] CreateDogCommand command)
         {
-            var dog =  await _mediator.Send(command);
+            var dog = await _mediator.Send(command);
             return dog
                 .Succ<IActionResult>(d => Ok(GetDogDto.FromDog))
                 .Fail(e =>
                 {
                     var errors = e.Select(x => x.Message).ToList();
-                    return UnprocessableEntity(new { errors });
+                    return UnprocessableEntity(new {errors});
                 });
-            }
-        
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<GetDogDto>> PutDog(Guid id, [FromBody] PutDogCommand command)
         {
