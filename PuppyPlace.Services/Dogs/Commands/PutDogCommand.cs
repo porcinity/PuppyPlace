@@ -29,13 +29,12 @@ public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Option<Valida
     public async Task<Option<Validation<Error, Dog>>> Handle(PutDogCommand request, CancellationToken cancellationToken)
     {
         var dog = await _dogsRepository.FindDog(request.Id);
-        var optDog = dog.ToSome().ToOption();
 
         var newName = DogName.Create(request.Name);
         var newAge = DogAge.Create(request.Age);
         var newBreed = DogBreed.Create(request.Breed);
 
-        var updatedDog = optDog
+        var updatedDog = dog
             .Map(d =>
                 (newName, newAge, newBreed)
                 .Apply(d.Update));
