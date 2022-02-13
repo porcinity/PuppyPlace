@@ -22,12 +22,10 @@ public class AdoptionService : IAdoptionService
         var dog = await _dogsRepository.FindDog(dogId);
         var person = await _personsRepository.FindPerson(personId);
 
-        var result = dog.Map(async d =>
-        {
-            person.AddDog(d);
-            await _context.SaveChangesAsync();
-        });
+        var adoptionResult = from d in dog from p in person select p.AddDog(d);
 
-        return dog.Map(x => unit);
+        ignore(adoptionResult.Map(async _ => await _context.SaveChangesAsync()));
+
+        return adoptionResult.Map(_ => unit);
     }
 }
