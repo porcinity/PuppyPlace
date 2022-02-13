@@ -1,4 +1,5 @@
 using LanguageExt;
+using static LanguageExt.Prelude;
 using LanguageExt.Common;
 using LanguageExt.SomeHelp;
 using MediatR;
@@ -28,38 +29,23 @@ public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Option<Valida
     public async Task<Option<Validation<Error, Dog>>> Handle(PutDogCommand request, CancellationToken cancellationToken)
     {
         var dog = await _dogsRepository.FindDog(request.Id);
-
-
         var optDog = dog.ToSome().ToOption();
 
         var newName = DogName.Create(request.Name);
         var newAge = DogAge.Create(request.Age);
         var newBreed = DogBreed.Create(request.Breed);
 
-        return optDog
+        var updatedDog = optDog
             .Map(d =>
                 (newName, newAge, newBreed)
-                .Apply((n, a, b) =>
-                    {
-                        d.Update(n, a, b);
-                        _dogsRepository.UpdateDog(d).Wait();
-                        return d;
-                    }));
+                .Apply(d.Update));
 
-        // var updatedDog = dog.Map(d =>
-        //     (newName, newAge, newBreed)
-        //     .Apply((name, age, breed) =>
-        //         d.Update(name, age, breed)));
+        ignore(
+            updatedDog
+                .Map(d =>
+                    d.Map(async x => await _dogsRepository.UpdateDog(x)))
+        );
 
-        // updatedDog
-        //     .Succ(async d => await _dogsRepository.UpdateDog(dog))
-        //     .Fail(e => {
-        //         return e
-        //             .Select(e => e.Message)
-        //             .ToList()
-        //             .AsTask();
-        //     });
-        //
-        // return updatedDog;
+        return updatedDog;
     }
 }
