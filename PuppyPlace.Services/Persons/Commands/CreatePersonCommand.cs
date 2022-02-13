@@ -31,8 +31,6 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, V
 
         var newPerson = (name, age).Apply((n, a) => new Person(n, a));
 
-        // _ = newPerson.Map(async p => await _personsRepository.AddPerson(p));
-
         ignore(newPerson.Map(async p => await _personsRepository.AddPerson(p)));
 
         return newPerson;
