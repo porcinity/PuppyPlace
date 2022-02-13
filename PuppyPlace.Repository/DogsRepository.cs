@@ -1,3 +1,6 @@
+using LanguageExt;
+using static LanguageExt.Prelude;
+using LanguageExt.SomeHelp;
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Data;
 using PuppyPlace.Domain;
@@ -11,10 +14,11 @@ public class DogsRepository : IDogsRepository
     {
         _context = context;
     }
-    public async Task AddDog(Dog dog)
+    public async Task<Unit> AddDog(Dog dog)
     {
         await _context.Dogs.AddAsync(dog);
         await _context.SaveChangesAsync();
+        return unit;
     }
     public async Task<IList<Dog>> FindDogs()
     {
@@ -26,39 +30,55 @@ public class DogsRepository : IDogsRepository
         return await _context.Dogs.Select(d => d.Name).ToListAsync();
     }
 
-    public async Task<Dog?> FindDog(Guid id)
+    public async Task<Option<Dog>> FindDog(Guid id)
     {
-        return await _context.Dogs.FirstOrDefaultAsync(m => m.Id == id);
+        var result = await _context.Dogs.FirstOrDefaultAsync(m => m.Id == id);
+        if (result is null)
+            return Option<Dog>.None;
+
+        return result.ToSome();
     }
 
-    public async Task<Dog?> FindDogWithOwner(Guid id)
+    public async Task<Option<Dog>> FindDogWithOwner(Guid id)
     {
-        return await _context.Dogs
+         var result = await _context.Dogs
             .Include("Owner")
             .FirstOrDefaultAsync(m => m.Id == id);
+         if (result is null)
+             return Option<Dog>.None;
+         return result.ToSome();
     }
 
-    public async Task UpdateDog(Dog dog)
+    public async Task<Unit> UpdateDog(Dog dog)
     {
         _context.Dogs.Update(dog);
         await _context.SaveChangesAsync();
+        return unit;
     }
-    public async Task UpdateDog (Guid id)
+    public async Task<Unit> UpdateDog (Guid id)
     {
         var dog = await FindDog(id);
-        _context.Dogs.Update(dog);
-        await _context.SaveChangesAsync();
+        ignore(dog.Map(async d =>
+        {
+            _context.Dogs.Update(d);
+            await _context.SaveChangesAsync();
+        }));
+        return unit;
     }
     public async Task DeleteDog(Dog dog)
     {
         _context.Dogs.Remove(dog);
         await _context.SaveChangesAsync();
     }
-    public async Task DeleteDog(Guid id)
+    public async Task<Option<Unit>> DeleteDog(Guid id)
     {
         var dog = await FindDog(id);
-        _context.Dogs.Remove(dog);
-        await _context.SaveChangesAsync();
+        ignore(dog.Map(async d =>
+        {
+            _context.Dogs.Remove(d);
+            await _context.SaveChangesAsync();
+        }));
+        return dog.Map(d => unit);
     }
     public async Task AddOwner(Dog dog, Person person)
     {
