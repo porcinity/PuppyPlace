@@ -1,6 +1,10 @@
+using LanguageExt;
+using LanguageExt.Common;
+using static LanguageExt.Prelude;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Api.Dtos;
+using PuppyPlace.Domain;
 using PuppyPlace.Services.Dogs.Commands;
 using PuppyPlace.Services.Dogs.Queries;
 
@@ -17,24 +21,27 @@ namespace PuppyPlace.Api.Controllers
         {
             _mediator = mediator;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetDogs([FromRoute] GetAllDogsQuery query)
         {
             return await _mediator
-                    .Send(query)
-                    .Select(x => x.Select(GetDogDto.FromDog))
-                    .Map(Ok);
+                .Send(query)
+                .Select(x => x.Select(GetDogDto.FromDog))
+                .Map(Ok);
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDog([FromRoute] GetDogByIdQuery query)
         {
             var dog = await _mediator.Send(query);
-            var response = GetDogDto.FromDog(dog);
-            return response == null ? NotFound() : Ok(response);
+            return dog
+                .Map(GetDogDto.FromDog)
+                .Some<IActionResult>(Ok)
+                .None(NotFound);
+
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> PostDog([FromBody] CreateDogCommand command)
         {
