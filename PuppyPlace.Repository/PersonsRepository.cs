@@ -1,3 +1,6 @@
+using LanguageExt;
+using static LanguageExt.Prelude;
+using LanguageExt.SomeHelp;
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Data;
 using PuppyPlace.Domain;
@@ -17,20 +20,24 @@ public class PersonsRepository : IPersonsRepository
         return await _context.Set<Person>().AsNoTracking().ToListAsync();
     }
     
-    public async Task<Person> FindPerson(Guid id)
+    public async Task<Option<Person>> FindPerson(Guid id)
     {
         var person = await _context.Persons
                 .AsNoTracking()
                 .Include(m => m.Dogs)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-        return person;
+        if (person is null)
+            return Option<Person>.None;
+
+        return person.ToSome();
     }
     
-    public async Task AddPerson(Person person)
+    public async Task<Unit> AddPerson(Person person)
     {
        await _context.Persons.AddAsync(person);
        await _context.SaveChangesAsync();
+       return unit;
     }
 
     public async Task AdoptDog(Person person, Dog dog)
@@ -39,18 +46,22 @@ public class PersonsRepository : IPersonsRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Person> UpdatePerson(Person person)
+    public async Task<Unit> UpdatePerson(Person person)
     {
         _context.Persons.Update(person);
         await _context.SaveChangesAsync();
-        return person;
+        return unit;
     }
 
-    public async Task DeletePerson(Guid id)
+    public async Task<Option<Unit>> DeletePerson(Guid id)
     {
         var person = await FindPerson(id);
-        _context.Persons.Remove(person);
-        await _context.SaveChangesAsync();
+        ignore(person.Map(async p=>
+        {
+            _context.Persons.Remove(p);
+            await _context.SaveChangesAsync();
+        }));
+        return person.Map(p => unit);
     }
     
     public async Task DeletePerson(Person person)
