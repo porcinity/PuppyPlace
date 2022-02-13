@@ -1,4 +1,5 @@
 using LanguageExt;
+using static LanguageExt.Prelude;
 using LanguageExt.Common;
 using MediatR;
 using PuppyPlace.Domain;
@@ -30,15 +31,9 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, V
 
         var newPerson = (name, age).Apply((n, a) => new Person(n, a));
 
-        newPerson
-            .Succ(async p =>
-            {
-                await _personsRepository.AddPerson(p);
-            })
-            .Fail(e =>
-            {
-                return e.AsTask();
-            });
+        // _ = newPerson.Map(async p => await _personsRepository.AddPerson(p));
+
+        ignore(newPerson.Map(async p => await _personsRepository.AddPerson(p)));
 
         return newPerson;
     }
