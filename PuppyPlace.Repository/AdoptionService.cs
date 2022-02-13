@@ -1,4 +1,6 @@
 using PuppyPlace.Data;
+using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace PuppyPlace.Repository;
 
@@ -15,12 +17,17 @@ public class AdoptionService : IAdoptionService
         _personsRepository = personsRepository;
     }
 
-    public async Task AdoptDog(Guid personId, Guid dogId)
+    public async Task<Option<Unit>> AdoptDog(Guid personId, Guid dogId)
     {
         var dog = await _dogsRepository.FindDog(dogId);
         var person = await _personsRepository.FindPerson(personId);
-        
-        person.AddDog(dog);
-        await _context.SaveChangesAsync();
+
+        var result = dog.Map(async d =>
+        {
+            person.AddDog(d);
+            await _context.SaveChangesAsync();
+        });
+
+        return dog.Map(x => unit);
     }
 }
