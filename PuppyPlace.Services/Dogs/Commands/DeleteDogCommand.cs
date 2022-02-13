@@ -1,14 +1,17 @@
+using LanguageExt;
+using static LanguageExt.Prelude;
 using MediatR;
 using PuppyPlace.Repository;
+using Unit = LanguageExt.Unit;
 
 namespace PuppyPlace.Services.Dogs.Commands;
 
-public class DeleteDogCommand : IRequest<Unit>
+public class DeleteDogCommand : IRequest<Option<Unit>>
 {
     public Guid Id { get; set; }
 }
 
-public class DeleteDogCommandHandler : IRequestHandler<DeleteDogCommand, Unit>
+public class DeleteDogCommandHandler : IRequestHandler<DeleteDogCommand, Option<Unit>>
 {
     private readonly IDogsRepository _dogsRepository;
 
@@ -16,9 +19,8 @@ public class DeleteDogCommandHandler : IRequestHandler<DeleteDogCommand, Unit>
     {
         _dogsRepository = dogsRepository;
     }
-    public async Task<Unit> Handle(DeleteDogCommand request, CancellationToken cancellationToken)
+    public async Task<Option<Unit>> Handle(DeleteDogCommand request, CancellationToken cancellationToken)
     {
-        await _dogsRepository.DeleteDog(request.Id);
-        return Unit.Value;
+       return await _dogsRepository.DeleteDog(request.Id);
     }
 }
