@@ -1,7 +1,6 @@
-using System.Text.RegularExpressions;
 using LanguageExt;
-using static LanguageExt.Prelude;
 using LanguageExt.Common;
+using LanguageExt.SomeHelp;
 using MediatR;
 using PuppyPlace.Domain;
 using PuppyPlace.Domain.Value_Objects.DogValueObjects;
@@ -25,17 +24,32 @@ public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Option<Valida
     {
         _dogsRepository = dogsRepository;
     }
+
     public async Task<Option<Validation<Error, Dog>>> Handle(PutDogCommand request, CancellationToken cancellationToken)
     {
         var dog = await _dogsRepository.FindDog(request.Id);
+
+
+        var optDog = dog.ToSome().ToOption();
+
         var newName = DogName.Create(request.Name);
         var newAge = DogAge.Create(request.Age);
         var newBreed = DogBreed.Create(request.Breed);
 
-        var updatedDog = dog.Map(d =>
-            (newName, newAge, newBreed)
-            .Apply((name, age, breed) =>
-                d.Update(name, age, breed)));
+        return optDog
+            .Map(d =>
+                (newName, newAge, newBreed)
+                .Apply((n, a, b) =>
+                    {
+                        d.Update(n, a, b);
+                        _dogsRepository.UpdateDog(d).Wait();
+                        return d;
+                    }));
+
+        // var updatedDog = dog.Map(d =>
+        //     (newName, newAge, newBreed)
+        //     .Apply((name, age, breed) =>
+        //         d.Update(name, age, breed)));
 
         // updatedDog
         //     .Succ(async d => await _dogsRepository.UpdateDog(dog))
@@ -45,7 +59,7 @@ public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Option<Valida
         //             .ToList()
         //             .AsTask();
         //     });
-
-        return updatedDog;
+        //
+        // return updatedDog;
     }
 }
