@@ -33,8 +33,9 @@ public class Person
         return this;
     }
 
-    public void AddDog(Dog dog)
+    public Person AddDog(Dog dog)
     {
         _dogs.Add(dog);
+        return this;
     }
 }
