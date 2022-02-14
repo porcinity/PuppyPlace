@@ -1,3 +1,4 @@
+using LanguageExt;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PuppyPlace.Domain;
@@ -5,12 +6,12 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Persons.Queries;
 
-public class GetPersonByIdQuery : IRequest<Person>
+public class GetPersonByIdQuery : IRequest<Option<Person>>
 {
     public Guid Id { get; set; }
 }
 
-public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, Person>
+public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, Option<Person>>
 {
     private readonly IPersonsRepository _personsRepository;
 
@@ -19,9 +20,8 @@ public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, Per
         _personsRepository = personsRepository;
     }
 
-    public async Task<Person> Handle(GetPersonByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Option<Person>> Handle(GetPersonByIdQuery request, CancellationToken cancellationToken)
     {
-        var person = await _personsRepository.FindPerson(request.Id);
-        return person;
+        return await _personsRepository.FindPerson(request.Id);
     }
 }

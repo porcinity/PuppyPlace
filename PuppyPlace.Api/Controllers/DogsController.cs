@@ -37,8 +37,7 @@ namespace PuppyPlace.Api.Controllers
             var dog = await _mediator.Send(query);
             return dog
                 .Map(GetDogDto.FromDog)
-                .Some<IActionResult>(Ok)
-                .None(NotFound);
+                .Match<IActionResult>(Ok, NotFound);
 
         }
 
@@ -75,7 +74,7 @@ namespace PuppyPlace.Api.Controllers
         public async Task<IActionResult> DeleteDog([FromRoute] DeleteDogCommand command)
         {
             var result = await _mediator.Send(command);
-            return result.Some<IActionResult>(_ => NoContent()).None(NotFound);
+            return result.Match<IActionResult>(_ => NoContent(),NotFound);
         }
     }
 }

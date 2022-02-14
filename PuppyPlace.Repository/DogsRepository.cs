@@ -55,6 +55,7 @@ public class DogsRepository : IDogsRepository
         await _context.SaveChangesAsync();
         return unit;
     }
+
     public async Task<Unit> UpdateDog (Guid id)
     {
         var dog = await FindDog(id);
@@ -65,11 +66,13 @@ public class DogsRepository : IDogsRepository
         }));
         return unit;
     }
-    public async Task DeleteDog(Dog dog)
+    public async Task<Unit> DeleteDog(Dog dog)
     {
         _context.Dogs.Remove(dog);
         await _context.SaveChangesAsync();
+        return unit;
     }
+
     public async Task<Option<Unit>> DeleteDog(Guid id)
     {
         var dog = await FindDog(id);

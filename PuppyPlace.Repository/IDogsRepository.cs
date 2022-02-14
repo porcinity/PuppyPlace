@@ -11,4 +11,5 @@ public interface IDogsRepository
     Task<Unit> AddDog(Dog dog);
     Task<Unit> UpdateDog(Dog dog);
     Task<Option<Unit>> DeleteDog(Guid id);
+    Task<Unit> DeleteDog(Dog dog);
 }

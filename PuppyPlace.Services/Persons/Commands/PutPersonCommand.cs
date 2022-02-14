@@ -1,5 +1,5 @@
-
 using LanguageExt;
+using static LanguageExt.Prelude;
 using LanguageExt.Common;
 using MediatR;
 using PuppyPlace.Domain;
@@ -8,14 +8,14 @@ using PuppyPlace.Repository;
 
 namespace PuppyPlace.Services.Persons.Commands;
 
-public class PutPersonCommand : IRequest<Validation<Error, Person>>
+public class PutPersonCommand : IRequest<Option<Validation<Error, Person>>>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
 }
 
-public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Validation<Error, Person>>
+public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Option<Validation<Error, Person>>>
 {
     private readonly IPersonsRepository _personsRepository;
 
@@ -23,23 +23,16 @@ public class PutPersonCommandHandler : IRequestHandler<PutPersonCommand, Validat
     {
         _personsRepository = personsRepository;
     }
-    public async Task<Validation<Error, Person>> Handle(PutPersonCommand command, CancellationToken cancellationToken)
+    public async Task<Option<Validation<Error, Person>>> Handle(PutPersonCommand command, CancellationToken cancellationToken)
     {
         var person = await _personsRepository.FindPerson(command.Id);
         var name = PersonName.Create(command.Name);
         var age = PersonAge.Create(command.Age);
 
-        var updatedPerson = (name, age).Apply(person.Update);
+        var updatedPerson = person.Map(p => (name, age).Apply(p.Update));
 
-        updatedPerson
-            .Succ(async p =>
-            {
-                await _personsRepository.UpdatePerson(p);
-            })
-            .Fail(e =>
-            {
-                return e.AsTask();
-            });
+        ignore(updatedPerson.Map(p =>
+            p.Map(async x => await _personsRepository.UpdatePerson(x))));
 
         return updatedPerson;
     }

@@ -1,3 +1,4 @@
+using LanguageExt;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PuppyPlace.Api.Dtos;
@@ -18,27 +19,29 @@ public class PersonsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<GetPersonsDto>> GetPersons([FromRoute] GetAllPersonsQuery query)
+    public async Task<IActionResult> GetPersons([FromRoute] GetAllPersonsQuery query)
     {
-        var people = await _mediator.Send(query);
-        var response = people.Select(GetPersonDto.FromPerson);
-        return Ok(response);
+        return await _mediator.Send(query)
+            .Select(x => x.Select(GetPersonDto.FromPerson))
+            .Select(Ok);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<GetPersonDto>> GetPerson([FromRoute] GetPersonByIdQuery query)
+    public async Task<IActionResult> GetPerson([FromRoute] GetPersonByIdQuery query)
     {
         var person = await _mediator.Send(query);
-        var response = GetPersonDto.FromPerson(person);
-        return response == null ? NotFound() : Ok(response);
+        return person
+            .Map(GetPersonDto.FromPerson)
+            .Match<IActionResult>(Ok, NotFound);
     }
 
     [HttpGet("{id}/dogs")]
-    public async Task<ActionResult<IEnumerable<GetDogDto>>> ShowDogs([FromRoute] GetPersonByIdQuery query)
+    public async Task<IActionResult> ShowDogs([FromRoute] GetPersonByIdQuery query)
     {
         var person = await _mediator.Send(query);
-        var response = person.Dogs.Select(GetDogDto.FromDog);
-        return Ok(response);
+        return person
+            .Map(x => x.Dogs.Select(GetDogDto.FromDog))
+            .Match<IActionResult>(Ok, NotFound);
     }
 
     [HttpPost]
@@ -55,10 +58,11 @@ public class PersonsController : ControllerBase
     }
 
     [HttpPost("{personId}/adoptdog")]
-    public async Task<ActionResult> AdoptDog(Guid personId, AdoptDogDto adoptDogDto)
+    public async Task<IActionResult> AdoptDog(Guid personId, AdoptDogDto adoptDogDto)
     {
         var command = AdoptDogCommand.Create(personId, adoptDogDto.Id);
-        return Ok(await _mediator.Send(command));
+        var result = await _mediator.Send(command);
+        return result.Match<IActionResult>(_ => Ok(), NotFound);
     }
 
     [HttpPut("{id}")]
@@ -66,18 +70,23 @@ public class PersonsController : ControllerBase
     {
         command.Id = id;
         var person = await _mediator.Send(command);
-        return person.Match<IActionResult>(
-            p => Ok(GetPersonDto.FromPerson(p)),
-            e =>
-            {
-                var list = e.Select(x => x.Message).ToList();
-                return UnprocessableEntity(new {errors = list});
-            });
+        return person
+            .Some(
+            p =>
+                p.Succ<IActionResult>(x =>
+                        Ok(GetPersonDto.FromPerson(x)))
+                    .Fail(e =>
+                    {
+                        var list = e.Select(x => x.Message).ToList();
+                        return UnprocessableEntity(new {errors = list});
+                    }))
+            .None(NotFound);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeletePerson([FromRoute] DeletePersonCommand command)
+    public async Task<IActionResult> DeletePerson([FromRoute] DeletePersonCommand command)
     {
-        return Ok(await _mediator.Send(command));
+        var result = await _mediator.Send(command);
+        return result.Match<IActionResult>(_ => NoContent(), NotFound);
     }
 }

@@ -10,4 +10,5 @@ public interface IPersonsRepository
     Task<Unit> AddPerson(Person person);
     Task<Unit> UpdatePerson(Person person);
     Task<Option<Unit>> DeletePerson(Guid id);
+    Task<Unit> DeletePerson(Person person);
 }

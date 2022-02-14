@@ -64,9 +64,10 @@ public class PersonsRepository : IPersonsRepository
         return person.Map(p => unit);
     }
     
-    public async Task DeletePerson(Person person)
+    public async Task<Unit> DeletePerson(Person person)
     {
         _context.Persons.Remove(person);
         await _context.SaveChangesAsync();
+        return unit;
     }
 }
