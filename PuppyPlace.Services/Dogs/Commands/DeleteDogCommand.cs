@@ -21,6 +21,11 @@ public class DeleteDogCommandHandler : IRequestHandler<DeleteDogCommand, Option<
     }
     public async Task<Option<Unit>> Handle(DeleteDogCommand request, CancellationToken cancellationToken)
     {
-       return await _dogsRepository.DeleteDog(request.Id);
+        var dog = await _dogsRepository.FindDog(request.Id);
+
+        ignore(dog.Map(async d => await _dogsRepository.DeleteDog(d)));
+
+        var result = dog.Map(d => unit);
+        return result;
     }
 }
