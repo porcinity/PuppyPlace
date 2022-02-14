@@ -1,9 +1,12 @@
+using LanguageExt;
+using static LanguageExt.Prelude;
 using MediatR;
 using PuppyPlace.Repository;
+using Unit = LanguageExt.Unit;
 
 namespace PuppyPlace.Services.Persons.Commands;
 
-public class AdoptDogCommand : IRequest<Unit>
+public class AdoptDogCommand : IRequest<Option<Unit>>
 {
     public Guid PersonId { get; set; }
     public Guid DogId { get; set; }
@@ -17,7 +20,7 @@ public class AdoptDogCommand : IRequest<Unit>
     }
 }
 
-public class AdoptDogCommandHandler : IRequestHandler<AdoptDogCommand, Unit>
+public class AdoptDogCommandHandler : IRequestHandler<AdoptDogCommand, Option<Unit>>
 {
     private readonly IAdoptionService _adoptionService;
 
@@ -25,9 +28,8 @@ public class AdoptDogCommandHandler : IRequestHandler<AdoptDogCommand, Unit>
     {
         _adoptionService = adoptionService;
     }
-    public async Task<Unit> Handle(AdoptDogCommand request, CancellationToken cancellationToken)
+    public async Task<Option<Unit>> Handle(AdoptDogCommand request, CancellationToken cancellationToken)
     {
-        await _adoptionService.AdoptDog(request.PersonId, request.DogId);
-        return Unit.Value;
+        return await _adoptionService.AdoptDog(request.PersonId, request.DogId);
     }
 }
