@@ -22,7 +22,7 @@ public class PersonsController : ControllerBase
     public async Task<IActionResult> GetPersons([FromRoute] GetAllPersonsQuery query)
     {
         return await _mediator.Send(query)
-            .Select(x => x.Select(GetPersonDto.FromPerson))
+            .MapT(GetPersonDto.FromPerson)
             .Select(Ok);
     }
 
