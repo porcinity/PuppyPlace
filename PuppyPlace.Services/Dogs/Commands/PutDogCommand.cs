@@ -1,7 +1,6 @@
 using LanguageExt;
 using static LanguageExt.Prelude;
 using LanguageExt.Common;
-using LanguageExt.SomeHelp;
 using MediatR;
 using PuppyPlace.Domain;
 using PuppyPlace.Domain.Value_Objects.DogValueObjects;
@@ -34,17 +33,21 @@ public class PutDogCommandHandler : IRequestHandler<PutDogCommand, Option<Valida
         var newAge = DogAge.Create(request.Age);
         var newBreed = DogBreed.Create(request.Breed);
 
+        var dogMapT = await _dogsRepository
+            .FindDog(request.Id)
+            .MapT(x =>
+                (newName, newAge, newBreed)
+                .Apply(x.Update));
+
+         ignore(dogMapT.MapT(async d => await _dogsRepository.UpdateDog(d)));
+
         var updatedDog = dog
             .Map(d =>
                 (newName, newAge, newBreed)
                 .Apply(d.Update));
 
-        ignore(
-            updatedDog
-                .Map(d =>
-                    d.Map(async x => await _dogsRepository.UpdateDog(x)))
-        );
+        ignore(updatedDog.MapT(async d => await _dogsRepository.UpdateDog(d)));
 
-        return updatedDog;
+        return dogMapT;
     }
 }
