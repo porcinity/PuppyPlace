@@ -27,7 +27,7 @@ namespace PuppyPlace.Api.Controllers
         {
             return await _mediator
                 .Send(query)
-                .Select(x => x.Select(GetDogDto.FromDog))
+                .MapT(GetDogDto.FromDog)
                 .Map(Ok);
         }
 
